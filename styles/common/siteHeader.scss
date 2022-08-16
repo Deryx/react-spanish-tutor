@@ -1,0 +1,143 @@
+header {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    padding-top: 1.5rem;
+    padding-bottom: 1.1rem;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(198, 10, 30);
+    z-index: 100;
+    position: fixed;
+
+    h1 {
+        margin: 0;
+        padding: 0;
+        margin-top: 0.25em;
+        margin-left: 2.0em;
+        font-size: 2rem !important;
+        letter-spacing: 0.1rem;
+        font-size: inherit;
+
+        div:first-child {
+            font-family: 'Lobster', sans-serif;
+            z-index: 99;
+            position: absolute;
+            margin-top: -0.3em;
+            margin-left: -1.3em;
+            letter-spacing: 0;
+            color: rgb(0, 0, 0);
+        }
+
+        div:last-child {
+            font-family: 'Oswald', sans-serif;
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgb(255, 196, 0);
+        }
+
+        a:visited {
+            color: rgb(255, 196, 0);
+        }
+    }
+
+    nav {
+        padding: 0;
+        padding-right: 16px;
+        width: 0;
+        text-transform: uppercase;
+        font-family: 'Roboto', sans-serif;
+      
+        #menu  {
+            margin: 0;
+            margin-top: -1.3rem;
+            padding: 0;
+            width: 230px;
+            list-style-type: none;
+            z-index: 100;
+            position: absolute;
+            right: -140px;
+            
+            li a {
+                text-decoration: none;
+                font-size: 125%;
+                font-weight: bold;
+                letter-spacing: 0.2em;
+                display: block;
+                padding: 0.1875rem 0.375rem;  
+
+                div {
+                    width: 2.5rem;
+                    height: 5px;
+                    background: rgb(0 0 0);
+                    background-color:  rgb(255, 196, 0);
+                    margin: 6px 0; 
+                }
+            }
+        }
+
+        #subMenu {
+            width: 230px;
+            list-style-type: none;
+            left: -180px;
+            margin-top: 0.75rem;
+            margin-left: 0;
+            padding: 0;
+            z-index: 100;
+            position: absolute;
+            background: rgb(198, 10, 30);
+            font-weight: 800;
+            font-family: 'Roboto', sans-serif;
+
+            li {
+                width: 100%;
+                padding-top: 5px;
+
+                h3 {
+                    color: rgb(198, 10, 30);
+                    background: rgb(255, 196, 0);
+                    margin: 0;
+                    padding-top: 8px;
+                    padding-bottom: 8px;
+                    padding-left: 5px;
+                    width: 100%;
+                    display: block;
+                    font-size: 115%;
+                    font-weight: bold;
+                    border-top: 1px solid  rgb(255, 196, 0);
+                    border-bottom: 1px solid  rgb(255, 196, 0);
+                }
+
+                a {
+                    width: 100%;
+                    display: block;
+                    background: rgb(198, 10, 30);
+                    color: rgb(255, 196, 0);
+                    font-weight: normal;
+                    letter-spacing: 0;  
+                }
+
+                a:hover {
+                    background: rgb(255, 196, 0);
+                    color: rgb(198, 10, 30);                  
+                }
+
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    
+                    li {
+                        text-indent: none; 
+                    }
+                }
+            }
+        }
+    }
+}
