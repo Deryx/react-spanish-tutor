@@ -5,8 +5,8 @@ function Menu( props: any ) {
 
     return (
         <ul>
-            { props.pages.map( ( page ) => 
-                    <li>
+            { props.pages.map( ( page, index ) => 
+                    <li key={ index }>
                         <Link href={ page.url }>
                             <a>{ page.title }</a>
                         </Link>

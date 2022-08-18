@@ -24,7 +24,7 @@ function SiteMenu() {
             <ul id="menu">
                 <li>
                     <Link href="/">
-                        <a  id="button" onClick="">
+                        <a  id="button">
                             <div></div>
                             <div></div>
                             <div></div>

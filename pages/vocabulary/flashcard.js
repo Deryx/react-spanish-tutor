@@ -4,9 +4,9 @@ import Footer from '/src/components/footer.tsx';
 import Dropdown from '/src/components/dropDown.tsx';
 import Card from '/src/components/card.tsx';
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient;
 
-function Flashcard( { categories } ) {
+function Flashcard({ categories }) {
     const headerFront = 'Front';
     const headerBack = 'Back';
     const info = '';
@@ -24,7 +24,7 @@ function Flashcard( { categories } ) {
                 <form id="vocabularyFlashcard" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
                         <Dropdown id="categorySelect" name="categorySelect" options={ categorySelect.sort() } />
-                        {/* <Card header={ headerFront } info={ info } /> */}
+                        <Card header={ headerFront } info={ info } />
                         {/* <Card header={ headerBack } info={ info } /> */}
                     </fieldset>
                 </form>
@@ -34,13 +34,13 @@ function Flashcard( { categories } ) {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const allCategories = await prisma.categories.findMany();
     return {
         props: {
             categories: allCategories
         }
-    }
+    };
 }
 
 export default Flashcard;

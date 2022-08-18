@@ -6,7 +6,7 @@ function Radiogroup( props: any ) {
             { props.choices.map( ( choice ) =>
                 <>
                     <input type="radio" id={ choice.id } name={ choice.id } value={ choice.value } />
-                    <label for={ choice.id }>{ choice.value }</label>
+                    <label htmlFor={ choice.id }>{ choice.value }</label>
                 </>
             )};
         </div>

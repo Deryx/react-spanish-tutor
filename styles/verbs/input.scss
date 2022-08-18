@@ -23,9 +23,8 @@ section {
         font-family: 'Roboto', sans-serif;
 
         fieldset {
-            border: 1px solid rgb(198, 10, 30);
-            border-radius: 0.3rem;
-            padding: 0;
+            border-radius: 0.8rem;
+            padding: 1.2rem 0;
             margin: 0 auto;
             background:  rgb(255, 196, 0);
 
@@ -55,7 +54,11 @@ section {
                     width: 70%;    
                     
                     input {
-                        width: 100%;
+                        width: 95%;
+                        border: 1px solid rgb(255, 255, 255);
+                        border-radius: 0.3rem;
+                        padding: 0.4rem;
+                        font-size: 80%;
                     }
                 }
             }

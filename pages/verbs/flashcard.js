@@ -20,8 +20,6 @@ function Flashcard( { verbs, tenses } ) {
         tenseSelect.push( tenses[tense].tense );
     }
 
-    console.log({verbSelect, tenseSelect});
-
     return (
         <>
             <Siteheader />
@@ -41,7 +39,7 @@ function Flashcard( { verbs, tenses } ) {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const allVerbs = await prisma.verbs.findMany();
     const allTenses = await prisma.tenses.findMany();
     return {
