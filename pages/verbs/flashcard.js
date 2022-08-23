@@ -7,18 +7,31 @@ import Card from '/src/components/card.tsx';
 const prisma = new PrismaClient();
 
 function Flashcard( { verbs, tenses } ) {
-    const verbSelect = [];
-    const tenseSelect = [];
+    const verbSelections = [];
+    const tenseSelections = [];
     const headerFront = 'Front';
     const headerBack = 'Back';
     const info = '';
 
-    for(const verb in verbs) {
-        verbSelect.push( verbs[verb].infinitive );
+    for(const verb of verbs) {
+        verbSelections.push( 
+            {
+                id: verb.id,
+                verb: verb.infinitive 
+            }
+        );
     }
+    verbSelections.sort( ( a, b ) => {
+        return a.verb - b.verb 
+    })
     
-    for(const tense in tenses) {
-        tenseSelect.push( tenses[tense].tense );
+    for(const tense of tenses) {
+        tenseSelections.push( 
+            {
+                id: tense.id,
+                tense: tense.tense
+            } 
+        );
     }
 
     return (
@@ -28,8 +41,26 @@ function Flashcard( { verbs, tenses } ) {
                 <h1>Verb Flashcard</h1>
                 <form id="verbFlashcard" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <Dropdown id="verbSelect" name="verbSelect" options={ verbSelect } />
-                        <Dropdown id="tenseSelect" name="tenseSelect" options={ tenseSelect } />
+                        <dl>
+                            <dt><label htmlFor="verbSelect">verb: </label></dt>
+                            <dd>
+                                <select id="verbSelect" name="verbSelect">
+                                    { verbSelections.map( ( verbSelection ) => 
+                                        <option key={ verbSelection.id } value={ verbSelection.id }>{ verbSelection.verb }</option>
+                                    )}
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt><label htmlFor="tenseSelect">tense: </label></dt>
+                            <dd>
+                                <select id="tenseSelect" name="tenseSelect">
+                                    { tenseSelections.map( ( tenseSelection, i ) => 
+                                        <option key={ i } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
+                                    )}
+                                </select>
+                            </dd>
+                        </dl>
                         <Card header={ headerFront } info={ info } />
                         {/* <Card header={ headerBack } info={ info } /> */}
                     </fieldset>
