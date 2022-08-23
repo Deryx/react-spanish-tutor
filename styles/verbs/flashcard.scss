@@ -1,6 +1,10 @@
 form#verbFlashcard {
     font-family: 'Roboto', sans-serif;
 
+    fieldset {
+        background: none;
+    }
+
     dl {
         padding: 0;
         width: 100%;

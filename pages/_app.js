@@ -3,6 +3,7 @@ import '/styles/styles.scss';
 import '/styles/common/siteHeader.scss';
 import '/styles/vocabulary/input.scss';
 import '/styles/vocabulary/flashcard.scss';
+import '/styles/vocabulary/quiz.scss';
 import '/styles/verbs/input.scss';
 import '/styles/verbs/conjugator.scss';
 import '/styles/verbs/flashcard.scss';

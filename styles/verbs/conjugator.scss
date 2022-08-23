@@ -21,13 +21,13 @@ section {
 
     form#conjugator {
         font-family: 'Roboto', sans-serif;
-
+        margin-bottom: 1.5rem;
         fieldset {
             border-radius: 0.8rem;
             padding: 1.2rem;
             margin: 0 auto;
             background:  rgb(255, 196, 0);
-
+        
             dl {
                 padding: 0;
                 padding-top: 0.85rem;
@@ -47,7 +47,7 @@ section {
                     text-align: right;
                     font-size: 90%;   
                 }
-
+        
                 dd {
                     margin: 0;
                     padding: 0 0.5rem;
@@ -62,10 +62,10 @@ section {
                     }
                 }
             }
-
+        
             dl:first-child {
                 border-top: none;
             }
         }
     }
-  }
+}

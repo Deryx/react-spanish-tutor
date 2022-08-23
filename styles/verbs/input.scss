@@ -18,73 +18,95 @@ section {
         font-weight: normal;
         font-size: 175%;
     }
+}
 
-    form#verbs {
-        font-family: 'Roboto', sans-serif;
-
-        fieldset {
-            border-radius: 0.8rem;
-            padding: 1.2rem 0;
-            margin: 0 auto;
-            background:  rgb(255, 196, 0);
-
-            dl {
-                padding: 0;
-                padding-top: 0.85rem;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                                                
-                dt {
-                    margin: 0;
-                    margin-top: 5px;
-                    margin-right: 10px;
-                    padding: 0;
-                    width: 30%;
-                    font-weight: bold;
-                    text-transform: capitalize;
-                    text-align: right;
-                    font-size: 90%;   
-                }
-
-                dd {
-                    margin: 0;
-                    padding: 0 0.5rem;
-                    width: 70%;    
-                    
-                    input {
-                        width: 95%;
-                        border: 1px solid rgb(255, 255, 255);
-                        border-radius: 0.3rem;
-                        padding: 0.4rem;
-                        font-size: 80%;
-                    }
-                }
-            }
-
-            section {
+form#verbs {
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 1.5rem;
+    fieldset {
+        border-radius: 0.8rem;
+        padding: 1.2rem 0;
+        margin: 0 auto;
+        background:  rgb(255, 196, 0);
+    
+        dl {
+            padding: 0;
+            padding-top: 0.85rem;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+                                            
+            dt {
                 margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
                 padding: 0;
-                width: 100%; 
-                
-                h4 {
-                    text-align: center;
-                    text-transform: uppercase;
-                    background: rgb(198, 10, 30);
-                    color: rgb(255, 196, 0);
-                    margin-top: 0;
-                    margin-bottom: 0;
-                    padding: 10px 0;
-                    letter-spacing: 2px;
-                    width: 105%;
-                    font-size: 100%;                  
-                }
+                width: 30%;
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: right;
+                font-size: 90%;   
             }
-
-            dl:first-child {
-                border-top: none;
+    
+            dd {
+                margin: 0;
+                padding: 0 0.5rem;
+                width: 70%;    
+                
+                input {
+                    width: 95%;
+                    border: 1px solid rgb(255, 255, 255);
+                    border-radius: 0.3rem;
+                    padding: 0.4rem;
+                    font-size: 80%;
+                }
             }
         }
+    
+        section {
+            margin: 0;
+            padding: 0;
+            width: 100%; 
+            
+            h4 {
+                text-align: center;
+                text-transform: uppercase;
+                background: rgb(198, 10, 30);
+                color: rgb(255, 196, 0);
+                margin-top: 0;
+                margin-bottom: 0;
+                padding: 10px 0;
+                letter-spacing: 2px;
+                width: 105%;
+                font-size: 100%;                  
+            }
+        }
+    
+        dl:first-child {
+            border-top: none;
+        }
     }
-  }
+    
+    .buttons {
+        display: flex;
+        justify-content: center;
+    
+        input[type="button"] {
+            width: 6.2rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
+        }
+    
+        #nextBtn {
+            background: rgb(0, 123, 255);
+        }
+    
+        #submitBtn {
+            background: rgb(40, 167, 69);
+            display: none;
+        }
+    }
+}

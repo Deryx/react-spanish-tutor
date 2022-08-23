@@ -11,6 +11,8 @@ form#accents {
         width: 100%;
         background: none;
         border: none;
+        overflow-y: hidden;
+        height: 2.5rem;
 
         div {
             display: flex;
@@ -21,8 +23,8 @@ form#accents {
                 color: rgb(255, 255, 255);
                 border: none;
                 border-radius: 0.25rem;
-                min-width: 2.0rem;
-                min-height: 2.0rem;
+                width: 2.0rem;
+                height: 2.0rem;
                 margin: 0 10px;
             }
         }

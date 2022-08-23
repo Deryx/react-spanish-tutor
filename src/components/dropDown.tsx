@@ -8,7 +8,7 @@ function Dropdown( props: any ) {
                 <dd>
                     <select id={ props.id } name={ props.id }>
                         { props.options.map( ( option, i ) => 
-                            <option key={ i } value={ option }>{ option }</option>
+                            <option key={ i } value={ option.id }>{ option.value }</option>
                         )}
                     </select>
                 </dd>

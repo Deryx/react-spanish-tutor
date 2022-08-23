@@ -16,6 +16,7 @@ function Flashcard( { verbs, tenses } ) {
     for(const verb in verbs) {
         verbSelect.push( verbs[verb].infinitive );
     }
+    
     for(const tense in tenses) {
         tenseSelect.push( tenses[tense].tense );
     }
@@ -49,4 +50,5 @@ export async function getServerSideProps() {
         }
     }
 }
+
 export default Flashcard;
