@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/verbs/input": "pages/verbs/input.js",
-  "/vocabulary/input": "pages/vocabulary/input.js"
+  "/vocabulary/quiz": "pages/vocabulary/quiz.js",
+  "/": "pages/index.js"
 }

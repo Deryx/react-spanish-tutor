@@ -3,28 +3,45 @@ import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
 import Radiogroup from '/src/components/radioGroup.tsx';
+import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
 const prisma = new PrismaClient();
 
 function Quiz({ dictionary, categories }) {
-    const [questions, setQuestions] = useState( [] );
+    const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
 
-    const categorySelections = [];
-    const quizDictionary = [];
-    const dictionaryLength = dictionary.length;
     const numQuestions = 5;
     const numOptions = 5;
-    let options = [];
+    const categorySelections = [];
+    const quizDictionary = dictionary;
+    const dictionaryLength = dictionary.length;
 
-    useEffect( () => {    
-        setQuestions( generateRandomNumbers( numQuestions, dictionaryLength ) );
-    
-        let randomSpot;
+    const incrementQuestion = () => {
+        if( question <= question ) {
+            setQuestion( question + 1 );
+        }
+    }
+
+    useEffect(() => {
+        const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
-            options.push( generateRandomNumbers( numOptions - 1, dictionaryLength ) );
-            randomSpot = generateRandomNumbers( 1, 4 );
-            options[i].splice(randomSpot[0], 0, questions[i]);
+            let current = words[i];
+            let set = {};
+            let optionNumbers;
+            let randomSpot = randomNumberGenerator( 1, 5 );
+
+            set.question = quizDictionary[current].word;
+            set.answer = quizDictionary[current].translation;
+
+            set.options = [];
+            optionNumbers = randomNumberGenerator( numOptions - 1, dictionaryLength );
+            for(const option of optionNumbers) {
+                set.options.push( quizDictionary[option].translation );
+            }
+            set.options.splice( randomSpot, 0, set.answer );
+            
+            setQuestionSet( current => [...current, set] );
         }
     }, []);
 
@@ -36,22 +53,9 @@ function Quiz({ dictionary, categories }) {
             }
          );
     }
+
+    categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
     categorySelections.unshift({ id: '', category: 'all' });
-
-    for(const entry of dictionary) {
-        quizDictionary.push( 
-            { 
-                word: entry.word,
-                translation: entry.translation,
-                category: entry.category
-            }
-         );
-    }
-
-    function incrementQuestion() {
-        setQuestion( question + 1 );
-        console.log(question);
-    }
 
     return (
         <>
@@ -60,43 +64,42 @@ function Quiz({ dictionary, categories }) {
                 <h1>Vocabulary Quiz</h1>
                 <form id="quiz" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <dl>
-                            <dt><label htmlFor="categorySelect">category: </label></dt>
+                        <dl id='categorySelect'>
+                            <dt><label htmlFor="category">category: </label></dt>
                             <dd>
-                                <select id="categorySelect" name="categorySelect">
+                                <select id="category" name="category">
                                     { categorySelections.map( ( categorySelection, i ) => 
                                         <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
                                     )}
                                 </select>
                             </dd>
                         </dl>
-                        <section>
-                            <h2>{ questions[question] }</h2>
-                        </section> 
+                        <dl id="questions">
+                            <dt>
+                                <label htmlFor={ `q${ question }` }>
+                                    { questionSet[question] && questionSet[question].question }
+                                </label>
+                            </dt>
+                            <dd>
+                                { questionSet[question] && questionSet[question].options.map( option => 
+                                    <div>
+                                        <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
+                                        <label htmlFor={ `q${ question }` }> 
+                                            { option }
+                                        </label>
+                                    </div>
+                                )}
+                            </dd>
+                        </dl>
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        <button id="submitBtn" onClick={ incrementQuestion }>next</button>
+                        <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />
                     </div>
                 </form>
             </section>
             <Footer />
         </>
     )
-}
-
-function generateRandomNumbers( arrLength, maxNumber ) {
-    const numArray = [];
-    let index = 0;
-
-    while( index < arrLength ) {
-        let newNumber = Math.floor(( Math.random() * maxNumber ));
-        if( numArray.indexOf( newNumber ) === -1 ) {
-            numArray.push( newNumber );
-            index++;
-        }
-    }
-
-    return numArray;
 }
 
 export async function getServerSideProps() {

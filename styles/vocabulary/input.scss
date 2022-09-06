@@ -19,65 +19,83 @@ section {
         font-size: 175%;
     }
 
-    form#vocabulary {
-        font-family: 'Roboto', sans-serif;
+}
 
-        fieldset {
-            border-radius: 0.8rem;
-            padding: 1.2rem;
-            margin: 0 auto;
-            background:  rgb(255, 196, 0); 
-            
-            dl {
+form#vocabulary {
+    font-family: 'Roboto', sans-serif;
+
+    fieldset {
+        border-radius: 0.8rem;
+        padding: 1.2rem;
+        margin: 0 auto;
+        background:  rgb(255, 196, 0); 
+        
+        dl {
+            padding: 0;
+            padding-top: 0.4rem;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+                                                
+            dt {
+                margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
                 padding: 0;
-                padding-top: 0.4rem;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                                                  
-                dt {
-                    margin: 0;
-                    margin-top: 5px;
-                    margin-right: 10px;
-                    padding: 0;
-                    width: 30%;
-                    font-weight: bold;
-                    text-transform: capitalize;
-                    text-align: right;
-                    font-size: 90%;   
-                }
-
-                dd {
-                    margin: 0;
-                    padding: 0 0.5rem;
-                    width: 70%;  
-                    
-                    input {
-                        width: 95%;
-                        border: 1px solid rgb(255, 255, 255);
-                        border-radius: 0.3rem;
-                        padding: 0.4rem;
-                        font-size: 80%;
-                    }
-
-                    input[type='file'] {
-                        border: none;
-                    }
-
-                    select {
-                        font-size: 80%;
-                        padding: 0.4rem;
-                        border: 1px solid rgb(255, 255, 255);
-                        border-radius: 0.3rem;
-                    }
-                }
+                width: 30%;
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: right;
+                font-size: 90%;   
             }
 
-            dl:first-child {
-                padding-top: 1.0rem;
-                border-top: none;
+            dd {
+                margin: 0;
+                padding: 0 0.5rem;
+                width: 70%;  
+                
+                input {
+                    width: 95%;
+                    border: 1px solid rgb(255, 255, 255);
+                    border-radius: 0.3rem;
+                    padding: 0.4rem;
+                    font-size: 80%;
+                }
+
+                input[type='file'] {
+                    border: none;
+                }
+
+                select {
+                    font-size: 80%;
+                    padding: 0.4rem;
+                    border: 1px solid rgb(255, 255, 255);
+                    border-radius: 0.3rem;
+                }
             }
         }
+
+        dl:first-child {
+            padding-top: 1.0rem;
+            border-top: none;
+        }
     }
-  }
+        
+    .buttons {
+        display: flex;
+        justify-content: center;
+    
+        input[type="button"] {
+            width: 6.2rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
+        }
+    
+        #submitBtn {
+            background: rgb(40, 167, 69);
+        }
+    }
+}

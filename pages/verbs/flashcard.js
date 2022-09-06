@@ -21,9 +21,7 @@ function Flashcard( { verbs, tenses } ) {
             }
         );
     }
-    verbSelections.sort( ( a, b ) => {
-        return a.verb - b.verb 
-    })
+    verbSelections.sort((a, b) => a.verb > b.verb ? 1 : -1);
     
     for(const tense of tenses) {
         tenseSelections.push( 

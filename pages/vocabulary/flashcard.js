@@ -21,6 +21,7 @@ function Flashcard({ dictionary, categories }) {
             }
          );
     }
+    categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
     categorySelections.unshift({ id: '', category: 'all' });
 
     for(const entry in dictionary) {

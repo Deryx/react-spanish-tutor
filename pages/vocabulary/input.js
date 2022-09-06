@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
@@ -8,7 +9,19 @@ import Accents from '/src/components/accents.tsx';
 const prisma = new PrismaClient;
 
 function Input({ categories }) {
+    const [formValues, setFormValues] = useState({
+        category: '',
+        word: '',
+        translation: '',
+        gender: '',
+        image: '',
+        pronunciation: ''
+    });
     const categorySelections = [];
+
+    const handleOtherSelection = (e) => {
+        setFormValues({category: e.target.value });
+    }
 
     for(const category of categories) {
         categorySelections.push( 
@@ -18,6 +31,8 @@ function Input({ categories }) {
             }
          );
     }
+    categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
+    categorySelections.push({ id: 0, category: 'other'});
 
     return (
         <>
@@ -29,22 +44,25 @@ function Input({ categories }) {
                         <dl>
                             <dt><label htmlFor="categorySelect">category: </label></dt>
                             <dd>
-                                <select id="categorySelect" name="categorySelect">
+                                <select id="category" name="category" onChange={ handleOtherSelection }>
                                     { categorySelections.map( ( categorySelection, i ) => 
                                         <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
                                     )}
                                 </select>
                             </dd>
                         </dl>
-                        <Texinput id="newCategory" name="new category" className="col-lg-12" />
+                        { formValues.category === '0' && <Texinput id="newCategory" name="new category" className="col-lg-12" /> }
                         <Texinput id="word" name="word" className="col-lg-12" />
                         <Texinput id="translation" name="translation" className="col-lg-12" />
                         <Texinput id="gender" name="gender" className="col-lg-12" />
                         <Imageupload id="image" name="image" />
                         <Texinput id="pronunciation" name="pronunciation" className="col-lg-12" />
                     </fieldset>
+                    <Accents></Accents>
+                    <div className='buttons col-lg-12'>
+                        <input type="button" id="submitBtn" value="add verb" />
+                    </div>
                 </form>
-                <Accents></Accents>
             </section>
             <Footer />
         </>

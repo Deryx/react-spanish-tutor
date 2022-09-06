@@ -26,13 +26,13 @@ form#quiz {
         padding: 1.2rem 0;
         margin: 0 auto;
     
-        dl {
+        dl#categorySelect {
             padding: 0;
             padding-top: 0.85rem;
             width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: center;
                                             
             dt {
                 margin: 0;
@@ -49,7 +49,7 @@ form#quiz {
             dd {
                 margin: 0;
                 padding: 0 0.5rem;
-                width: 70%;    
+                width: 70%;
                 
                 select {
                     width: 50%;
@@ -59,6 +59,65 @@ form#quiz {
                     font-size: 80%;
                 }
             }
+        }
+
+        dl#questions {
+            padding: 0;
+            padding-top: 0.85rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+                                            
+            dt {
+                margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
+                padding: 0;
+                width: 100%;
+                font-weight: bold;
+                text-transform: lowercase;
+                text-align: center;
+                font-size: 90%;   
+            }
+    
+            dd {
+                margin: 0;
+                margin-top: 1.5rem;
+                padding: 0 0.5rem;
+                display: flex;
+                flex-direction: column; 
+                justify-content: center;
+
+                div {
+                    display: flex;
+                    flex: 1 1 50%;
+                    margin-left: 45%;
+
+                    input {
+                        margin-right: 0.5rem;
+                    }
+                }
+            }
+        }
+    
+    }
+
+    .buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    
+        input[type="button"] {
+            width: 6.2rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
+        }
+    
+        #submitBtn {
+            background: rgb(40, 167, 69);
         }
     }
 }
