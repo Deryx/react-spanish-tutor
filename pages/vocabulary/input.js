@@ -23,6 +23,11 @@ function Input({ categories }) {
         setFormValues({category: e.target.value });
     }
 
+    const handleAccent = ( event, ) => {
+        event.preventDefault();
+        let accent = event.target.value;
+    }
+
     for(const category of categories) {
         categorySelections.push( 
             {
@@ -36,7 +41,6 @@ function Input({ categories }) {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Vocabulary Input</h1>
                 <form id="vocabulary" className="col-xs-12 col-sm-10 col-md-8 col-lg-5">
@@ -58,7 +62,7 @@ function Input({ categories }) {
                         <Imageupload id="image" name="image" />
                         <Texinput id="pronunciation" name="pronunciation" className="col-lg-12" />
                     </fieldset>
-                    <Accents></Accents>
+                    <Accents handleAccentClick={ handleAccent }></Accents>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" value="add verb" />
                     </div>

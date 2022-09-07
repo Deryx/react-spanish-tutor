@@ -27,7 +27,6 @@ function Completion({ dictionary, categories }) {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Vocabulary Completion</h1>
                 <form className="col-xs-12 col-sm-8 col-lg-4">

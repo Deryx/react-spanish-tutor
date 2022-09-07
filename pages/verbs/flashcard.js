@@ -34,7 +34,6 @@ function Flashcard( { verbs, tenses } ) {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Verb Flashcard</h1>
                 <form id="verbFlashcard" className="col-xs-12 col-sm-8 col-lg-4">

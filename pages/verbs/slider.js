@@ -6,7 +6,6 @@ function Slider() {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Verb Slider</h1>
                 <form className="col-xs-12 col-sm-8 col-lg-4">

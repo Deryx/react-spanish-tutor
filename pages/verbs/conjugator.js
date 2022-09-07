@@ -8,7 +8,6 @@ function Conjugator() {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Verb Conjugator</h1>
                 <form id="conjugator" className="col-xs-12 col-sm-8 col-lg-4">

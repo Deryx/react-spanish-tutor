@@ -26,7 +26,6 @@ function Input({ tenses }) {
 
     return (
         <div>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Verb Input</h1>
                 <form id="verbs" className="col-xs-12 col-sm-8 col-lg-5">

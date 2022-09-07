@@ -36,7 +36,6 @@ function Flashcard({ dictionary, categories }) {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Vocabulary Flashcard</h1>
                 <form id="vocabularyFlashcard" className="col-xs-12 col-sm-8 col-lg-4">

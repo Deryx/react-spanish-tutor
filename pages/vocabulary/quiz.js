@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
-import Radiogroup from '/src/components/radioGroup.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
 const prisma = new PrismaClient();
@@ -40,7 +39,7 @@ function Quiz({ dictionary, categories }) {
                 set.options.push( quizDictionary[option].translation );
             }
             set.options.splice( randomSpot, 0, set.answer );
-            
+
             setQuestionSet( current => [...current, set] );
         }
     }, []);
@@ -59,7 +58,6 @@ function Quiz({ dictionary, categories }) {
 
     return (
         <>
-            <Siteheader />
             <section className='pageContainer'>
                 <h1>Vocabulary Quiz</h1>
                 <form id="quiz" className="col-xs-12 col-sm-8 col-lg-4">
