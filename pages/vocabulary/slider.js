@@ -7,13 +7,14 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Slider({ dictionary, categories }) {
-    const [questionSet, setQuestionSet] = useState( [] );
+    const [brickSets, setBrickSets] = useState( [] );
+    const [slideSets, setSlideSets] = useState( [] );
     const [question, setQuestion] = useState( 0 );
 
     const numQuestions = 5;
     const numOptions = 5;
     const categorySelections = [];
-    const scrambleDictionary = dictionary;
+    const sliderDictionary = dictionary;
     const dictionaryLength = dictionary.length;
 
     const incrementQuestion = () => {
@@ -23,17 +24,23 @@ function Slider({ dictionary, categories }) {
     }
 
     useEffect(() => {
-        const words = randomNumberGenerator( numQuestions, dictionaryLength );
-        for(let i = 0; i < numQuestions; i++) {
-            let current = words[i];
-            let set = {};
-            let optionNumbers;
-            let randomSpot = randomNumberGenerator( 1, 5 );
-
-            set.question = scrambleDictionary[current].translation;
-            set.answer = scrambleDictionary[current].word;
-
-            setQuestionSet( current => [...current, set] );
+        const slideSets = [];
+        for(let i = 0; i < numOptions; i++) {
+            slideSets.push( randomNumberGenerator( numQuestions, dictionaryLength ) );
+        }
+        for( const slideSet of slideSets ) {
+            let scrambledSlides = randomNumberGenerator( slideSet.length, slideSet.length );
+            let currentBrickSet = [];
+            let currentSlideSet = [];
+            for( const slide of slideSet) {
+                currentBrickSet = [...currentBrickSet, <div>{ sliderDictionary[slide].word }</div>];
+            }
+            setBrickSets( prev => [...prev, currentBrickSet]);
+            for( const scrambledSlide of scrambledSlides ) {
+                let currentSlide = slideSet[scrambledSlide];
+                currentSlideSet = [...currentSlideSet, <div>{ sliderDictionary[currentSlide].translation }</div>];
+            }
+            setSlideSets( prev => [...prev, currentSlideSet]);
         }
     }, []);
 
@@ -65,23 +72,14 @@ function Slider({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        <dl id="questions">
-                            <dt>
-                                <label htmlFor={ `q${ question }` }>
-                                    { questionSet[question] && questionSet[question].question }
-                                </label>
-                            </dt>
-                            {/* <dd>
-                                { questionSet[question] && questionSet[question].options.map( option => 
-                                    <div>
-                                        <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
-                                        <label htmlFor={ `q${ question }` }> 
-                                            { option }
-                                        </label>
-                                    </div>
-                                )}
-                            </dd> */}
-                        </dl>
+                        <div id="questions">
+                            <div className='bricks'>
+                                { brickSets[question] }
+                            </div>
+                            <div className='slides'>
+                                { slideSets[question] }
+                            </div>
+                        </div>
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />

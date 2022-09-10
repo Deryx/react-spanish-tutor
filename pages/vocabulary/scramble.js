@@ -11,7 +11,6 @@ function Scramble({ dictionary, categories }) {
     const [question, setQuestion] = useState( 0 );
 
     const numQuestions = 5;
-    const numOptions = 5;
     const categorySelections = [];
     const scrambleDictionary = dictionary;
     const dictionaryLength = dictionary.length;
@@ -26,12 +25,14 @@ function Scramble({ dictionary, categories }) {
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
+            let currentWord = scrambleDictionary[current].word;
             let set = {};
-            let optionNumbers;
-            let randomSpot = randomNumberGenerator( 1, 5 );
 
-            set.question = scrambleDictionary[current].translation;
-            set.answer = scrambleDictionary[current].word;
+            let currentArray = currentWord.split( '' );
+            let scrambledArray = randomNumberGenerator( currentWord.length, currentWord.length );
+            let scrambledWord = scrambledArray.map( element => currentArray[element]);
+            set.question = scrambledWord;
+            set.answer = currentWord;
 
             setQuestionSet( current => [...current, set] );
         }
