@@ -30,7 +30,7 @@ function Scramble({ dictionary, categories }) {
 
             let currentArray = currentWord.split( '' );
             let scrambledArray = randomNumberGenerator( currentWord.length, currentWord.length );
-            let scrambledWord = scrambledArray.map( element => currentArray[element]);
+            let scrambledWord = scrambledArray.map( element => <div>{ currentArray[element] }</div>);
             set.question = scrambledWord;
             set.answer = currentWord;
 
@@ -66,23 +66,9 @@ function Scramble({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        <dl id="questions">
-                            <dt>
-                                <label htmlFor={ `q${ question }` }>
-                                    { questionSet[question] && questionSet[question].question }
-                                </label>
-                            </dt>
-                            {/* <dd>
-                                { questionSet[question] && questionSet[question].options.map( option => 
-                                    <div>
-                                        <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
-                                        <label htmlFor={ `q${ question }` }> 
-                                            { option }
-                                        </label>
-                                    </div>
-                                )}
-                            </dd> */}
-                        </dl>
+                        <div id="questions">
+                            { questionSet[question] && questionSet[question].question }
+                        </div>
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />
