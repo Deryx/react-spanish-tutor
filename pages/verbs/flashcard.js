@@ -74,7 +74,7 @@ export async function getServerSideProps() {
     return {
         props: {
             verbs: allVerbs,
-            tenses: allTenses
+            tenses: allTenses,
         }
     }
 }

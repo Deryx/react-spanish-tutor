@@ -64,7 +64,7 @@ function Input({ categories }) {
                     </fieldset>
                     <Accents handleAccentClick={ handleAccent }></Accents>
                     <div className='buttons col-lg-12'>
-                        <input type="button" id="submitBtn" value="add verb" />
+                        <input type="button" id="submitBtn" value="add word" />
                     </div>
                 </form>
             </section>

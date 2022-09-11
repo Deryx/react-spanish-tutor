@@ -76,8 +76,8 @@ form#slider {
                 margin: 0 0.5rem;
 
                 div {
-                    min-width: 10rem;
-                    margin: 0.5rem 0;
+                    width: 15rem;
+                    margin: 0.0625rem 0;
                     padding: 0.5rem;
                     text-align: center;
                     background: rgb(198, 10, 30);
@@ -89,11 +89,11 @@ form#slider {
                 display: flex;
                 flex-direction: column;
                 flex-basis: 1 1 0;
-                margin: 0 0.5rem;
+                margin: 0 0.0625rem;
 
                 div {
-                    min-width: 10rem;
-                    margin: 0.5rem 0;
+                    width: 15rem;
+                    margin: 0.0625rem 0;
                     padding: 0.5rem;
                     text-align: center;
                     color: rgb(198, 10, 30);

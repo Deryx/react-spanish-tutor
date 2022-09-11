@@ -17,12 +17,6 @@ function Slider({ dictionary, categories }) {
     const sliderDictionary = dictionary;
     const dictionaryLength = dictionary.length;
 
-    const incrementQuestion = () => {
-        if( question <= question ) {
-            setQuestion( question + 1 );
-        }
-    }
-
     useEffect(() => {
         const slideSets = [];
         for(let i = 0; i < numOptions; i++) {
@@ -33,16 +27,22 @@ function Slider({ dictionary, categories }) {
             let currentBrickSet = [];
             let currentSlideSet = [];
             for( const slide of slideSet) {
-                currentBrickSet = [...currentBrickSet, <div>{ sliderDictionary[slide].word }</div>];
+                currentBrickSet = [...currentBrickSet, sliderDictionary[slide].word];
             }
             setBrickSets( prev => [...prev, currentBrickSet]);
             for( const scrambledSlide of scrambledSlides ) {
                 let currentSlide = slideSet[scrambledSlide];
-                currentSlideSet = [...currentSlideSet, <div>{ sliderDictionary[currentSlide].translation }</div>];
+                currentSlideSet = [...currentSlideSet, sliderDictionary[currentSlide].translation];
             }
             setSlideSets( prev => [...prev, currentSlideSet]);
         }
     }, []);
+
+    const incrementQuestion = () => {
+        if( question <= question ) {
+            setQuestion( question + 1 );
+        }
+    }
 
     for(const category of categories) {
         categorySelections.push( 
@@ -55,6 +55,9 @@ function Slider({ dictionary, categories }) {
 
     categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
     categorySelections.unshift({ id: '', category: 'all' });
+
+    const currentBrickSet = brickSets && brickSets[question];
+    const currentSlideSet = slideSets && slideSets[question];
 
     return (
         <>
@@ -74,10 +77,18 @@ function Slider({ dictionary, categories }) {
                         </dl>
                         <div id="questions">
                             <div className='bricks'>
-                                { brickSets[question] }
+                                {
+                                    currentBrickSet && currentBrickSet.map( ( brickSet, index ) => 
+                                        <div key={ index }>{ brickSet }</div>
+                                    )
+                                }
                             </div>
                             <div className='slides'>
-                                { slideSets[question] }
+                                {
+                                    currentSlideSet && currentSlideSet.map( ( slideSet, index ) => 
+                                        <div key={ index }>{ slideSet }</div>
+                                    )
+                                }
                             </div>
                         </div>
                     </fieldset>
