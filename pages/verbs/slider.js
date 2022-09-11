@@ -12,7 +12,9 @@ function Slider( { verbs, tenses, conjugations } ) {
     const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
     const [question, setQuestion] = useState( 0 );
     const [infinitives, setInfinitives] = useState( [] );
-    const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length ).map( (element) => element + 1 ) );
+    const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length )
+                                                .map( (element) => element + 1 ) 
+                                            );
     const [slideSets, setSlideSets] = useState( [] );
 
     useEffect( () => {

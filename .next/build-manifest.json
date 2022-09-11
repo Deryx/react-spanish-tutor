@@ -30,11 +30,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/verbs/conjugator": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/verbs/conjugator.js"
-    ],
     "/verbs/flashcard": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -44,11 +39,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/verbs/slider.js"
-    ],
-    "/vocabulary/slider": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/slider.js"
     ]
   },
   "ampFirstPages": []
