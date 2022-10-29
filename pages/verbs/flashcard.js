@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
@@ -7,6 +8,8 @@ import Card from '/src/components/card.tsx';
 const prisma = new PrismaClient();
 
 function Flashcard( { verbs, tenses } ) {
+    const cardRef = useRef(null);
+
     const verbSelections = [];
     const tenseSelections = [];
     const headerFront = 'Front';
@@ -30,6 +33,13 @@ function Flashcard( { verbs, tenses } ) {
                 tense: tense.tense
             } 
         );
+    }
+
+
+    const incrementQuestion = () => {
+        if( question <= question ) {
+            setQuestion( question + 1 );
+        }
     }
 
     return (
@@ -58,9 +68,12 @@ function Flashcard( { verbs, tenses } ) {
                                 </select>
                             </dd>
                         </dl>
-                        <Card header={ headerFront } info={ info } />
-                        {/* <Card header={ headerBack } info={ info } /> */}
+                        <Card ref={ cardRef } frontHeader={ headerFront } backHeader={ headerBack } frontInfo={ info } backInfo={ info } />
                     </fieldset>
+                    <div className='buttons col-lg-12'>
+                        <input type="button" id="flipBtn" value="flip card" />
+                        <input type="button" id="nextBtn" onClick={ incrementQuestion } value="next" />
+                    </div>
                 </form>
             </section>
             <Footer />

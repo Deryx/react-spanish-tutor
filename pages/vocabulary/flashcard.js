@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef, useImperativeHandle } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
@@ -7,11 +8,40 @@ import Card from '/src/components/card.tsx';
 const prisma = new PrismaClient;
 
 function Flashcard({ dictionary, categories }) {
+    const cardRef = useRef( null );
+    // const card = cardRef.current && cardRef.current;
+
     const headerFront = 'Front';
     const headerBack = 'Back';
     const info = '';
     const categorySelections = [];
     const quizDictionary = [];
+
+    const flipCard = () => {
+        cardRef.current.classList.toggle( 'flipCard' );
+    }
+
+    const handleClick = () => {
+        cardRef.current.addEventListener('click', flipCard);
+
+        return () => {
+            cardRef.current.removeEventListener('click', flipCard);
+        }
+    }
+
+    // useEffect( () => {
+    //     if (card) {
+    //         card.addEventListener( 'click', flipCard );
+
+    //         const flipCard = () => {
+    //             card.classList.toggle( 'flipCard' );
+    //         }
+
+    //         return () => {
+    //             card.removeEventListener( 'click', flipCard );
+    //         };
+    //     }
+    // }, [ card ]);
 
     for(const category of categories) {
         categorySelections.push( 
@@ -34,6 +64,12 @@ function Flashcard({ dictionary, categories }) {
          );
     }
 
+    const incrementQuestion = () => {
+        if( question <= question ) {
+            setQuestion( question + 1 );
+        }
+    }
+
     return (
         <>
             <section className='pageContainer'>
@@ -50,9 +86,12 @@ function Flashcard({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        <Card header={ headerFront } info={ info } />
-                        {/* <Card header={ headerBack } info={ info } /> */}
+                        <Card ref={ cardRef } frontHeader={ headerFront } backHeader={ headerBack } frontInfo={ info } backInfo={ info } />
                     </fieldset>
+                    <div className='buttons col-lg-12'>
+                        <input type="button" id="flipBtn" onClick={ handleClick } value="flip card" />
+                        <input type="button" id="nextBtn" onClick={ incrementQuestion } value="next" />
+                    </div>
                 </form>
             </section>
             <Footer />

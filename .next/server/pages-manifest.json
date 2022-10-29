@@ -2,6 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/verbs/slider": "pages/verbs/slider.js"
+  "/vocabulary/slider": "pages/vocabulary/slider.js",
+  "/verbs/flashcard": "pages/verbs/flashcard.js",
+  "/verbs/conjugator": "pages/verbs/conjugator.js",
+  "/": "pages/index.js"
 }

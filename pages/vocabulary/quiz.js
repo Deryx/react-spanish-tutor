@@ -22,6 +22,20 @@ function Quiz({ dictionary, categories }) {
         }
     }
 
+    const createCategorySelect = () => {
+        for(const category of categories) {
+            categorySelections.push( 
+                {
+                    id: category.id,
+                    category: category.category
+                }
+             );
+        }
+    
+        categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
+        categorySelections.unshift({ id: '', category: 'all' });
+    }
+
     useEffect(() => {
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
@@ -44,17 +58,7 @@ function Quiz({ dictionary, categories }) {
         }
     }, []);
 
-    for(const category of categories) {
-        categorySelections.push( 
-            {
-                id: category.id,
-                category: category.category
-            }
-         );
-    }
-
-    categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
-    categorySelections.unshift({ id: '', category: 'all' });
+    createCategorySelect();
 
     return (
         <>

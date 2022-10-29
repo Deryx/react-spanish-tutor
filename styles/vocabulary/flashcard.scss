@@ -1,8 +1,15 @@
 form#vocabularyFlashcard {
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
 
     fieldset {
         background: none;
+
+        .mainContainer {
+            top: 55%;
+            left: 50%;    
+        }
     }
 
     dl {
@@ -35,6 +42,30 @@ form#vocabularyFlashcard {
                 padding: 0.4rem;
                 font-size: 80%;
             }
+        }
+    }
+
+    .buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 70%;
+    
+        input[type="button"] {
+            width: 6.2rem;
+            margin: 0.75rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
+        }
+
+        #flipBtn {
+            background: rgb(0, 123, 255);
+        }
+    
+        #nextBtn {
+            background: rgb(40, 167, 69);
         }
     }
 }

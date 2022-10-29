@@ -17,6 +17,26 @@ function Slider({ dictionary, categories }) {
     const sliderDictionary = dictionary;
     const dictionaryLength = dictionary.length;
 
+    const incrementQuestion = () => {
+        if( question <= question ) {
+            setQuestion( question + 1 );
+        }
+    }
+
+    const createCategorySelect = () => {
+        for(const category of categories) {
+            categorySelections.push( 
+                {
+                    id: category.id,
+                    category: category.category
+                }
+             );
+        }
+    
+        categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
+        categorySelections.unshift({ id: '', category: 'all' });
+    }
+
     useEffect(() => {
         const slideSets = [];
         for(let i = 0; i < numOptions; i++) {
@@ -38,23 +58,7 @@ function Slider({ dictionary, categories }) {
         }
     }, []);
 
-    const incrementQuestion = () => {
-        if( question <= question ) {
-            setQuestion( question + 1 );
-        }
-    }
-
-    for(const category of categories) {
-        categorySelections.push( 
-            {
-                id: category.id,
-                category: category.category
-            }
-         );
-    }
-
-    categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
-    categorySelections.unshift({ id: '', category: 'all' });
+    createCategorySelect();
 
     const currentBrickSet = brickSets && brickSets[question];
     const currentSlideSet = slideSets && slideSets[question];

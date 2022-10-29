@@ -18,54 +18,89 @@ section {
         font-weight: normal;
         font-size: 175%;
     }
+}
 
-    form#conjugator {
-        font-family: 'Roboto', sans-serif;
-        margin-bottom: 1.5rem;
-        fieldset {
-            border-radius: 0.8rem;
-            padding: 1.2rem;
-            margin: 0 auto;
-            background:  rgb(255, 196, 0);
-        
-            dl {
+form#conjugator {
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 1.5rem;
+    
+    h2 {
+        color: rgb(198, 10, 30);
+        font-weight: bold;
+        text-align: center;
+    }
+
+    h4 {
+        color: rgb(198, 10, 30);
+        text-align: center;
+    }
+
+    h5 {
+        text-align: center;
+        margin-bottom: 2.0rem;
+        font-weight: bold;
+    }
+
+    fieldset {
+        border-radius: 0.8rem;
+        padding: 1.2rem;
+        margin: 0 auto;
+        background:  rgb(255, 196, 0);
+    
+        dl {
+            padding: 0;
+            padding-top: 0.85rem;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+                                            
+            dt {
+                margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
                 padding: 0;
-                padding-top: 0.85rem;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                                                
-                dt {
-                    margin: 0;
-                    margin-top: 5px;
-                    margin-right: 10px;
-                    padding: 0;
-                    width: 30%;
-                    font-weight: bold;
-                    text-transform: capitalize;
-                    text-align: right;
-                    font-size: 90%;   
-                }
-        
-                dd {
-                    margin: 0;
-                    padding: 0 0.5rem;
-                    width: 70%;    
-                    
-                    input {
-                        width: 95%;
-                        border: 1px solid rgb(255, 255, 255);
-                        border-radius: 0.3rem;
-                        padding: 0.4rem;
-                        font-size: 80%;
-                    }
+                width: 30%;
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: right;
+                font-size: 90%;   
+            }
+    
+            dd {
+                margin: 0;
+                padding: 0 0.5rem;
+                width: 70%;    
+                
+                input {
+                    width: 95%;
+                    border: 1px solid rgb(255, 255, 255);
+                    border-radius: 0.3rem;
+                    padding: 0.4rem;
+                    font-size: 80%;
                 }
             }
-        
-            dl:first-child {
-                border-top: none;
-            }
+        }
+    
+        dl:first-child {
+            border-top: none;
+        }
+    }
+    
+    .buttons {
+        display: flex;
+        justify-content: center;
+    
+        input[type="button"] {
+            width: 6.2rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
+        }
+    
+        #submitBtn {
+            background: rgb(40, 167, 69);
         }
     }
 }

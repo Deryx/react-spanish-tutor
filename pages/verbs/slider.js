@@ -12,14 +12,13 @@ function Slider( { verbs, tenses, conjugations } ) {
     const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
     const [question, setQuestion] = useState( 0 );
     const [infinitives, setInfinitives] = useState( [] );
-    const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length )
-                                                .map( (element) => element + 1 ) 
-                                            );
+    const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length ).map( (element) => element + 1 ) );
     const [slideSets, setSlideSets] = useState( [] );
 
     useEffect( () => {
         const randomIndices = randomNumberGenerator( numQuestions, verbs.length );
         const randomOrder = randomNumberGenerator( numQuestions, tenses.length );
+    
         let verbIds = [];
         let slideSet = [];
         let scrambledSet = [];
@@ -59,7 +58,7 @@ function Slider( { verbs, tenses, conjugations } ) {
                 <form id="slider" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
                         <section>
-                            <h2>{ infinitives && infinitives[question]  }</h2>
+                            <h2>[ { infinitives && infinitives[question]  } ]</h2>
                             <h4>{ currentTense } tense</h4>
                         </section>
                         <div id="questions">

@@ -1,40 +1,72 @@
 form#verbFlashcard {
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
 
     fieldset {
         background: none;
+
+        .mainContainer {
+            top: 60%;
+            left: 50%;    
+        }
+
+        dl {
+            padding: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+    
+            dt {
+                margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
+                padding: 0;
+                width: 30%;
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: right;
+                font-size: 90%;   
+            }
+    
+            dd {
+                margin: 0;
+                padding: 0 0.5rem;
+                width: 70%;    
+                
+                select {
+                    width: 50%;
+                    border: 1px solid rgb(112, 128, 144);
+                    border-radius: 0.3rem;
+                    padding: 0.4rem;
+                    font-size: 80%;
+                }
+            }
+        } 
     }
 
-    dl {
-        padding: 0;
+    .buttons {
         width: 100%;
         display: flex;
         justify-content: center;
+        margin-top: 70%;
 
-        dt {
-            margin: 0;
-            margin-top: 5px;
-            margin-right: 10px;
-            padding: 0;
-            width: 30%;
-            font-weight: bold;
-            text-transform: capitalize;
-            text-align: right;
-            font-size: 90%;   
+    
+        input[type="button"] {
+            margin: 0.75rem;
+            width: 6.2rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
         }
 
-        dd {
-            margin: 0;
-            padding: 0 0.5rem;
-            width: 70%;    
-            
-            select {
-                width: 50%;
-                border: 1px solid rgb(112, 128, 144);
-                border-radius: 0.3rem;
-                padding: 0.4rem;
-                font-size: 80%;
-            }
+        #flipBtn {
+            background: rgb(0, 123, 255);
+        }
+    
+        #nextBtn {
+            background: rgb(40, 167, 69);
         }
     }
 }
