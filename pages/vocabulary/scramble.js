@@ -40,12 +40,14 @@ function Scramble({ dictionary, categories }) {
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
             let currentWord = scrambleDictionary[current].word;
+            let currentTranslation = scrambleDictionary[current].translation;
             let set = {};
 
             let currentArray = currentWord.split( '' );
             let scrambledArray = randomNumberGenerator( currentWord.length, currentWord.length );
-            let scrambledWord = scrambledArray.map( element => <div>{ currentArray[element] }</div>);
+            let scrambledWord = scrambledArray.map( element => currentArray[element] );
             set.question = scrambledWord;
+            set.translation = currentTranslation;
             set.answer = currentWord;
 
             setQuestionSet( current => [...current, set] );
@@ -70,9 +72,16 @@ function Scramble({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        <div id="questions">
-                            { questionSet[question] && questionSet[question].question }
-                        </div>
+                        <dl id="questions">
+                            <dt>
+                                <h2>[ { questionSet[question] && questionSet[question].translation } ]</h2>
+                            </dt>
+                            <dd>
+                                { questionSet[question] && questionSet[question].question.map( letter =>
+                                    <div>{ letter }</div>
+                                ) }
+                            </dd>
+                        </dl>
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />

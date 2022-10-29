@@ -89,13 +89,22 @@ form#completion {
                 flex-direction: column; 
                 justify-content: center;
 
-                div {
+                ul {
+                    margin: 0;
+                    padding: 0;
                     display: flex;
-                    flex: 1 1 50%;
-                    margin-left: 45%;
+                    flex-direction: row;
+                    justify-content: center;
+                    
+                    li {
+                        margin: 0.35rem;
+                        list-style: none;
 
-                    input {
-                        margin-right: 0.5rem;
+                        input {
+                            width: 2.0rem;
+                            height: 2.0rem;
+                            text-align: center;
+                        }
                     }
                 }
             }

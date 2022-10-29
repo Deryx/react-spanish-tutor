@@ -30,20 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/verbs/conjugator": [
+    "/vocabulary/completion": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/verbs/conjugator.js"
-    ],
-    "/verbs/flashcard": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/verbs/flashcard.js"
-    ],
-    "/vocabulary/slider": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/slider.js"
+      "static/chunks/pages/vocabulary/completion.js"
     ]
   },
   "ampFirstPages": []

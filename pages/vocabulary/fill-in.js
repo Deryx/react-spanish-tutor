@@ -72,20 +72,13 @@ function Fillin({ dictionary, categories }) {
                         </dl>
                         <dl id="questions">
                             <dt>
-                                <label htmlFor={ `q${ question }` }>
-                                    { questionSet[question] && questionSet[question].question }
-                                </label>
+                                <h2>
+                                    [ { questionSet[question] && questionSet[question].question } ]
+                                </h2>
                             </dt>
-                            {/* <dd>
-                                { questionSet[question] && questionSet[question].options.map( option => 
-                                    <div>
-                                        <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
-                                        <label htmlFor={ `q${ question }` }> 
-                                            { option }
-                                        </label>
-                                    </div>
-                                )}
-                            </dd> */}
+                            <dd>
+                                <input />
+                            </dd>
                         </dl>
                     </fieldset>
                     <Accents></Accents>

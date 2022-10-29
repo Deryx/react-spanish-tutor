@@ -9,6 +9,7 @@ function Completion({ dictionary, categories }) {
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
 
+    const BLANK = ' ';
     const numQuestions = 5;
     const numOptions = 5;
     const categorySelections = [];
@@ -39,11 +40,18 @@ function Completion({ dictionary, categories }) {
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
+            let currentWord = completionDictionary[current].word.split('');
+            let currentLength = currentWord.length;
+            let numberBlanks = Math.ceil( currentLength / 2 );
+            let blanksArray = randomNumberGenerator( numberBlanks, currentLength );
+            for(const index of blanksArray) {
+                currentWord[index] = BLANK;
+            }
             let set = {};
             let optionNumbers;
-            let randomSpot = randomNumberGenerator( 1, 5 );
 
-            set.question = completionDictionary[current].translation;
+            set.question = currentWord.join('');
+            set.translation = completionDictionary[current].translation;
             set.answer = completionDictionary[current].word;
 
             setQuestionSet( current => [...current, set] );
@@ -69,7 +77,16 @@ function Completion({ dictionary, categories }) {
                             </dd>
                         </dl>
                         <dl id="questions">
-
+                            <dt>
+                                <h2>[ { questionSet[question] && questionSet[question].translation } ]</h2>
+                            </dt>
+                            <dd>
+                                <ul>
+                                    { questionSet[question] && questionSet[question].question.split('').map( (letter, index) => 
+                                        <li key={ index }><input value={ letter } disabled={ letter !== BLANK } /></li>
+                                    ) }
+                                </ul>
+                            </dd>
                         </dl>
                     </fieldset>
                     <Accents></Accents>
