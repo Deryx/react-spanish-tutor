@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PrismaClient } from '@prisma/client';
-import Siteheader from '/src/components/siteHeader.tsx';
-import Footer from '/src/components/footer.tsx';
+import Modal from '/src/components/modal.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
 const prisma = new PrismaClient();
@@ -14,6 +13,7 @@ function Slider( { verbs, tenses, conjugations } ) {
     const [infinitives, setInfinitives] = useState( [] );
     const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length ).map( (element) => element + 1 ) );
     const [slideSets, setSlideSets] = useState( [] );
+    const [showModal, setShowModal] = useState( false );
 
     useEffect( () => {
         const randomIndices = randomNumberGenerator( numQuestions, verbs.length );
@@ -43,9 +43,11 @@ function Slider( { verbs, tenses, conjugations } ) {
     }, []);
 
     const incrementQuestion = () => {
-        if( question <= question ) {
-            setQuestion( question + 1 );
-        }
+        if( question < numQuestions ) {
+            setQuestion( ++question );
+        } 
+        
+        question === numQuestions && setShowModal( showModal => showModal = !showModal );
     }
     
     const currentTense = tenses && tenses.filter( tense => tense.id === randomTenses[question] )[0].tense;
@@ -54,6 +56,7 @@ function Slider( { verbs, tenses, conjugations } ) {
     return (
         <>
             <section className='pageContainer'>
+                { showModal === true ? <Modal /> : null }
                 <h1>Verb Slider</h1>
                 <form id="slider" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
@@ -79,7 +82,7 @@ function Slider( { verbs, tenses, conjugations } ) {
                         </div>
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />
+                        { currentSlideSet && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>

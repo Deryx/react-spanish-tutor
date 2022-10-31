@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Modal from '/src/components/modal.tsx';
 import Accents from '/src/components/accents.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
@@ -8,6 +9,7 @@ const prisma = new PrismaClient();
 function Completion({ dictionary, categories }) {
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
+    const [showModal, setShowModal] = useState( false );
 
     const BLANK = ' ';
     const numQuestions = 5;
@@ -17,9 +19,11 @@ function Completion({ dictionary, categories }) {
     const dictionaryLength = dictionary.length;
 
     const incrementQuestion = () => {
-        if( question <= question ) {
-            setQuestion( question + 1 );
-        }
+        if( question < numQuestions ) {
+            setQuestion( ++question );
+        } 
+        
+        question === numQuestions && setShowModal( showModal => showModal = !showModal );
     }
 
     const createCategorySelect = () => {
@@ -63,6 +67,7 @@ function Completion({ dictionary, categories }) {
     return (
         <>
             <section className='pageContainer'>
+                { showModal === true ? <Modal /> : null }
                 <h1>Vocabulary Completion</h1>
                 <form id="completion" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
@@ -89,9 +94,9 @@ function Completion({ dictionary, categories }) {
                             </dd>
                         </dl>
                     </fieldset>
-                    <Accents></Accents>
+                    { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
-                        <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />
+                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>

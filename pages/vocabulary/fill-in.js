@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PrismaClient } from '@prisma/client';
-import Siteheader from '/src/components/siteHeader.tsx';
-import Footer from '/src/components/footer.tsx';
+import Modal from '/src/components/modal.tsx';
 import Accents from '/src/components/accents.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
@@ -10,6 +9,7 @@ const prisma = new PrismaClient();
 function Fillin({ dictionary, categories }) {
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
+    const [showModal, setShowModal] = useState( false );
 
     const numQuestions = 5;
     const numOptions = 5;
@@ -18,9 +18,11 @@ function Fillin({ dictionary, categories }) {
     const dictionaryLength = dictionary.length;
 
     const incrementQuestion = () => {
-        if( question <= question ) {
-            setQuestion( question + 1 );
-        }
+        if( question < numQuestions ) {
+            setQuestion( ++question );
+        } 
+        
+        question === numQuestions && setShowModal( showModal => showModal = !showModal );
     }
 
     const createCategorySelect = () => {
@@ -57,6 +59,7 @@ function Fillin({ dictionary, categories }) {
     return (
         <>
             <section className='pageContainer'>
+                { showModal === true ? <Modal /> : null }
                 <h1>Vocabulary Fill-in</h1>
                 <form id="fillin" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
@@ -81,9 +84,9 @@ function Fillin({ dictionary, categories }) {
                             </dd>
                         </dl>
                     </fieldset>
-                    <Accents></Accents>
+                    { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
-                        <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />
+                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>

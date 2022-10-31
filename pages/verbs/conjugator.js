@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { PrismaClient } from '@prisma/client';
-import Siteheader from '/src/components/siteHeader.tsx';
-import Footer from '/src/components/footer.tsx';
+import Modal from '/src/components/modal.tsx';
 import Textinput from '/src/components/textInput.tsx';
 import Accents from '/src/components/accents.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
@@ -17,6 +16,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
     const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length )
                                                 .map( (element) => element + 1 ) 
                                             );
+    const [showModal, setShowModal] = useState( false );
 
     useEffect( () => {
         const randomIndices = randomNumberGenerator( numQuestions, verbs.length );
@@ -34,15 +34,18 @@ function Conjugator( { verbs, tenses, conjugations } ) {
     }, [] );
 
     const incrementQuestion = () => {
-        if( question <= question ) {
-            setQuestion( question + 1 );
-        }
+        if( question < numQuestions ) {
+            setQuestion( ++question );
+        } 
+        
+        question === numQuestions && setShowModal( showModal => showModal = !showModal );
     }
     const currentTense = tenses && tenses.filter( tense => tense.id === randomTenses[question] )[0].tense;
 
     return (
         <>
             <section className='pageContainer'>
+                { showModal === true ? <Modal /> : null }
                 <h1>Verb Conjugator</h1>
                 <form id="conjugator" className="col-xs-12 col-sm-8 col-lg-4">
                     <h2>[ { infinitives && infinitives[question]  } ]</h2>
@@ -57,9 +60,9 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                         <Textinput id="vosotros" name="vosotros" className="col-lg-12" />
                         <Textinput id="ellos" name="ellos/Ellas/Ustedes" className="col-lg-12" />
                     </fieldset>
-                    <Accents></Accents>
+                    { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
-                        <input type="button" id="submitBtn" onClick={ incrementQuestion } value="next" />
+                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>

@@ -15,6 +15,7 @@ import '/styles/verbs/flashcard.scss';
 import '/styles/verbs/slider.scss';
 import '/styles/common/accents.scss';
 import '/styles/common/card.scss';
+import '/styles/common/modal.scss';
 
 export default function MyApp({ Component, pageProps }) {
     return (
