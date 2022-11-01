@@ -6,16 +6,16 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Slider({ dictionary, categories }) {
+    const [numQuestions, setNumQuestions] = useState();
+    const [category, setCategory] = useState();
     const [brickSets, setBrickSets] = useState( [] );
     const [slideSets, setSlideSets] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
 
-    const numQuestions = 5;
     const numOptions = 5;
     const categorySelections = [];
-    const sliderDictionary = dictionary;
-    const dictionaryLength = dictionary.length;
+    let sliderDictionary = [];
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -39,8 +39,18 @@ function Slider({ dictionary, categories }) {
         categorySelections.unshift({ id: '', category: 'all' });
     }
 
+    const handleNumQuestionsChange = () => {
+        setNumQuestions( parseInt( event.target.value ));
+    }
+
+    const handleCategoryChange = () => {
+        setCategory( parseInt( event.target.value ));
+    }
+
     useEffect(() => {
+        sliderDictionary = [...dictionary.filter( word => word.category === category )];
         const slideSets = [];
+        const dictionaryLength = sliderDictionary.length;
         for(let i = 0; i < numOptions; i++) {
             slideSets.push( randomNumberGenerator( numQuestions, dictionaryLength ) );
         }
@@ -104,7 +114,6 @@ function Slider({ dictionary, categories }) {
                     </div>
                 </form>
             </section>
-            <Footer />
         </>
     )
 }

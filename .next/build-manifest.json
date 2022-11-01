@@ -30,10 +30,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/vocabulary/input": [
+    "/verbs/slider": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/input.js"
+      "static/chunks/pages/verbs/slider.js"
+    ],
+    "/vocabulary/completion": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/vocabulary/completion.js"
     ]
   },
   "ampFirstPages": []

@@ -6,15 +6,15 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Quiz({ dictionary, categories }) {
+    const [numQuestions, setNumQuestions] = useState();
+    const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
 
-    const numQuestions = 5;
     const numOptions = 5;
     const categorySelections = [];
-    const quizDictionary = dictionary;
-    const dictionaryLength = dictionary.length;
+    let quizDictionary = [];
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -38,7 +38,17 @@ function Quiz({ dictionary, categories }) {
         categorySelections.unshift({ id: '', category: 'all' });
     }
 
+    const handleNumQuestionsChange = () => {
+        setNumQuestions( parseInt( event.target.value ));
+    }
+
+    const handleCategoryChange = () => {
+        setCategory( parseInt( event.target.value ));
+    }
+
     useEffect(() => {
+        quizDictionary = [...dictionary.filter( word => word.category === category )];
+        const dictionaryLength = quizDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
@@ -102,7 +112,6 @@ function Quiz({ dictionary, categories }) {
                     </div>
                 </form>
             </section>
-            <Footer />
         </>
     )
 }

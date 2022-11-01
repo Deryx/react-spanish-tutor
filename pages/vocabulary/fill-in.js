@@ -7,15 +7,15 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Fillin({ dictionary, categories }) {
+    const [numQuestions, setNumQuestions] = useState();
+    const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
 
-    const numQuestions = 5;
     const numOptions = 5;
     const categorySelections = [];
-    const fillinDictionary = dictionary;
-    const dictionaryLength = dictionary.length;
+    let fillinDictionary = [];
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -39,7 +39,17 @@ function Fillin({ dictionary, categories }) {
         categorySelections.unshift({ id: '', category: 'all' });
     }
 
+    const handleNumQuestionsChange = () => {
+        setNumQuestions( parseInt( event.target.value ));
+    }
+
+    const handleCategoryChange = () => {
+        setCategory( parseInt( event.target.value ));
+    }
+
     useEffect(() => {
+        fillinDictionary = [...dictionary.filter( word => word.category === category )];
+        const dictionaryLength = fillinDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
@@ -47,12 +57,12 @@ function Fillin({ dictionary, categories }) {
             let optionNumbers;
             let randomSpot = randomNumberGenerator( 1, 5 );
 
-            set.question = fillinDictionary[current].translation;
+            set.translation = fillinDictionary[current].translation;
             set.answer = fillinDictionary[current].word;
 
             setQuestionSet( current => [...current, set] );
         }
-    }, []);
+    }, [category]);
 
     createCategorySelect();
 
@@ -63,26 +73,42 @@ function Fillin({ dictionary, categories }) {
                 <h1>Vocabulary Fill-in</h1>
                 <form id="fillin" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <dl id='categorySelect'>
-                            <dt><label htmlFor="category">category: </label></dt>
+                        <dl id='numQuestionsSelect'>
+                            <dt><label htmlFor='numQuestions'>number questions: </label></dt>
                             <dd>
-                                <select id="category" name="category">
-                                    { categorySelections.map( ( categorySelection, i ) => 
-                                        <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
-                                    )}
+                                <select id="numQuestions" name="numQuestions" onChange={ handleNumQuestionsChange }>
+                                    <option key=""></option>
+                                    <option key="numQuestions5" value="5">5</option>
+                                    <option key="numQuestions10" value="10">10</option>
+                                    <option key="numQuestions15" value="15">15</option>
+                                    <option key="numQuestions20" value="20">20</option>
                                 </select>
                             </dd>
                         </dl>
-                        <dl id="questions">
-                            <dt>
-                                <h2>
-                                    [ { questionSet[question] && questionSet[question].question } ]
-                                </h2>
-                            </dt>
-                            <dd>
-                                <input />
-                            </dd>
-                        </dl>
+                        { numQuestions && 
+                            <dl id='categorySelect'>
+                                <dt><label htmlFor="category">category: </label></dt>
+                                <dd>
+                                    <select id="category" name="category" onChange={ handleCategoryChange }>
+                                        { categorySelections.map( ( categorySelection ) => 
+                                            <option key={ categorySelection.category } value={ categorySelection.id }>{ categorySelection.category }</option>
+                                        )}
+                                    </select>
+                                </dd>
+                            </dl> 
+                        }
+                        { questionSet[question] && 
+                            <dl id="questions">
+                                <dt>
+                                    <h2>
+                                        [ { questionSet[question] && questionSet[question].translation } ]
+                                    </h2>
+                                </dt>
+                                <dd>
+                                    <input />
+                                </dd>
+                            </dl>
+                        }
                     </fieldset>
                     { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
@@ -90,7 +116,6 @@ function Fillin({ dictionary, categories }) {
                     </div>
                 </form>
             </section>
-            <Footer />
         </>
     )
 }

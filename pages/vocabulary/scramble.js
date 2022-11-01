@@ -6,14 +6,14 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Scramble({ dictionary, categories }) {
+    const [numQuestions, setNumQuestions] = useState();
+    const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
 
-    const numQuestions = 5;
     const categorySelections = [];
-    const scrambleDictionary = dictionary;
-    const dictionaryLength = dictionary.length;
+    let scrambleDictionary = [];
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -37,7 +37,17 @@ function Scramble({ dictionary, categories }) {
         categorySelections.unshift({ id: '', category: 'all' });
     }
 
+    const handleNumQuestionsChange = () => {
+        setNumQuestions( parseInt( event.target.value ));
+    }
+
+    const handleCategoryChange = () => {
+        setCategory( parseInt( event.target.value ));
+    }
+
     useEffect(() => {
+        scrambleDictionary = [...dictionary.filter( word => word.category === category )];
+        const dictionaryLength = scrambleDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
@@ -91,7 +101,6 @@ function Scramble({ dictionary, categories }) {
                     </div>
                 </form>
             </section>
-            <Footer />
         </>
     )
 }

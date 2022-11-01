@@ -2,5 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/vocabulary/completion": "pages/vocabulary/completion.js",
+  "/verbs/slider": "pages/verbs/slider.js"
 }

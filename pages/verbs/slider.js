@@ -6,18 +6,45 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Slider( { verbs, tenses, conjugations } ) {
-    const numQuestions = 5;
-    const numOptions = 5;
-    const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
+    const [numQuestions, setNumQuestions] = useState();
     const [question, setQuestion] = useState( 0 );
     const [infinitives, setInfinitives] = useState( [] );
-    const [randomTenses, setRandomTenses] = useState( randomNumberGenerator( numQuestions, tenses.length ).map( (element) => element + 1 ) );
+    const [tense, setTense] = useState();
     const [slideSets, setSlideSets] = useState( [] );
     const [showModal, setShowModal] = useState( false );
+    const tenseSelections = [];
+    const numOptions = 5;
+    const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
+
+    const incrementQuestion = () => {
+        if( question < numQuestions ) {
+            setQuestion( ++question );
+        } 
+        
+        question === numQuestions && setShowModal( showModal => showModal = !showModal );
+    }
+
+    const handleNumQuestionsChange = () => {
+        setNumQuestions( parseInt( event.target.value ));
+    }
+
+    const createTenseSelect = () => {
+        for(const tense of tenses) {
+            tenseSelections.push( 
+                {
+                    id: tense.id,
+                    tense: tense.tense
+                }
+             );
+        } 
+    }
+
+    const handleTenseChange = () => {
+        setTense( parseInt( event.target.value ));
+    }
 
     useEffect( () => {
         const randomIndices = randomNumberGenerator( numQuestions, verbs.length );
-        const randomOrder = randomNumberGenerator( numQuestions, tenses.length );
     
         let verbIds = [];
         let slideSet = [];
@@ -31,27 +58,18 @@ function Slider( { verbs, tenses, conjugations } ) {
         let sets = [];
         for( let i = 0; i < numQuestions; i++) {
             let currentVerb = verbIds[i];
-            let currentTense = randomTenses[i];
             let currentConjugations = conjugations
-                .filter( ( conjugation ) => conjugation.tense === currentTense && conjugation.verb === currentVerb)
+                .filter( ( conjugation ) => conjugation.tense === tense && conjugation.verb === currentVerb )
                 .map( ({ yo, tu, el, nosotros, vosotros, ellos }) => ({ yo, tu, el, nosotros, vosotros, ellos}) );
-            let currentSlides = Object.values(currentConjugations[0]);
+            let currentSlides = currentConjugations && Object.values(currentConjugations[0]);
             const randomSlideOrder = randomNumberGenerator( currentSlides.length, currentSlides.length );
             let scrambledSlides = randomSlideOrder.map( slide => currentSlides[slide] );
             setSlideSets( prev => [...prev, scrambledSlides] );
         }
-    }, []);
+    }, [tense]);
 
-    const incrementQuestion = () => {
-        if( question < numQuestions ) {
-            setQuestion( ++question );
-        } 
-        
-        question === numQuestions && setShowModal( showModal => showModal = !showModal );
-    }
-    
-    const currentTense = tenses && tenses.filter( tense => tense.id === randomTenses[question] )[0].tense;
     const currentSlideSet = slideSets && slideSets[question];
+    createTenseSelect();
 
     return (
         <>
@@ -60,33 +78,61 @@ function Slider( { verbs, tenses, conjugations } ) {
                 <h1>Verb Slider</h1>
                 <form id="slider" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <section>
-                            <h2>[ { infinitives && infinitives[question]  } ]</h2>
-                            <h4>{ currentTense } tense</h4>
-                        </section>
-                        <div id="questions">
-                            <div className='bricks'>
-                                { 
-                                    bricks.map( ( brick, index ) => 
-                                        <div key={ index }>{ brick }</div>    
-                                    )
-                                }
+                        <dl id='numQuestionsSelect'>
+                            <dt><label htmlFor='numQuestions'>number questions: </label></dt>
+                            <dd>
+                                <select id="numQuestions" name="numQuestions" onChange={ handleNumQuestionsChange }>
+                                    <option key=""></option>
+                                    <option key="numQuestions5" value="5">5</option>
+                                    <option key="numQuestions10" value="10">10</option>
+                                    <option key="numQuestions15" value="15">15</option>
+                                    <option key="numQuestions20" value="20">20</option>
+                                </select>
+                            </dd>
+                        </dl>
+                        { numQuestions && 
+                            <dl id='tenseSelect'>
+                                <dt><label htmlFor="tense">tense: </label></dt>
+                                <dd>
+                                    <select id="tense" name="tense" onChange={ handleTenseChange }>
+                                        <option key=""></option>
+                                        { tenseSelections.map( ( tenseSelection ) => 
+                                            <option key={ tenseSelection.tense } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
+                                        )}
+                                    </select>
+                                </dd>
+                            </dl> 
+                        }
+                        { slideSets.length > 0 && 
+                            <section id="headings">
+                                <h2>[ { infinitives && infinitives[question]  } ]</h2>
+                                <h4>{ tenses[tense - 1].tense } tense</h4>
+                            </section>
+                        }
+                        { slideSets.length > 0 && 
+                            <div id="questions">
+                                <div className='bricks'>
+                                    { 
+                                        bricks.map( ( brick, index ) => 
+                                            <div key={ index }>{ brick }</div>    
+                                        )
+                                    }
+                                </div>
+                                <div className='slides'>
+                                    {
+                                        currentSlideSet && currentSlideSet.map( ( slideSet, index ) => 
+                                            <div key={ index }>{ slideSet }</div>
+                                        )
+                                    }
+                                </div>
                             </div>
-                            <div className='slides'>
-                                {
-                                    currentSlideSet && currentSlideSet.map( ( slideSet, index ) => 
-                                        <div key={ index }>{ slideSet }</div>
-                                    )
-                                }
-                            </div>
-                        </div>
+                        }
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         { currentSlideSet && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>
-            <Footer />
         </>
     )
 }
