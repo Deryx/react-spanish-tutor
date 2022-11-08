@@ -10,19 +10,26 @@ function Completion({ dictionary, categories }) {
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
+    const [userAnswer, setUserAnswer] = useState( [] );
+    const [userAnswers, setUserAnswers] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
+    let answer;
 
     const BLANK = ' ';
     const numOptions = 5;
     const categorySelections = [];
     let completionDictionary = [];
 
+    const getLetter = (event) => {
+        return event.target.value;
+    }
+
     const incrementQuestion = () => {
         if( question < numQuestions ) {
             setQuestion( ++question );
         } 
-        
+
         question === numQuestions && setShowModal( showModal => showModal = !showModal );
     }
 
@@ -40,6 +47,10 @@ function Completion({ dictionary, categories }) {
         categorySelections.unshift({ id: '', category: 'all' });
     }
 
+    const handleAnswerChange = ( e ) => {
+        
+    }
+
     const handleNumQuestionsChange = () => {
         setNumQuestions( parseInt( event.target.value ));
     }
@@ -49,6 +60,7 @@ function Completion({ dictionary, categories }) {
     }
 
     useEffect( () => {    
+        answer = document.querySelectorAll( 'ul li > input');
         completionDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = completionDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
@@ -113,7 +125,7 @@ function Completion({ dictionary, categories }) {
                                 <dd>
                                     <ul>
                                         { questionSet[question] && questionSet[question].question.split('').map( (letter, index) => 
-                                            <li key={ index }><input value={ letter } disabled={ letter !== BLANK } /></li>
+                                            <li key={ index }><input key={ `answer${index}` } value={ letter } disabled={ letter !== BLANK } /></li>
                                         ) }
                                     </ul>
                                 </dd>
@@ -122,7 +134,7 @@ function Completion({ dictionary, categories }) {
                     </fieldset>
                     { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" onChange={ getLetter } /> }
                     </div>
                 </form>
             </section>

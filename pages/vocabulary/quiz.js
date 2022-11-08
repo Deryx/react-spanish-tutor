@@ -68,7 +68,7 @@ function Quiz({ dictionary, categories }) {
 
             setQuestionSet( current => [...current, set] );
         }
-    }, []);
+    }, [category]);
 
     createCategorySelect();
 
@@ -79,33 +79,49 @@ function Quiz({ dictionary, categories }) {
                 <h1>Vocabulary Quiz</h1>
                 <form id="quiz" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <dl id='categorySelect'>
-                            <dt><label htmlFor="category">category: </label></dt>
+                        <dl id='numQuestionsSelect'>
+                            <dt><label htmlFor='numQuestions'>number questions: </label></dt>
                             <dd>
-                                <select id="category" name="category">
-                                    { categorySelections.map( ( categorySelection, i ) => 
-                                        <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
-                                    )}
+                                <select id="numQuestions" name="numQuestions" onChange={ handleNumQuestionsChange }>
+                                    <option key=""></option>
+                                    <option key="numQuestions5" value="5">5</option>
+                                    <option key="numQuestions10" value="10">10</option>
+                                    <option key="numQuestions15" value="15">15</option>
+                                    <option key="numQuestions20" value="20">20</option>
                                 </select>
                             </dd>
                         </dl>
-                        <dl id="questions">
-                            <dt>
-                                <label htmlFor={ `q${ question }` }>
-                                    { questionSet[question] && questionSet[question].question }
-                                </label>
-                            </dt>
-                            <dd>
-                                { questionSet[question] && questionSet[question].options.map( option => 
-                                    <div>
-                                        <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
-                                        <label htmlFor={ `q${ question }` }> 
-                                            { option }
-                                        </label>
-                                    </div>
-                                )}
-                            </dd>
-                        </dl>
+                        { numQuestions && 
+                            <dl id='categorySelect'>
+                                <dt><label htmlFor="category">category: </label></dt>
+                                <dd>
+                                    <select id="category" name="category" onChange={ handleCategoryChange }>
+                                        { categorySelections.map( ( categorySelection ) => 
+                                            <option key={ categorySelection.category } value={ categorySelection.id }>{ categorySelection.category }</option>
+                                        )}
+                                    </select>
+                                </dd>
+                            </dl> 
+                        }
+                        { questionSet.length > 0 && 
+                            <dl id="questions">
+                                <dt>
+                                    <label htmlFor={ `q${ question }` }>
+                                        { questionSet[question] && questionSet[question].question }
+                                    </label>
+                                </dt>
+                                <dd>
+                                    { questionSet[question] && questionSet[question].options.map( option => 
+                                        <div>
+                                            <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
+                                            <label htmlFor={ `q${ question }` }> 
+                                                { option }
+                                            </label>
+                                        </div>
+                                    )}
+                                </dd>
+                            </dl>
+                        }
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
