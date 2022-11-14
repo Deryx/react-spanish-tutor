@@ -8,7 +8,6 @@ const prisma = new PrismaClient();
 function Slider({ dictionary, categories }) {
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
-    const [brickSets, setBrickSets] = useState( [] );
     const [slideSets, setSlideSets] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
@@ -55,16 +54,18 @@ function Slider({ dictionary, categories }) {
             let bricks = {};
             let stationaryBricks = [];
             let slideBricks = [];
+            const set = {};
             for(const word of randomWords) {
                 stationaryBricks.push( sliderDictionary[word].translation);
             }
+            set.stationaryBricks = stationaryBricks;
             const randomSlideOrder = randomNumberGenerator( numOptions, numOptions );
             for(const randomSlide of randomSlideOrder) {
                 let current = randomWords[randomSlide];
                 slideBricks.push( sliderDictionary[current].word);
             }
-            setBrickSets( prev => [...prev, stationaryBricks]);
-            setSlideSets(prev => [...prev, slideBricks]);
+            set.slideBricks = slideBricks;
+            setSlideSets( prev => [...prev, set] );
         }
     }, [category]);
 
@@ -101,19 +102,19 @@ function Slider({ dictionary, categories }) {
                                 </dd>
                             </dl> 
                         }
-                        { ( slideSets.length > 0 && brickSets.length > 0 ) && 
+                        { slideSets[question] && 
                             <div id="questions">
                                 <div className='bricks'>
                                     {
-                                        brickSets && brickSets[question].map( ( brickSet, index ) => 
-                                            <div key={ index }>{ brickSet }</div>
+                                        slideSets[question] && slideSets[question].stationaryBricks.map( ( stationaryBricks, index ) => 
+                                            <div key={ index }>{ stationaryBricks }</div>
                                         )
                                     }
                                 </div>
                                 <div className='slides'>
                                     {
-                                        slideSets && slideSets[question].map( ( slideSet, index ) => 
-                                            <div key={ index }>{ slideSet }</div>
+                                        slideSets[question] && slideSets[question].slideBricks.map( ( slideBricks, index ) => 
+                                            <div key={ index }>{ slideBricks }</div>
                                         )
                                     }
                                 </div>
@@ -121,7 +122,7 @@ function Slider({ dictionary, categories }) {
                         }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { ( slideSets[question] && brickSets[question] ) && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { slideSets[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>
