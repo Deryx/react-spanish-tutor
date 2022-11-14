@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '/src/components/modal.tsx';
 import Textinput from '/src/components/textInput.tsx';
@@ -8,6 +8,8 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Conjugator( { verbs, tenses, conjugations } ) {
+    const numQuestionsRef = useRef();
+    const tensesRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
@@ -27,6 +29,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
 
     const handleNumQuestionsChange = () => {
         setNumQuestions( parseInt( event.target.value ));
+        numQuestionsRef.current.style.display = "none";
     }
 
     const createTenseSelect = () => {
@@ -42,6 +45,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
 
     const handleTenseChange = () => {
         setTense( parseInt( event.target.value ));
+        tensesRef.current.style.display = "none";
     }
 
     useEffect( () => {
@@ -68,7 +72,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                 { showModal === true ? <Modal /> : null }
                 <h1>Verb Conjugator</h1>
                 <form id="conjugator" className="col-xs-12 col-sm-8 col-lg-4">
-                    <dl id='numQuestionsSelect'>
+                    <dl ref={ numQuestionsRef } id='numQuestionsSelect'>
                         <dt><label htmlFor='numQuestions'>number questions: </label></dt>
                         <dd>
                             <select id="numQuestions" name="numQuestions" onChange={ handleNumQuestionsChange }>
@@ -81,7 +85,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                         </dd>
                     </dl>
                     { numQuestions && 
-                        <dl id='tenseSelect'>
+                        <dl ref={ tensesRef } id='tenseSelect'>
                             <dt><label htmlFor="tense">tense: </label></dt>
                             <dd>
                                 <select id="tense" name="tense" onChange={ handleTenseChange }>

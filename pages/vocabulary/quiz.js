@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '/src/components/modal.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
@@ -6,6 +6,8 @@ import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 const prisma = new PrismaClient();
 
 function Quiz({ dictionary, categories }) {
+    const numQuestionsRef = useRef();
+    const categoriesRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
@@ -39,11 +41,13 @@ function Quiz({ dictionary, categories }) {
     }
 
     const handleNumQuestionsChange = () => {
-        setNumQuestions( parseInt( event.target.value ));
+        setNumQuestions( parseInt( event.target.value ));    
+        numQuestionsRef.current.style.display = "none";
     }
 
     const handleCategoryChange = () => {
         setCategory( parseInt( event.target.value ));
+        categoriesRef.current.style.display = "none";
     }
 
     useEffect(() => {
@@ -79,7 +83,7 @@ function Quiz({ dictionary, categories }) {
                 <h1>Vocabulary Quiz</h1>
                 <form id="quiz" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <dl id='numQuestionsSelect'>
+                        <dl ref={ numQuestionsRef } id='numQuestionsSelect'>
                             <dt><label htmlFor='numQuestions'>number questions: </label></dt>
                             <dd>
                                 <select id="numQuestions" name="numQuestions" onChange={ handleNumQuestionsChange }>
@@ -92,7 +96,7 @@ function Quiz({ dictionary, categories }) {
                             </dd>
                         </dl>
                         { numQuestions && 
-                            <dl id='categorySelect'>
+                            <dl ref={ categoriesRef } id='categorySelect'>
                                 <dt><label htmlFor="category">category: </label></dt>
                                 <dd>
                                     <select id="category" name="category" onChange={ handleCategoryChange }>
