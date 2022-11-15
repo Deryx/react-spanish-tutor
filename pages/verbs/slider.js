@@ -72,7 +72,6 @@ function Slider( { verbs, tenses, conjugations } ) {
         }
     }, [tense]);
 
-    const currentSlideSet = slideSets && slideSets[question];
     createTenseSelect();
 
     return (
@@ -107,13 +106,13 @@ function Slider( { verbs, tenses, conjugations } ) {
                                 </dd>
                             </dl> 
                         }
-                        { slideSets.length > 0 && 
+                        { slideSets[question] && 
                             <section id="headings">
                                 <h2>[ { infinitives && infinitives[question]  } ]</h2>
                                 <h4>{ tenses[tense - 1].tense } tense</h4>
                             </section>
                         }
-                        { slideSets.length > 0 && 
+                        { slideSets[question] && 
                             <div id="questions">
                                 <div className='bricks'>
                                     { 
@@ -124,7 +123,7 @@ function Slider( { verbs, tenses, conjugations } ) {
                                 </div>
                                 <div className='slides'>
                                     {
-                                        currentSlideSet && currentSlideSet.map( ( slideSet, index ) => 
+                                        slideSets[question] && slideSets[question].map( ( slideSet, index ) => 
                                             <div key={ index }>{ slideSet }</div>
                                         )
                                     }
@@ -133,7 +132,7 @@ function Slider( { verbs, tenses, conjugations } ) {
                         }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { currentSlideSet && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { slideSets[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>
