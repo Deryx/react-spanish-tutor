@@ -10,9 +10,8 @@ function Slider( { verbs, tenses, conjugations } ) {
     const tensesRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [question, setQuestion] = useState( 0 );
-    const [infinitives, setInfinitives] = useState( [] );
+    const [questionSet, setQuestionSet] = useState( [] );
     const [tense, setTense] = useState();
-    const [slideSets, setSlideSets] = useState( [] );
     const [showModal, setShowModal] = useState( false );
     const tenseSelections = [];
     const numOptions = 5;
@@ -56,19 +55,20 @@ function Slider( { verbs, tenses, conjugations } ) {
         for( const index of randomIndices ) {
             verbIds = [...verbIds, verbs.filter( verb => verb.id === index )[0].id];
         }
-        for( const id of verbIds ) {
-            setInfinitives( prev => [...prev, verbs.filter( verb => verb.id === id)[0].infinitive]);
-        }
-        let sets = [];
         for( let i = 0; i < numQuestions; i++) {
-            let currentVerb = verbIds[i];
+            let set = {};
+            let currentVerb = verbs[verbIds[i]].id;
+            set.infinitive = verbs.find( verb => verb.id === currentVerb).infinitive;
+            set.translation = verbs.find( verb => verb.id === currentVerb).translation;
             let currentConjugations = conjugations
                 .filter( ( conjugation ) => conjugation.tense === tense && conjugation.verb === currentVerb )
                 .map( ({ yo, tu, el, nosotros, vosotros, ellos }) => ({ yo, tu, el, nosotros, vosotros, ellos}) );
             let currentSlides = currentConjugations && Object.values(currentConjugations[0]);
+            set.answers = currentSlides;
             const randomSlideOrder = randomNumberGenerator( currentSlides.length, currentSlides.length );
             let scrambledSlides = randomSlideOrder.map( slide => currentSlides[slide] );
-            setSlideSets( prev => [...prev, scrambledSlides] );
+            set.slideSet = scrambledSlides;
+            setQuestionSet( prev => [...prev, set] );
         }
     }, [tense]);
 
@@ -106,13 +106,14 @@ function Slider( { verbs, tenses, conjugations } ) {
                                 </dd>
                             </dl> 
                         }
-                        { slideSets[question] && 
+                        { questionSet[question] && 
                             <section id="headings">
-                                <h2>[ { infinitives && infinitives[question]  } ]</h2>
-                                <h4>{ tenses[tense - 1].tense } tense</h4>
+                                <h2>{ questionSet && questionSet[question].infinitive  }</h2>
+                                <h3>[ { questionSet && questionSet[question].translation } ]</h3>
+                                <h5>{ tenses[tense - 1].tense } tense</h5>
                             </section>
                         }
-                        { slideSets[question] && 
+                        { questionSet[question] && 
                             <div id="questions">
                                 <div className='bricks'>
                                     { 
@@ -123,8 +124,8 @@ function Slider( { verbs, tenses, conjugations } ) {
                                 </div>
                                 <div className='slides'>
                                     {
-                                        slideSets[question] && slideSets[question].map( ( slideSet, index ) => 
-                                            <div key={ index }>{ slideSet }</div>
+                                        questionSet[question] && questionSet[question].slideSet.map( ( slide, index ) => 
+                                            <div key={ index }>{ slide }</div>
                                         )
                                     }
                                 </div>
@@ -132,7 +133,7 @@ function Slider( { verbs, tenses, conjugations } ) {
                         }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { slideSets[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
                     </div>
                 </form>
             </section>
