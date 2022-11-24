@@ -91,7 +91,7 @@ function Scramble({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        { numQuestions && 
+                        { numQuestions ? 
                             <dl ref={ categoriesRef } id='categorySelect'>
                                 <dt><label htmlFor="category">category: </label></dt>
                                 <dd>
@@ -102,22 +102,22 @@ function Scramble({ dictionary, categories }) {
                                     </select>
                                 </dd>
                             </dl> 
-                        }
-                        { questionSet.length > 0 && 
+                        : null }
+                        { questionSet[question] ? 
                             <dl id="questions">                            
                                 <dt>
-                                    <h2>[ { questionSet[question] && questionSet[question].translation } ]</h2>
+                                    <h2>[ { questionSet[question].translation } ]</h2>
                                 </dt>
                                 <dd>
-                                    { questionSet[question] && questionSet[question].question.map( letter =>
+                                    { questionSet[question].question.map( letter =>
                                         <div>{ letter }</div>
                                     ) }
                                 </dd>
                             </dl>
-                        }
+                        : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
                     </div>
                 </form>
             </section>

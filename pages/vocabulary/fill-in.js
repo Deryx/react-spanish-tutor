@@ -89,7 +89,7 @@ function Fillin({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        { numQuestions && 
+                        { numQuestions ? 
                             <dl ref={ categoriesRef } id='categorySelect'>
                                 <dt><label htmlFor="category">category: </label></dt>
                                 <dd>
@@ -100,25 +100,25 @@ function Fillin({ dictionary, categories }) {
                                     </select>
                                 </dd>
                             </dl> 
-                        }
-                        { questionSet[question] && 
+                        : null }
+                        { questionSet[question] ? 
                             <dl id="questions">
                                 <dt>
                                     <h2>
-                                        [ { questionSet[question] && questionSet[question].translation } ]
+                                        [ { questionSet[question] ? questionSet[question].translation : null } ]
                                     </h2>
                                 </dt>
                                 <dd>
                                     <input />
                                 </dd>
                             </dl>
-                        }
+                        : null }
                     </fieldset>
-                    { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
                     </div>
                 </form>
+                { questionSet[question] ? <Accents /> : null }
             </section>
         </>
     )

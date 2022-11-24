@@ -94,7 +94,7 @@ function Slider({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        { numQuestions && 
+                        { numQuestions ? 
                             <dl ref={ categoriesRef } id='categorySelect'>
                                 <dt><label htmlFor="category">category: </label></dt>
                                 <dd>
@@ -105,28 +105,28 @@ function Slider({ dictionary, categories }) {
                                     </select>
                                 </dd>
                             </dl> 
-                        }
-                        { slideSets[question] && 
+                        : null }
+                        { slideSets[question] ? 
                             <div id="questions">
                                 <div className='bricks'>
                                     {
-                                        slideSets[question] && slideSets[question].stationaryBricks.map( ( stationaryBricks, index ) => 
+                                        slideSets[question].stationaryBricks.map( ( stationaryBricks, index ) => 
                                             <div key={ index }>{ stationaryBricks }</div>
                                         )
                                     }
                                 </div>
                                 <div className='slides'>
                                     {
-                                        slideSets[question] && slideSets[question].slideBricks.map( ( slideBricks, index ) => 
+                                        slideSets[question].slideBricks.map( ( slideBricks, index ) => 
                                             <div key={ index }>{ slideBricks }</div>
                                         )
                                     }
                                 </div>
                             </div>
-                        }
+                        : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { slideSets[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { slideSets[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
                     </div>
                 </form>
             </section>

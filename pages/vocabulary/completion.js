@@ -9,23 +9,18 @@ const prisma = new PrismaClient();
 function Completion({ dictionary, categories }) {
     const numQuestionsRef = useRef();
     const categoriesRef = useRef();
+    const answerRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
-    const [userAnswer, setUserAnswer] = useState( [] );
     const [userAnswers, setUserAnswers] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
-    let answer;
 
     const BLANK = ' ';
     const numOptions = 5;
     const categorySelections = [];
     let completionDictionary = [];
-
-    const getLetter = (event) => {
-        return event.target.value;
-    }
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -49,22 +44,35 @@ function Completion({ dictionary, categories }) {
         categorySelections.unshift({ id: '', category: 'all' });
     }
 
-    const handleAnswerChange = ( e ) => {
-        
-    }
-
     const handleNumQuestionsChange = () => {
         setNumQuestions( parseInt( event.target.value ));
         numQuestionsRef.current.style.display = "none";
     }
 
-    const handleCategoryChange = () => {
+    const handleCategoryChange = (event) => {
         setCategory( parseInt( event.target.value ));
         categoriesRef.current.style.display = "none";
     }
 
+    const clearAnswer = () => {
+        const currentAnswer = answerRef.current.querySelectorAll('input');
+        for(const letter of currentAnswer) {
+            letter.value = null;
+        }
+    }
+
+    const handleSubmitClick = () => {
+        const currentAnswer = answerRef.current.querySelectorAll('input');
+        const answer = [];
+        for(const letter of currentAnswer) {
+            answer.push( letter.value );
+        }
+        setUserAnswers( prev => [ ...prev, answer.join( '' ) ]);
+        incrementQuestion();
+        clearAnswer();
+    }
+
     useEffect( () => {    
-        answer = document.querySelectorAll( 'ul li > input');
         completionDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = completionDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
@@ -109,7 +117,7 @@ function Completion({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        { numQuestions && 
+                        { numQuestions ?  
                             <dl ref={ categoriesRef } id='categorySelect'>
                                 <dt><label htmlFor="category">category: </label></dt>
                                 <dd>
@@ -120,27 +128,27 @@ function Completion({ dictionary, categories }) {
                                     </select>
                                 </dd>
                             </dl> 
-                        }
-                        { questionSet.length > 0 && 
+                        : null }
+                        { questionSet[question] ? 
                             <dl id="questions">
                                 <dt>
-                                    <h2>[ { questionSet[question] && questionSet[question].translation } ]</h2>
+                                    <h2>[ { questionSet[question].translation } ]</h2>
                                 </dt>
                                 <dd>
-                                    <ul>
+                                    <ul ref={ answerRef }>
                                         { questionSet[question] && questionSet[question].question.split('').map( (letter, index) => 
-                                            <li key={ index }><input key={ `answer${index}` } value={ letter } disabled={ letter !== BLANK } /></li>
+                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onChange={ (event) => event.target.value } maxLength="1" size="1" disabled={ letter !== BLANK } /></li>
                                         ) }
                                     </ul>
                                 </dd>
                             </dl>
-                        }
+                        : null }
                     </fieldset>
-                    { questionSet[question] && <Accents /> }
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" onChange={ getLetter } /> }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
+                { questionSet[question] ? <Accents /> : null }
             </section>
         </>
     )

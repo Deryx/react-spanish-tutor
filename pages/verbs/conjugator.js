@@ -10,6 +10,12 @@ const prisma = new PrismaClient();
 function Conjugator( { verbs, tenses, conjugations } ) {
     const numQuestionsRef = useRef();
     const tensesRef = useRef();
+    const yoRef = useRef();
+    const tuRef = useRef();
+    const elRef = useRef();
+    const nosotrosRef = useRef();
+    const vosotrosRef = useRef();
+    const ellosRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
@@ -63,7 +69,6 @@ function Conjugator( { verbs, tenses, conjugations } ) {
         }
     }, [tense] );
 
-    console.log(questionSet);
     createTenseSelect();
     
     return (
@@ -84,7 +89,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                             </select>
                         </dd>
                     </dl>
-                    { numQuestions && 
+                    { numQuestions ? 
                         <dl ref={ tensesRef } id='tenseSelect'>
                             <dt><label htmlFor="tense">tense: </label></dt>
                             <dd>
@@ -96,29 +101,29 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                                 </select>
                             </dd>
                         </dl> 
-                    }
-                    { questionSet.length > 0 && 
+                    : null }
+                    { questionSet[question] ? 
                         <section id="headings">
-                            <h2>[ { questionSet[question] && questionSet[question].infinitive  } ]</h2>
-                            <h4>{ questionSet[question] && questionSet[question].translation  }</h4>
+                            <h2>[ { questionSet[question].infinitive  } ]</h2>
+                            <h4>{ questionSet[question].translation  }</h4>
                             <h5>{ tenses[tense - 1].tense } tense</h5>
                         </section>
-                    }
-                    { questionSet.length > 0 && 
+                    : null }
+                    { questionSet[question] ? 
                         <fieldset className="col-lg-12">
-                            <Textinput id="yo" name="yo" className="col-lg-12" />
-                            <Textinput id="tu" name="tu" className="col-lg-12" />
-                            <Textinput id="el" name="el/Ella/Usted" className="col-lg-12" />
-                            <Textinput id="nosotros" name="nosotros" className="col-lg-12" />
-                            <Textinput id="vosotros" name="vosotros" className="col-lg-12" />
-                            <Textinput id="ellos" name="ellos/Ellas/Ustedes" className="col-lg-12" />
+                            <Textinput ref={ yoRef } id="yo" name="yo" className="col-lg-12" />
+                            <Textinput ref={ tuRef } id="tu" name="tu" className="col-lg-12" />
+                            <Textinput ref={ elRef } id="el" name="el/Ella/Usted" className="col-lg-12" />
+                            <Textinput ref={ nosotrosRef } id="nosotros" name="nosotros" className="col-lg-12" />
+                            <Textinput ref={ vosotrosRef } id="vosotros" name="vosotros" className="col-lg-12" />
+                            <Textinput ref={ ellosRef } id="ellos" name="ellos/Ellas/Ustedes" className="col-lg-12" />
                         </fieldset>
-                    }
-                    { questionSet.length > 0 && <Accents /> }
+                    : null }
                     <div className='buttons col-lg-12'>
-                        { questionSet.length > 0 && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
                     </div>
                 </form>
+                { questionSet[question] ? <Accents /> : null }
             </section>
         </>
     )

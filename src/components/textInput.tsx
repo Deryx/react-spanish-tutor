@@ -1,16 +1,16 @@
-import React from 'react';
+import { forwardRef } from 'react';
 
-function Textinput( props:any ) {
+const Textinput = forwardRef( ( props:any, forwardedRef ) => {
     return (
         <>
             <dl>
                 <dt><label htmlFor={ props.id }>{ props.name }: </label></dt>
                 <dd>
-                    <input type="text" id={ props.id } name={ props.id } />
+                    <input ref={ forwardedRef } type="text" id={ props.id } name={ props.id } />
                 </dd>
             </dl>
         </>
     )
-}
+})
 
 export default Textinput;

@@ -95,7 +95,7 @@ function Quiz({ dictionary, categories }) {
                                 </select>
                             </dd>
                         </dl>
-                        { numQuestions && 
+                        { numQuestions ? 
                             <dl ref={ categoriesRef } id='categorySelect'>
                                 <dt><label htmlFor="category">category: </label></dt>
                                 <dd>
@@ -106,29 +106,29 @@ function Quiz({ dictionary, categories }) {
                                     </select>
                                 </dd>
                             </dl> 
-                        }
-                        { questionSet.length > 0 && 
+                        : null }
+                        { questionSet[question] ? 
                             <dl id="questions">
                                 <dt>
                                     <label htmlFor={ `q${ question }` }>
-                                        { questionSet[question] && questionSet[question].question }
+                                        { questionSet[question].question }
                                     </label>
                                 </dt>
                                 <dd>
-                                    { questionSet[question] && questionSet[question].options.map( option => 
+                                    { questionSet[question] ? questionSet[question].options.map( option => 
                                         <div>
                                             <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
                                             <label htmlFor={ `q${ question }` }> 
                                                 { option }
                                             </label>
                                         </div>
-                                    )}
+                                    ) : null }
                                 </dd>
                             </dl>
-                        }
+                        : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
                     </div>
                 </form>
             </section>

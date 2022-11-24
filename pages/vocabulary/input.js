@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
@@ -9,6 +9,7 @@ import Accents from '/src/components/accents.tsx';
 const prisma = new PrismaClient;
 
 function Input({ categories }) {
+    const wordRef = useRef();
     const [formValues, setFormValues] = useState({
         category: '',
         word: '',
@@ -56,17 +57,17 @@ function Input({ categories }) {
                             </dd>
                         </dl>
                         { formValues.category === '0' && <Texinput id="newCategory" name="new category" className="col-lg-12" /> }
-                        <Texinput id="word" name="word" className="col-lg-12" />
+                        <Texinput ref={ wordRef } id="word" name="word" className="col-lg-12" />
                         <Texinput id="translation" name="translation" className="col-lg-12" />
                         <Texinput id="gender" name="gender" className="col-lg-12" />
                         <Imageupload id="image" name="image" />
                         <Texinput id="pronunciation" name="pronunciation" className="col-lg-12" />
                     </fieldset>
-                    <Accents handleAccentClick={ handleAccent }></Accents>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" value="add word" />
                     </div>
                 </form>
+                <Accents handleAccentClick={ handleAccent }></Accents>
             </section>
             <Footer />
         </>

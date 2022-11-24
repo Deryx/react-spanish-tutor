@@ -93,7 +93,7 @@ function Slider( { verbs, tenses, conjugations } ) {
                                 </select>
                             </dd>
                         </dl> 
-                        { numQuestions && 
+                        { numQuestions ? 
                             <dl ref={ tensesRef } id='tenseSelect'>
                                 <dt><label htmlFor="tense">tense: </label></dt>
                                 <dd>
@@ -105,15 +105,15 @@ function Slider( { verbs, tenses, conjugations } ) {
                                     </select>
                                 </dd>
                             </dl> 
-                        }
-                        { questionSet[question] && 
+                        : null }
+                        { questionSet[question] ? 
                             <section id="headings">
                                 <h2>{ questionSet && questionSet[question].infinitive  }</h2>
                                 <h3>[ { questionSet && questionSet[question].translation } ]</h3>
                                 <h5>{ tenses[tense - 1].tense } tense</h5>
                             </section>
-                        }
-                        { questionSet[question] && 
+                        : null }
+                        { questionSet[question] ? 
                             <div id="questions">
                                 <div className='bricks'>
                                     { 
@@ -124,16 +124,16 @@ function Slider( { verbs, tenses, conjugations } ) {
                                 </div>
                                 <div className='slides'>
                                     {
-                                        questionSet[question] && questionSet[question].slideSet.map( ( slide, index ) => 
+                                        questionSet[question].slideSet.map( ( slide, index ) => 
                                             <div key={ index }>{ slide }</div>
                                         )
                                     }
                                 </div>
                             </div>
-                        }
+                        : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] && <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
                     </div>
                 </form>
             </section>
