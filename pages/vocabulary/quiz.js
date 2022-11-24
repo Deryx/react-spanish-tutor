@@ -8,10 +8,13 @@ const prisma = new PrismaClient();
 function Quiz({ dictionary, categories }) {
     const numQuestionsRef = useRef();
     const categoriesRef = useRef();
+    const answerRef = useRef();
+
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
+    const [userAnswers, setUserAnswers] = useState( [] );
     const [showModal, setShowModal] = useState( false );
 
     const numOptions = 5;
@@ -50,6 +53,25 @@ function Quiz({ dictionary, categories }) {
         categoriesRef.current.style.display = "none";
     }
 
+    const clearAnswer = () => {
+        const currentAnswers = answerRef.current.querySelectorAll('input[type="radio"]');
+        for( const answer of currentAnswers ) {
+            answer.checked = false;
+        }
+    }
+
+    const handleSubmitClick = () => {
+        const currentAnswers = answerRef.current.querySelectorAll('input[type="radio"]');
+        for( const answer of currentAnswers ) {
+            if( answer.checked ) {
+                setUserAnswers( prev => [...prev, answer.value] );
+                break;
+            }
+        }
+        incrementQuestion();
+        clearAnswer();
+    }
+
     useEffect(() => {
         quizDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = quizDictionary.length;
@@ -75,6 +97,7 @@ function Quiz({ dictionary, categories }) {
     }, [category]);
 
     createCategorySelect();
+    console.log(userAnswers);
 
     return (
         <>
@@ -114,10 +137,10 @@ function Quiz({ dictionary, categories }) {
                                         { questionSet[question].question }
                                     </label>
                                 </dt>
-                                <dd>
+                                <dd ref={ answerRef }>
                                     { questionSet[question] ? questionSet[question].options.map( option => 
                                         <div>
-                                            <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } />
+                                            <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } onChange={ e => e.target.value } />
                                             <label htmlFor={ `q${ question }` }> 
                                                 { option }
                                             </label>
@@ -128,7 +151,7 @@ function Quiz({ dictionary, categories }) {
                         : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
             </section>
