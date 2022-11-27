@@ -25,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/vocabulary/completion": [
+    "/verbs/conjugator": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/completion.js"
+      "static/chunks/pages/verbs/conjugator.js"
     ],
-    "/vocabulary/quiz": [
+    "/vocabulary/scramble": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/quiz.js"
+      "static/chunks/pages/vocabulary/scramble.js"
     ]
   },
   "ampFirstPages": []

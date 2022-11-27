@@ -18,6 +18,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
     const ellosRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
+    const [userAnswers, setUserAnswers] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [infinitives, setInfinitives] = useState( [] );
     const [tense, setTense] = useState();
@@ -54,6 +55,28 @@ function Conjugator( { verbs, tenses, conjugations } ) {
         tensesRef.current.style.display = "none";
     }
 
+    const clearAnswers = () => {
+        yoRef.current.value = null;
+        tuRef.current.value = null;
+        elRef.current.value = null;
+        nosotrosRef.current.value = null;
+        vosotrosRef.current.value = null;
+        ellosRef.current.value = null;
+    }
+
+    const handleSubmitClick = () => {
+        const set = {};
+        set.yo = yoRef.current.value;
+        set.tu = tuRef.current.value;
+        set.el = elRef.current.value;
+        set.nosotros = nosotrosRef.current.value;
+        set.vosotros = vosotrosRef.current.value;
+        set.ellos = ellosRef.current.value;
+        setUserAnswers( prev => [...prev, set]);
+        incrementQuestion();
+        clearAnswers();
+    }
+
     useEffect( () => {
         const randomVerbs = randomNumberGenerator( numQuestions, verbs.length );
         for(const verb of randomVerbs) {
@@ -70,6 +93,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
     }, [tense] );
 
     createTenseSelect();
+    console.log({ questionSet, userAnswers });
     
     return (
         <>
@@ -120,7 +144,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                         </fieldset>
                     : null }
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
                 { questionSet[question] ? <Accents /> : null }

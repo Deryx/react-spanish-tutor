@@ -9,10 +9,12 @@ const prisma = new PrismaClient();
 function Fillin({ dictionary, categories }) {
     const numQuestionsRef = useRef();
     const categoriesRef = useRef();
+    const answerRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
+    const [userAnswers, setUserAnswers] = useState( [] );
     const [showModal, setShowModal] = useState( false );
 
     const numOptions = 5;
@@ -51,6 +53,19 @@ function Fillin({ dictionary, categories }) {
         categoriesRef.current.style.display = "none";
     }
 
+    const clearAnswer = () => {
+        const currentAnswer = answerRef.current.querySelector('input');
+        currentAnswer.value = null;
+    }
+
+    const handleSubmitClick = () => {
+        const currentAnswer = answerRef.current.querySelector('input');
+        const answer = currentAnswer.value;
+        setUserAnswers( prev => [...prev, answer] );
+        incrementQuestion();
+        clearAnswer();
+    }
+
     useEffect(() => {
         fillinDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = fillinDictionary.length;
@@ -69,6 +84,7 @@ function Fillin({ dictionary, categories }) {
     }, [category]);
 
     createCategorySelect();
+    console.log(userAnswers);
 
     return (
         <>
@@ -108,14 +124,14 @@ function Fillin({ dictionary, categories }) {
                                         [ { questionSet[question] ? questionSet[question].translation : null } ]
                                     </h2>
                                 </dt>
-                                <dd>
-                                    <input />
+                                <dd ref={ answerRef }>
+                                    <input type="text" id={ `answer${question}` } key={ `answer${question}` } onChange={ (event) => event.target.value }  />
                                 </dd>
                             </dl>
                         : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
                 { questionSet[question] ? <Accents /> : null }

@@ -8,10 +8,12 @@ const prisma = new PrismaClient();
 function Scramble({ dictionary, categories }) {
     const numQuestionsRef = useRef();
     const categoriesRef = useRef();
+    const answerRef = useRef();
     const [numQuestions, setNumQuestions] = useState();
     const [category, setCategory] = useState();
     const [questionSet, setQuestionSet] = useState( [] );
     const [question, setQuestion] = useState( 0 );
+    const [userAnswers, setUserAnswers] = useState( [] );
     const [showModal, setShowModal] = useState( false );
 
     const categorySelections = [];
@@ -49,6 +51,16 @@ function Scramble({ dictionary, categories }) {
         categoriesRef.current.style.display = "none";
     }
 
+    const handleSubmitClick = () => {
+        const currentAnswer = answerRef.current.querySelectorAll( 'div' );
+        const answer = [];
+        for( const div of currentAnswer ) {
+            answer.push( div.innerText );
+        }
+        setUserAnswers( prev => [...prev, answer.join('')] );
+        incrementQuestion();
+    }
+
     useEffect(() => {
         scrambleDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = scrambleDictionary.length;
@@ -71,6 +83,7 @@ function Scramble({ dictionary, categories }) {
     }, [category]);
 
     createCategorySelect();
+    console.log( userAnswers );
 
     return (
         <>
@@ -108,16 +121,16 @@ function Scramble({ dictionary, categories }) {
                                 <dt>
                                     <h2>[ { questionSet[question].translation } ]</h2>
                                 </dt>
-                                <dd>
-                                    { questionSet[question].question.map( letter =>
-                                        <div>{ letter }</div>
+                                <dd ref={ answerRef }>
+                                    { questionSet[question].question.map( ( letter, index ) =>
+                                        <div key={ index }>{ letter }</div>
                                     ) }
                                 </dd>
                             </dl>
                         : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
             </section>
