@@ -85,9 +85,9 @@ function Conjugator( { verbs, tenses, conjugations } ) {
             let currentConjugations = conjugations
                 .filter( ( conjugation ) => conjugation.tense === tense && conjugation.verb === currentVerb )
                 .map( ({ yo, tu, el, nosotros, vosotros, ellos }) => ({ yo, tu, el, nosotros, vosotros, ellos}) );
-            set.infinitive = verbs[currentVerb].infinitive;
-            set.translation = verbs[currentVerb].translation;
-            set.conjugations = currentConjugations;
+            set.infinitive = verbs.find( verb => verb.id === currentVerb).infinitive;
+            set.translation = verbs.find( verb => verb.id === currentVerb).translation;
+            set.conjugations = currentConjugations[0];
             setQuestionSet( current => [...current, set] );
         }
     }, [tense] );
