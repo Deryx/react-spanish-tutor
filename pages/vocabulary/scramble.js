@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '/src/components/modal.tsx';
+import SimpleReport from '/src/components/vocabulary/simple-report.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
 const prisma = new PrismaClient();
@@ -15,6 +16,7 @@ function Scramble({ dictionary, categories }) {
     const [question, setQuestion] = useState( 0 );
     const [userAnswers, setUserAnswers] = useState( [] );
     const [showModal, setShowModal] = useState( false );
+    const reportTitle = "Vocabulary Scramble Report";
 
     const categorySelections = [];
     let scrambleDictionary = [];
@@ -88,7 +90,13 @@ function Scramble({ dictionary, categories }) {
     return (
         <>
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
+                { showModal === true ? 
+                    <>
+                        <Modal />
+                        <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } />
+                    </>
+                    : null 
+                }
                 <h1>Vocabulary Scramble</h1>
                 <form id="scramble" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">

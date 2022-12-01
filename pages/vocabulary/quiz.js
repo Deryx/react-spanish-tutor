@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '/src/components/modal.tsx';
+import SimpleReport from '/src/components/vocabulary/simple-report.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
 const prisma = new PrismaClient();
@@ -16,6 +17,7 @@ function Quiz({ dictionary, categories }) {
     const [question, setQuestion] = useState( 0 );
     const [userAnswers, setUserAnswers] = useState( [] );
     const [showModal, setShowModal] = useState( false );
+    const reportTitle = "Vocabulary Quiz Report";
 
     const numOptions = 5;
     const categorySelections = [];
@@ -97,12 +99,12 @@ function Quiz({ dictionary, categories }) {
     }, [category]);
 
     createCategorySelect();
-    console.log(userAnswers);
 
     return (
         <>
+            { showModal ? <Modal /> : null }
+            { showModal ? <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } /> : null }
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
                 <h1>Vocabulary Quiz</h1>
                 <form id="quiz" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">

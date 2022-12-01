@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '/src/components/modal.tsx';
+import SimpleReport from '/src/components/vocabulary/simple-report.tsx';
 import Accents from '/src/components/accents.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
@@ -16,6 +17,7 @@ function Completion({ dictionary, categories }) {
     const [userAnswers, setUserAnswers] = useState( [] );
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
+    const reportTitle = "Vocabulary Completion Report";
 
     const BLANK = ' ';
     const numOptions = 5;
@@ -101,7 +103,13 @@ function Completion({ dictionary, categories }) {
     return (
         <>
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
+                { showModal === true ? 
+                    <>
+                        <Modal />
+                        <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } />
+                    </>
+                    : null 
+                }
                 <h1>Vocabulary Completion</h1>
                 <form id="completion" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">

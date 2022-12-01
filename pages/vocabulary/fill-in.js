@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '/src/components/modal.tsx';
+import SimpleReport from '/src/components/vocabulary/simple-report.tsx';
 import Accents from '/src/components/accents.tsx';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator.tsx';
 
@@ -16,6 +17,7 @@ function Fillin({ dictionary, categories }) {
     const [question, setQuestion] = useState( 0 );
     const [userAnswers, setUserAnswers] = useState( [] );
     const [showModal, setShowModal] = useState( false );
+    const reportTitle = "Vocabulary Fill-In Report";
 
     const numOptions = 5;
     const categorySelections = [];
@@ -89,7 +91,13 @@ function Fillin({ dictionary, categories }) {
     return (
         <>
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
+                { showModal === true ? 
+                    <>
+                        <Modal />
+                        <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } />
+                    </>
+                    : null 
+                }
                 <h1>Vocabulary Fill-in</h1>
                 <form id="fillin" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">

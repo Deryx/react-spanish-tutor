@@ -93,7 +93,6 @@ function Conjugator( { verbs, tenses, conjugations } ) {
     }, [tense] );
 
     createTenseSelect();
-    console.log({ questionSet, userAnswers });
     
     return (
         <>

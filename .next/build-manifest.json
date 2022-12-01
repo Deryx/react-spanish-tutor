@@ -30,15 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/verbs/conjugator": [
+    "/vocabulary/scramble": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/verbs/conjugator.js"
-    ],
-    "/verbs/slider": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/verbs/slider.js"
+      "static/chunks/pages/vocabulary/scramble.js"
     ]
   },
   "ampFirstPages": []

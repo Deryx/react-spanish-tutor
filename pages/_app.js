@@ -16,6 +16,7 @@ import '/styles/verbs/slider.scss';
 import '/styles/common/accents.scss';
 import '/styles/common/card.scss';
 import '/styles/common/modal.scss';
+import '/styles/vocabulary/simple-report.scss';
 
 export default function MyApp({ Component, pageProps }) {
     return (
