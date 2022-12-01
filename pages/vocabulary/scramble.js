@@ -76,8 +76,8 @@ function Scramble({ dictionary, categories }) {
             let currentArray = currentWord.split( '' );
             let scrambledArray = randomNumberGenerator( currentWord.length, currentWord.length );
             let scrambledWord = scrambledArray.map( element => currentArray[element] );
-            set.question = scrambledWord;
-            set.translation = currentTranslation;
+            set.question = currentTranslation;
+            set.scrambledWord = scrambledWord
             set.answer = currentWord;
 
             setQuestionSet( current => [...current, set] );
@@ -127,10 +127,10 @@ function Scramble({ dictionary, categories }) {
                         { questionSet[question] ? 
                             <dl id="questions">                            
                                 <dt>
-                                    <h2>[ { questionSet[question].translation } ]</h2>
+                                    <h2>[ { questionSet[question].question } ]</h2>
                                 </dt>
                                 <dd ref={ answerRef }>
-                                    { questionSet[question].question.map( ( letter, index ) =>
+                                    { questionSet[question].scrambledWord.map( ( letter, index ) =>
                                         <div key={ index }>{ letter }</div>
                                     ) }
                                 </dd>
