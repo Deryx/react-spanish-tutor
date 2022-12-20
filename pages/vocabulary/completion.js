@@ -19,6 +19,7 @@ function Completion({ dictionary, categories }) {
     const [showModal, setShowModal] = useState( false );
     const reportTitle = "Vocabulary Completion Report";
     let currentBox;
+    let currentLetter;
 
     const BLANK = ' ';
     const numOptions = 5;
@@ -60,8 +61,15 @@ function Completion({ dictionary, categories }) {
     const clearAnswer = () => {
         const currentAnswer = answerRef.current.querySelectorAll('input');
         for(const letter of currentAnswer) {
-            letter.value = null;
+            letter.value = '';
         }
+    }
+
+
+
+    const handleChange = (e) => {
+        currentLetter = e.target.value;
+        currentBox.value = currentLetter;
     }
 
     const handleSubmitClick = () => {
@@ -78,6 +86,8 @@ function Completion({ dictionary, categories }) {
     const handleOnFocusEvent = (e) => {
         if(answerRef.current.contains(e.target)){
             currentBox = e.target;
+            currentBox.focus();
+            currentBox.selectionEnd = currentBox.selectionStart + 1;
         }
     }
 
@@ -159,7 +169,7 @@ function Completion({ dictionary, categories }) {
                                 <dd>
                                     <ul ref={ answerRef }>
                                         { questionSet[question] && questionSet[question].incompleteWord.split('').map( (letter, index) => 
-                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onFocus={ handleOnFocusEvent } onChange={ (event) => event.target.value } maxLength="1" size="1" disabled={ letter !== BLANK } /></li>
+                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onFocus={ handleOnFocusEvent } onChange={ handleChange } maxLength="1" size="1" disabled={ letter !== BLANK } /></li>
                                         ) }
                                     </ul>
                                 </dd>

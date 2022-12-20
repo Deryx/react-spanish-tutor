@@ -135,15 +135,15 @@ function Quiz({ dictionary, categories }) {
                         { questionSet[question] ? 
                             <dl id="questions">
                                 <dt>
-                                    <label htmlFor={ `q${ question }` }>
+                                    <label key={ `question${ question }` } htmlFor={ `q${ question }` }>
                                         { questionSet[question].question }
                                     </label>
                                 </dt>
                                 <dd ref={ answerRef }>
                                     { questionSet[question] ? questionSet[question].options.map( option => 
                                         <div>
-                                            <input type="radio" id={ `q${ question }` } name={ `q${ question }` } value={ option } onChange={ e => e.target.value } />
-                                            <label htmlFor={ `q${ question }` }> 
+                                            <input type="radio" key={ `radio${ question }` } id={ `q${ question }` } name={ `q${ question }` } value={ option } onChange={ e => e.target.value } />
+                                            <label key={ `label${ question }` } htmlFor={ `q${ question }` }> 
                                                 { option }
                                             </label>
                                         </div>
