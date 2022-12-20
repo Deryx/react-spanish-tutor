@@ -36,11 +36,13 @@ function Input({ categories }) {
         const currentPosition = wordRef.current.selectionStart;
         let answer = wordRef.current.value;
         wordRef.current.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+        wordRef.current.focus();
+        wordRef.current.selectionStart = currentPosition + 1;
+        wordRef.current.selectionEnd = currentPosition + 1;
     }
 
     const handleInputChange = (e) => {
         const currentBox = e.target.id;
-        console.log(currentBox);
     }
 
     for(const category of categories) {

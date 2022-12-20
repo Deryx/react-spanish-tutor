@@ -73,6 +73,9 @@ function Fillin({ dictionary, categories }) {
         const currentPosition = answerRef.current.selectionStart;
         let answer = answerRef.current.value;
         answerRef.current.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+        answerRef.current.focus();
+        answerRef.current.selectionStart = currentPosition + 1;
+        answerRef.current.selectionEnd = currentPosition + 1;
     }
 
     useEffect(() => {

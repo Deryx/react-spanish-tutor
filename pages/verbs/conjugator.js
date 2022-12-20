@@ -83,6 +83,9 @@ function Conjugator( { verbs, tenses, conjugations } ) {
         const currentPosition = currentTextbox.selectionStart;
         let answer = currentTextbox.value;
         currentTextbox.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+        currentTextbox.focus();
+        currentTextbox.selectionStart = currentPosition + 1;
+        currentTextbox.selectionEnd = currentPosition + 1;
     }
 
     const onFocus = (e) => {

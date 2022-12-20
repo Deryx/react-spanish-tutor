@@ -33,7 +33,10 @@ function Input({ tenses }) {
     }
 
     const handleInfinitiveFocusEvent = (e) => {
-        currentTextBox = infinitiveRef.current;
+        const infinitiveBox = document.querySelector('#infinitive');
+        if(e.target === infinitiveBox) {
+            currentTextBox = infinitiveBox;
+        }
     }
 
     const handleSectionFocusEvent = (e) => {
@@ -48,6 +51,9 @@ function Input({ tenses }) {
         const currentPosition = currentTextBox.selectionStart;
         let answer = currentTextBox.value;
         currentTextBox.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+        currentTextBox.focus();
+        currentTextBox.selectionStart = currentPosition + 1;
+        currentTextBox.selectionEnd = currentPosition + 1;
     }
 
     for(const tense in tenses) {
