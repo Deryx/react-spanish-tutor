@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
@@ -9,7 +9,13 @@ import Accents from '/src/components/accents.tsx';
 const prisma = new PrismaClient;
 
 function Input({ categories }) {
+    const [accent, setAccent] = useState(null);
     const wordRef = useRef();
+    const translationRef = useRef();
+    const genderRef = useRef();
+    const pronunciationRef = useRef();
+    let currentTextbox;
+
     const [formValues, setFormValues] = useState({
         category: '',
         word: '',
@@ -24,9 +30,17 @@ function Input({ categories }) {
         setFormValues({category: e.target.value });
     }
 
-    const handleAccent = ( event, ) => {
-        event.preventDefault();
-        let accent = event.target.value;
+    const handleAccentClick = (e) => {
+        e.preventDefault();
+        setAccent(e.target.value);
+        const currentPosition = wordRef.current.selectionStart;
+        let answer = wordRef.current.value;
+        wordRef.current.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+    }
+
+    const handleInputChange = (e) => {
+        const currentBox = e.target.id;
+        console.log(currentBox);
     }
 
     for(const category of categories) {
@@ -37,6 +51,7 @@ function Input({ categories }) {
             }
          );
     }
+
     categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
     categorySelections.push({ id: 0, category: 'other'});
 
@@ -57,17 +72,17 @@ function Input({ categories }) {
                             </dd>
                         </dl>
                         { formValues.category === '0' && <Texinput id="newCategory" name="new category" className="col-lg-12" /> }
-                        <Texinput ref={ wordRef } id="word" name="word" className="col-lg-12" />
-                        <Texinput id="translation" name="translation" className="col-lg-12" />
-                        <Texinput id="gender" name="gender" className="col-lg-12" />
+                        <Texinput ref={ wordRef } id="word" name="word" onFocus={ currentTextbox = wordRef } onChange={ handleInputChange } className="col-lg-12" />
+                        <Texinput id="translation" name="translation" onChange={ handleInputChange } className="col-lg-12" />
+                        <Texinput id="gender" name="gender" onChange={ handleInputChange } className="col-lg-12" />
                         <Imageupload id="image" name="image" />
-                        <Texinput id="pronunciation" name="pronunciation" className="col-lg-12" />
+                        <Texinput id="pronunciation" name="pronunciation" onChange={ handleInputChange } className="col-lg-12" />
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" value="add word" />
                     </div>
                 </form>
-                <Accents handleAccentClick={ handleAccent }></Accents>
+                <Accents handleAccentClick={ handleAccentClick } />
             </section>
             <Footer />
         </>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
-function Accents( { handleAccentClick } ) {
+function Accents({ handleAccentClick }) {
+
     return (
         <>
             <form id="accents" className='row'>

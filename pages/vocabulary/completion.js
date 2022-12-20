@@ -18,6 +18,7 @@ function Completion({ dictionary, categories }) {
     const [question, setQuestion] = useState( 0 );
     const [showModal, setShowModal] = useState( false );
     const reportTitle = "Vocabulary Completion Report";
+    let currentBox;
 
     const BLANK = ' ';
     const numOptions = 5;
@@ -74,6 +75,19 @@ function Completion({ dictionary, categories }) {
         clearAnswer();
     }
 
+    const handleOnFocusEvent = (e) => {
+        if(answerRef.current.contains(e.target)){
+            currentBox = e.target;
+        }
+    }
+
+    const handleAccentClick = (e) => {
+        e.preventDefault();
+        const currentPosition = currentBox.selectionStart;
+        let answer = currentBox.value;
+        currentBox.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+    }
+
     useEffect( () => {    
         completionDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = completionDictionary.length;
@@ -90,8 +104,8 @@ function Completion({ dictionary, categories }) {
             let set = {};
             let optionNumbers;
 
-            set.question = currentWord.join('');
-            set.translation = completionDictionary[current].translation;
+            set.question = completionDictionary[current].translation;;
+            set.incompleteWord = currentWord.join('');
             set.answer = completionDictionary[current].word;
 
             setQuestionSet( current => [...current, set] );
@@ -140,12 +154,12 @@ function Completion({ dictionary, categories }) {
                         { questionSet[question] ? 
                             <dl id="questions">
                                 <dt>
-                                    <h2>[ { questionSet[question].translation } ]</h2>
+                                    <h2>[ { questionSet[question].question } ]</h2>
                                 </dt>
                                 <dd>
                                     <ul ref={ answerRef }>
-                                        { questionSet[question] && questionSet[question].question.split('').map( (letter, index) => 
-                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onChange={ (event) => event.target.value } maxLength="1" size="1" disabled={ letter !== BLANK } /></li>
+                                        { questionSet[question] && questionSet[question].incompleteWord.split('').map( (letter, index) => 
+                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onFocus={ handleOnFocusEvent } onChange={ (event) => event.target.value } maxLength="1" size="1" disabled={ letter !== BLANK } /></li>
                                         ) }
                                     </ul>
                                 </dd>
@@ -156,7 +170,7 @@ function Completion({ dictionary, categories }) {
                         { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
-                { questionSet[question] ? <Accents /> : null }
+                { questionSet[question] ? <Accents handleAccentClick={ handleAccentClick } /> : null }
             </section>
         </>
     )

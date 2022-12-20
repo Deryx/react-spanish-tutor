@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import Siteheader from '/src/components/siteHeader.tsx';
 import Footer from '/src/components/footer.tsx';
 import Texinput from '/src/components/textInput.tsx';
-import Textsection from '/src/components/verbs/tenseSection.tsx';
+import Tensesection from '/src/components/verbs/tenseSection.tsx';
 import Accents from '/src/components/accents.tsx';
 
 const prisma = new PrismaClient();
@@ -17,21 +17,41 @@ function Input({ tenses }) {
     const [tense, setTense] = useState( 0 );
     const numTenses = tenses.length;
 
-    for(const tense in tenses) {
-        formTenses.push( tenses[tense].tense );
-    }
+    let currentTextBox;
 
-    function incrementTense() {
+    const incrementTense = () => {
         setTense( tense + 1 );
     }
 
-    function handleNextClick() {
+    const handleNextClick = () => {
         if(tense < numTenses - 1 ) {
             incrementTense();
         } else {
             nextButtonRef.current.style.display = "none";
             submitButtonRef.current.style.display = "block";
         }     
+    }
+
+    const handleInfinitiveFocusEvent = (e) => {
+        currentTextBox = infinitiveRef.current;
+    }
+
+    const handleSectionFocusEvent = (e) => {
+        const currentSection = document.querySelector(`#${formTenses[tense]}`);
+        if(currentSection.contains(e.target)){
+            currentTextBox = e.target;
+        }
+    }
+
+    const handleAccentClick = (e, accent) => {
+        e.preventDefault();
+        const currentPosition = currentTextBox.selectionStart;
+        let answer = currentTextBox.value;
+        currentTextBox.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+    }
+
+    for(const tense in tenses) {
+        formTenses.push( tenses[tense].tense );
     }
 
     return (
@@ -42,11 +62,11 @@ function Input({ tenses }) {
                         { tense < numTenses && 
                             <fieldset className="col-lg-12">
                                     <>
-                                        <Texinput ref={ infinitiveRef } id="infinitive" name="infinitive" className="col-lg-12" />
+                                        <Texinput ref={ infinitiveRef } id="infinitive" name="infinitive" onFocusEvent={ handleInfinitiveFocusEvent } className="col-lg-12" />
                                         <Texinput id="translation" name="translation" className="col-lg-12" />
                                         <Texinput id="pronunciation" name="pronunciation" className="col-lg-12" />
                                     
-                                        <Textsection tense={ formTenses[tense]  } />
+                                        <Tensesection tense={ formTenses[tense] } onFocusEvent={ handleSectionFocusEvent } />
                                     </>
                             </fieldset>
                         }
@@ -55,7 +75,7 @@ function Input({ tenses }) {
                             <input ref={ submitButtonRef } type="button" id="submitBtn" value="add verb" />
                         </div>
                     </form>
-                { tense < numTenses && <Accents /> }
+                { tense < numTenses && <Accents handleAccentClick={ handleAccentClick } /> }
             </section>
             <Footer />
         </div>

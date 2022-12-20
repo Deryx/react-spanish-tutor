@@ -68,6 +68,13 @@ function Fillin({ dictionary, categories }) {
         clearAnswer();
     }
 
+    const handleAccentClick = (e) => {
+        e.preventDefault();
+        const currentPosition = answerRef.current.selectionStart;
+        let answer = answerRef.current.value;
+        answerRef.current.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+    }
+
     useEffect(() => {
         fillinDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = fillinDictionary.length;
@@ -78,7 +85,7 @@ function Fillin({ dictionary, categories }) {
             let optionNumbers;
             let randomSpot = randomNumberGenerator( 1, 5 );
 
-            set.translation = fillinDictionary[current].translation;
+            set.question = fillinDictionary[current].translation;
             set.answer = fillinDictionary[current].word;
 
             setQuestionSet( current => [...current, set] );
@@ -86,7 +93,6 @@ function Fillin({ dictionary, categories }) {
     }, [category]);
 
     createCategorySelect();
-    console.log(userAnswers);
 
     return (
         <>
@@ -129,11 +135,11 @@ function Fillin({ dictionary, categories }) {
                             <dl id="questions">
                                 <dt>
                                     <h2>
-                                        [ { questionSet[question] ? questionSet[question].translation : null } ]
+                                        [ { questionSet[question] ? questionSet[question].question : null } ]
                                     </h2>
                                 </dt>
-                                <dd ref={ answerRef }>
-                                    <input type="text" id={ `answer${question}` } key={ `answer${question}` } onChange={ (event) => event.target.value }  />
+                                <dd>
+                                    <input ref={ answerRef } type="text" id={ `answer${question}` } key={ `answer${question}` } onChange={ (event) => event.target.value }  />
                                 </dd>
                             </dl>
                         : null }
@@ -142,7 +148,7 @@ function Fillin({ dictionary, categories }) {
                         { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
-                { questionSet[question] ? <Accents /> : null }
+                { questionSet[question] ? <Accents handleAccentClick={ handleAccentClick } /> : null }
             </section>
         </>
     )

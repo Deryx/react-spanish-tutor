@@ -25,6 +25,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
     const [translations, setTranslations] = useState( [] );
     const tenseSelections = [];
     const [showModal, setShowModal] = useState( false );
+    let currentTextbox;
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -77,6 +78,34 @@ function Conjugator( { verbs, tenses, conjugations } ) {
         clearAnswers();
     }
 
+    const handleAccentClick = (e) => {
+        e.preventDefault();
+        const currentPosition = currentTextbox.selectionStart;
+        let answer = currentTextbox.value;
+        currentTextbox.value = answer.slice(0, currentPosition) + e.target.value + answer.slice(currentPosition);
+    }
+
+    const onFocus = (e) => {
+        if(e.target === yoRef.current ) {
+            currentTextbox = yoRef.current;
+        }
+        if(e.target === tuRef.current ) {
+            currentTextbox = tuRef.current;
+        }
+        if(e.target === elRef.current ) {
+            currentTextbox = elRef.current;
+        }
+        if(e.target === nosotrosRef.current ) {
+            currentTextbox = nosotrosRef.current;
+        }
+        if(e.target === vosotrosRef.current ) {
+            currentTextbox = vosotrosRef.current;
+        }
+        if(e.target === ellosRef.current ) {
+            currentTextbox = ellosRef.current;
+        }
+    }
+
     useEffect( () => {
         const randomVerbs = randomNumberGenerator( numQuestions, verbs.length );
         for(const verb of randomVerbs) {
@@ -92,7 +121,7 @@ function Conjugator( { verbs, tenses, conjugations } ) {
         }
     }, [tense] );
 
-    createTenseSelect();
+    createTenseSelect(); 
     
     return (
         <>
@@ -134,19 +163,19 @@ function Conjugator( { verbs, tenses, conjugations } ) {
                     : null }
                     { questionSet[question] ? 
                         <fieldset className="col-lg-12">
-                            <Textinput ref={ yoRef } id="yo" name="yo" className="col-lg-12" />
-                            <Textinput ref={ tuRef } id="tu" name="tu" className="col-lg-12" />
-                            <Textinput ref={ elRef } id="el" name="el/Ella/Usted" className="col-lg-12" />
-                            <Textinput ref={ nosotrosRef } id="nosotros" name="nosotros" className="col-lg-12" />
-                            <Textinput ref={ vosotrosRef } id="vosotros" name="vosotros" className="col-lg-12" />
-                            <Textinput ref={ ellosRef } id="ellos" name="ellos/Ellas/Ustedes" className="col-lg-12" />
+                            <Textinput ref={ yoRef } id="yo" name="yo" onFocusEvent={ onFocus } className="col-lg-12" />
+                            <Textinput ref={ tuRef } id="tu" name="tu" onFocusEvent={ onFocus } className="col-lg-12" />
+                            <Textinput ref={ elRef } id="el" name="el/Ella/Usted" onFocusEvent={ onFocus } className="col-lg-12" />
+                            <Textinput ref={ nosotrosRef } id="nosotros" name="nosotros" onFocusEvent={ onFocus } className="col-lg-12" />
+                            <Textinput ref={ vosotrosRef } id="vosotros" name="vosotros" onFocusEvent={ onFocus } className="col-lg-12" />
+                            <Textinput ref={ ellosRef } id="ellos" name="ellos/Ellas/Ustedes" onFocusEvent={ onFocus } className="col-lg-12" />
                         </fieldset>
                     : null }
                     <div className='buttons col-lg-12'>
                         { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
-                { questionSet[question] ? <Accents /> : null }
+                { questionSet[question] && <Accents handleAccentClick={ handleAccentClick } /> }
             </section>
         </>
     )
