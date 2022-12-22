@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Link from 'next/link';
-import Menu from '../components/menu.tsx';
+import Menu from '../components/menu';
 
 function SiteMenu() {
+    const menuRef = useRef( null );
+    const buttonRef = useRef( null );
+
     const verbPages = [
         { title: 'input', url: '/verbs/input'},
         { title: 'flashcard', url: '/verbs/flashcard' },
@@ -18,19 +21,33 @@ function SiteMenu() {
         { title: 'scramble', url: '/vocabulary/scramble' },
         { title: 'slider', url: '/vocabulary/slider' }
     ];
+    let toggle: boolean = false;
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        toggle = !toggle;
+        buttonRef.current.classList.toggle('change')
+        if(toggle) {
+            menuRef.current.classList.add('open');
+            menuRef.current.classList.remove('close');
+        } else {
+            menuRef.current.classList.remove('open');
+            menuRef.current.classList.add('close');
+        }
+    }
 
     return (
         <nav>
             <ul id="menu">
                 <li>
                     <Link href="/">
-                        <a  id="button">
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                        <a ref={ buttonRef } id="button" onClick={ handleClick }>
+                            <div className='bar1'></div>
+                            <div className='bar2'></div>
+                            <div className='bar3'></div>
                         </a>
                     </Link>
-                    <ul id="subMenu">
+                    <ul ref={ menuRef } id="subMenu" className='close'>
                         <li>
                             <h3>verbs</h3>
                             <Menu pages={ verbPages } />

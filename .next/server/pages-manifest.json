@@ -2,5 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/vocabulary/completion": "pages/vocabulary/completion.js"
+  "/": "pages/index.js"
 }

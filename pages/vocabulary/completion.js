@@ -65,8 +65,6 @@ function Completion({ dictionary, categories }) {
         }
     }
 
-
-
     const handleChange = (e) => {
         currentLetter = e.target.value;
         currentBox.value = currentLetter;
