@@ -26,11 +26,16 @@ function SiteMenu() {
     const handleClick = (e) => {
         e.preventDefault();
         toggle = !toggle;
-        buttonRef.current.classList.toggle('change')
         if(toggle) {
+            buttonRef.current.classList.add('change');
             menuRef.current.classList.add('open');
             menuRef.current.classList.remove('close');
+            setTimeout(() => {
+                toggle = true;
+                handleClick(e);
+            }, 5000);
         } else {
+            buttonRef.current.classList.remove('change');
             menuRef.current.classList.remove('open');
             menuRef.current.classList.add('close');
         }

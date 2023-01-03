@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/vocabulary/fill-in": [
+    "/verbs/conjugator": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/fill-in.js"
+      "static/chunks/pages/verbs/conjugator.js"
     ]
   },
   "ampFirstPages": []

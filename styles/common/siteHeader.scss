@@ -80,24 +80,23 @@ header {
                     margin: 6px 0; 
                     transition: 0.4s;
                 }
-                .change {
-                    .bar1 {
-                        transform: translate(0, 11px) rotate(-45deg);
-                    }                  
-                    .bar2 {opacity: 0;}
-                  
-                    .bar3 {
-                        transform: translate(0, -11px) rotate(45deg);
-                    } 
-                }           
             }
-        }
+            .change {
+                .bar1 {
+                    transform: translate(0, 11px) rotate(-45deg);
+                }                  
+                .bar2 {opacity: 0;}
+              
+                .bar3 {
+                    transform: translate(0, -11px) rotate(45deg);
+                } 
+            }           
+    }
 
         #subMenu {
             width: 230px;
             list-style-type: none;
             left: -11.25rem;
-            // top: -35.9375rem;
             margin-top: 0.75rem;
             margin-left: 0;
             padding: 0;
