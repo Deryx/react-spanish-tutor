@@ -33,7 +33,7 @@ function SiteMenu() {
             setTimeout(() => {
                 toggle = true;
                 handleClick(e);
-            }, 5000);
+            }, 8000);
         } else {
             buttonRef.current.classList.remove('change');
             menuRef.current.classList.remove('open');
