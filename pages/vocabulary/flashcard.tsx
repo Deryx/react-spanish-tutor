@@ -15,35 +15,39 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
     const categoriesRef = useRef(null);
     const cardRef = useRef(null);
     const [card, setCard] = useState(0);
-    const [category, setCategory] = useState();
-    // const card = cardRef.current && cardRef.current;
+    const [cards, setCards] = useState([]);
+    const [category, setCategory] = useState(null);
 
     const headerFront = 'Front';
     const headerBack = 'Back';
     const info = '';
     const categorySelections = [];
     let flashcardDictionary;
+    let toggle: boolean = false;
 
-    const incrementQuestion = () => {
-        if(card <= card) {
+    const incrementCard = () => {
+        if(card <= cards.length) {
             setCard(card + 1);
         }
     }
 
-    const handleCategoryChange = () => {
-        setCategory( parseInt( event.target.value ));
-        categoriesRef.current.style.display = "none";
+    const handleCategoryChange = (e) => {
+        categoriesRef.current.value = parseInt(e.target.value);
+        setCategory(categoriesRef.current.value);
     }
 
-    const flipCard = () => {
-        cardRef.current.classList.toggle( 'flipCard' );
+    const handleNext = (e) => {
+        e.preventDefault();
+        incrementCard();
     }
 
-    const handleClick = () => {
-        cardRef.current.addEventListener('click', flipCard);
-
-        return () => {
-            cardRef.current.removeEventListener('click', flipCard);
+    const handleClick = (e) => {
+        e.preventDefault();
+        toggle = !toggle;
+        if(toggle) {
+            cardRef.current.classList.add('flipCard');
+        } else {
+            cardRef.current.classList.remove('flipCard');
         }
     }
 
@@ -62,11 +66,15 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
         categorySelections.unshift({ id: '', category: '' });
     }
 
-    useEffect( () => {
+    useEffect(() => {
         flashcardDictionary = category != '0' ? [...dictionary.filter( word => word.category === category )] : dictionary;
         const dictionaryLength = flashcardDictionary.length;
-        const words = randomNumberGenerator( dictionaryLength, dictionaryLength );
-    }, [category] );
+        const words = randomNumberGenerator(dictionaryLength, dictionaryLength);
+        setCards([]);
+        for(let i = 0; i < words.length; i++) {
+            setCards(prev => [...prev, flashcardDictionary[i]]);
+        }
+    }, [category]);
 
     createCategorySelect();
 
@@ -85,12 +93,15 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
                                     )}
                                 </select>
                             </dd>
-                        </dl> 
-                        <Card ref={ cardRef } frontHeader={ headerFront } backHeader={ headerBack } frontInfo={ info } backInfo={ info } />
+                        </dl>
+                        { cards[card] ? 
+                            <Card ref={cardRef} cardType={'vocabulary'} word={ cards[card].word } pronunciation={ cards[card].pronunciation } translation={ cards[card].translation }  image={ cards[card].image.split('/')[2] } />
+                            : null
+                        }
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="flipBtn" onClick={ handleClick } value="flip card" />
-                        <input type="button" id="nextBtn" onClick={ incrementQuestion } value="next" />
+                        <input type="button" id="nextBtn" onClick={ handleNext } value="next" />
                     </div>
                 </form>
             </section>

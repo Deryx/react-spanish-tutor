@@ -35,11 +35,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/verbs/flashcard.js"
     ],
-    "/vocabulary/completion": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/completion.js"
-    ],
     "/vocabulary/flashcard": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

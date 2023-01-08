@@ -8,43 +8,99 @@ const prisma = new PrismaClient();
 interface FlashcardProps {
     verbs: any[];
     tenses: any[];
+    conjugations: any[];
 }
 
-const Flashcard: FC<FlashcardProps> = ( { verbs, tenses } ) => {
-    const cardRef = useRef(null);
-    const [card, setCard] = useState(0);
+const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
+    const verbRef = useRef(null);
+    const tenseRef = useRef(null);
+    const verbCardRef = useRef(null);
+    const [cardInfo, setCardInfo] = useState({
+        infinitive: null,
+        translation: null,
+        pronunciation: null,
+        tense: null,
+        conjugations: null
+    });
+    const [verbSelection, setVerbSelection] = useState(0);
+    const [tenseSelection, setTenseSelection] = useState(0);
 
     const verbSelections = [];
     const tenseSelections = [];
-    const headerFront = 'Front';
-    const headerBack = 'Back';
+    const headerFront: String = 'Front';
+    const headerBack: String = 'Back';
     const info = '';
+    let toggle: boolean = false;
 
-    for(const verb of verbs) {
-        verbSelections.push( 
-            {
-                id: verb.id,
-                verb: verb.infinitive 
-            }
-        );
+    const createVerbSelect = () => {
+        for(const verb of verbs) {
+            verbSelections.push( 
+                {
+                    id: verb.id,
+                    verb: verb.infinitive 
+                }
+            );
+        }
+        verbSelections.sort((a, b) => a.verb > b.verb ? 1 : -1);
+        verbSelections.unshift({ id: '', verb: 'SELECT AN INFINITIVE' });
     }
-    verbSelections.sort((a, b) => a.verb > b.verb ? 1 : -1);
     
-    for(const tense of tenses) {
-        tenseSelections.push( 
-            {
-                id: tense.id,
-                tense: tense.tense
-            } 
-        );
+    const createTenseSelect = () => {
+        for(const tense of tenses) {
+            tenseSelections.push( 
+                {
+                    id: tense.id,
+                    tense: tense.tense
+                } 
+            );
+        }
+        tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
 
-
-    const incrementQuestion = () => {
-        if( card <= card ) {
-            setCard( card + 1 );
+    const handleFlipClick = (e) => {
+        e.preventDefault();
+        toggle = !toggle;
+        if(toggle) {
+            verbCardRef.current.classList.add('flipCard');
+        } else {
+            verbCardRef.current.classList.remove('flipCard');
         }
     }
+
+    const handleVerbChange = (e) => {
+        e.preventDefault();
+        setVerbSelection(parseInt(e.target.value));
+    }
+
+    const handleTenseChange = (e) => {
+        e.preventDefault();
+        setTenseSelection(parseInt(e.target.value));
+    }
+
+    useEffect(() => {
+        const info = {
+                infinitive: null,
+                translation: null,
+                pronunciation: null,
+                tense: '',
+                conjugations: null
+            };
+        const infinitiveInfo = verbs.find((verb) => verb.id  === verbSelection);
+        const tenseInput = tenses.find((tense) => tense.id === tenseSelection);
+        info.infinitive = infinitiveInfo && infinitiveInfo.infinitive;
+        info.translation = infinitiveInfo && infinitiveInfo.translation;
+        info.pronunciation = infinitiveInfo && infinitiveInfo.pronunciation;
+        info.tense = tenseInput && tenseInput.tense;
+        const verbConjugations = conjugations
+            .filter((conjugation) => conjugation.verb === verbSelection && conjugation.tense === tenseSelection)
+            .map( ({ yo, tu, el, nosotros, vosotros, ellos }) => ({ yo, tu, el, nosotros, vosotros, ellos}) )[0];
+        info.conjugations = verbConjugations && verbConjugations;
+        setCardInfo(info);
+    }, [verbSelection, tenseSelection]);
+
+    createVerbSelect();
+    createTenseSelect();
+    console.log(cardInfo);
 
     return (
         <>
@@ -52,31 +108,36 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses } ) => {
                 <h1>Verb Flashcard</h1>
                 <form id="verbFlashcard" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
-                        <dl>
+                        <dl ref={verbRef}>
                             <dt><label htmlFor="verbSelect">verb: </label></dt>
                             <dd>
-                                <select id="verbSelect" name="verbSelect">
+                                <select id="verbSelect" name="verbSelect" onChange={handleVerbChange}>
                                     { verbSelections.map( ( verbSelection ) => 
                                         <option key={ verbSelection.id } value={ verbSelection.id }>{ verbSelection.verb }</option>
                                     )}
                                 </select>
                             </dd>
                         </dl>
-                        <dl>
-                            <dt><label htmlFor="tenseSelect">tense: </label></dt>
-                            <dd>
-                                <select id="tenseSelect" name="tenseSelect">
-                                    { tenseSelections.map( ( tenseSelection, i ) => 
-                                        <option key={ i } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
-                                    )}
-                                </select>
-                            </dd>
-                        </dl>
-                        <Card ref={ cardRef } frontHeader={ headerFront } backHeader={ headerBack } frontInfo={ info } backInfo={ info } />
+                        {/* { verbSelection ?  */}
+                            <dl>
+                                <dt><label htmlFor="tenseSelect">tense: </label></dt>
+                                <dd>
+                                    <select ref={tenseRef} id="tenseSelect" name="tenseSelect" onChange={handleTenseChange}>
+                                        { tenseSelections.map( ( tenseSelection, i ) => 
+                                            <option key={ i } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
+                                        )}
+                                    </select>
+                                </dd>
+                            </dl>
+                            {/* : null
+                        }    */}
+                        { cardInfo ? 
+                            <Card ref={ verbCardRef } cardType={'verb'} infinitive={ cardInfo.infinitive } translation={ cardInfo.translation } pronunciation={ cardInfo.pronunciation } tense={ cardInfo.tense } conjugations={cardInfo.conjugations} />
+                            : null                            
+                        }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        <input type="button" id="flipBtn" value="flip card" />
-                        <input type="button" id="nextBtn" onClick={ incrementQuestion } value="next" />
+                        <input type="button" id="flipBtn" onClick={handleFlipClick} value="flip card" />
                     </div>
                 </form>
             </section>
@@ -87,10 +148,12 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses } ) => {
 export async function getServerSideProps() {
     const allVerbs = await prisma.verbs.findMany();
     const allTenses = await prisma.tenses.findMany();
+    const allConjugations = await prisma.conjugations.findMany();
     return {
         props: {
             verbs: allVerbs,
             tenses: allTenses,
+            conjugations: allConjugations
         }
     }
 }
