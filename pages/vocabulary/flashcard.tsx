@@ -63,7 +63,7 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
     
         categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
         categorySelections.unshift({ id: '0', category: 'all' });
-        categorySelections.unshift({ id: '', category: '' });
+        categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
     }
 
     useEffect(() => {
@@ -94,10 +94,7 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
                                 </select>
                             </dd>
                         </dl>
-                        { cards[card] ? 
-                            <Card ref={cardRef} cardType={'vocabulary'} word={ cards[card].word } pronunciation={ cards[card].pronunciation } translation={ cards[card].translation }  image={ cards[card].image.split('/')[2] } />
-                            : null
-                        }
+                        <Card ref={cardRef} cardType={'vocabulary'} word={ cards[card] && cards[card].word } pronunciation={ cards[card] && cards[card].pronunciation } translation={ cards[card] && cards[card].translation }  image={ cards[card] && cards[card].image.split('/')[2] } />
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="flipBtn" onClick={ handleClick } value="flip card" />

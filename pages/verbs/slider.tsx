@@ -45,6 +45,7 @@ const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
                 }
              );
         } 
+        tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
 
     const handleTenseChange = () => {
@@ -104,7 +105,6 @@ const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
                                 <dt><label htmlFor="tense">tense: </label></dt>
                                 <dd>
                                     <select id="tense" name="tense" onChange={ handleTenseChange }>
-                                        <option key=""></option>
                                         { tenseSelections.map( ( tenseSelection ) => 
                                             <option key={ tenseSelection.tense } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
                                         )}

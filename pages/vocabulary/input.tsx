@@ -48,17 +48,22 @@ const Input: FC<InputProps> = ({ categories }) => {
         const currentBox = e.target.id;
     }
 
-    for(const category of categories) {
-        categorySelections.push( 
-            {
-                id: category.id,
-                category: category.category
-            }
-         );
+    const createCategorySelect = () => {
+        for(const category of categories) {
+            categorySelections.push( 
+                {
+                    id: category.id,
+                    category: category.category
+                }
+             );
+        }
+    
+        categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
+        categorySelections.unshift({ id: '0', category: 'all' });
+        categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
     }
 
-    categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
-    categorySelections.push({ id: 0, category: 'other'});
+    createCategorySelect();
 
     return (
         <>

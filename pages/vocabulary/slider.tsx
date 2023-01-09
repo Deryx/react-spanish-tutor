@@ -42,7 +42,8 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
         }
     
         categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
-        categorySelections.unshift({ id: '', category: 'all' });
+        categorySelections.unshift({ id: '0', category: 'all' });
+        categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
     }
 
     const handleNumQuestionsChange = () => {

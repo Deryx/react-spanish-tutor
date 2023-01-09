@@ -39,7 +39,7 @@ const Card = forwardRef((props: CardProps, _ref) => {
                         </div>
                         <div className='back'>
                             <h3>{ translation }</h3>
-                            { image && image.split('/').length > 0 ?
+                            { image && !(image === 'blank.png') ?
                                 <div className="image">
                                     <Image src={`/images/${image}`} width={150} height={150} />
                                 </div> : null
