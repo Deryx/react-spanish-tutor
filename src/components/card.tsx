@@ -29,7 +29,7 @@ const Card = forwardRef((props: CardProps, _ref) => {
     return (
         <div className='mainContainer'>
             <div ref={_ref} className="card">
-                { props.cardType == "vocabulary" ? 
+                { cardType == "vocabulary" ? 
                     <>
                         <div className='front'>
                             <h3>[ { word } ]</h3>
@@ -54,9 +54,7 @@ const Card = forwardRef((props: CardProps, _ref) => {
                         </div>
                         <div className='back'>
                             <h3>[ {tense} ] tense</h3>
-                            <div>
-                                { conjugations && Object.entries(conjugations).map(([key, value]) => <dl className='verb'><dt>{key}</dt><dd>{value}</dd></dl>)}   
-                            </div>
+                            { conjugations && Object.entries(conjugations).map(([key, value]) => <dl className='verb'><dt>{key}</dt><dd>{value}</dd></dl>)}   
                         </div>
                     </>
                 }

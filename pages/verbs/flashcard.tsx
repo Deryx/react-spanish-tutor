@@ -64,6 +64,7 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
             verbCardRef.current.classList.add('flipCard');
         } else {
             verbCardRef.current.classList.remove('flipCard');
+            console.log(verbCardRef.current.classList);
         }
     }
 
@@ -78,6 +79,8 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
     }
 
     useEffect(() => {
+        const cardBack = verbCardRef.current.querySelector('.back');
+        cardBack.style.backgroundColor = 'rgb(0, 0, 0)';
         const info = {
                 infinitive: null,
                 translation: null,
@@ -100,7 +103,6 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
 
     createVerbSelect();
     createTenseSelect();
-    console.log(cardInfo);
 
     return (
         <>
@@ -118,19 +120,16 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
                                 </select>
                             </dd>
                         </dl>
-                        {/* { verbSelection ?  */}
-                            <dl>
-                                <dt><label htmlFor="tenseSelect">tense: </label></dt>
-                                <dd>
-                                    <select ref={tenseRef} id="tenseSelect" name="tenseSelect" onChange={handleTenseChange}>
-                                        { tenseSelections.map( ( tenseSelection, i ) => 
-                                            <option key={ i } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
-                                        )}
-                                    </select>
-                                </dd>
-                            </dl>
-                            {/* : null
-                        }    */}
+                        <dl>
+                            <dt><label htmlFor="tenseSelect">tense: </label></dt>
+                            <dd>
+                                <select ref={tenseRef} id="tenseSelect" name="tenseSelect" onChange={handleTenseChange}>
+                                    { tenseSelections.map( ( tenseSelection, i ) => 
+                                        <option key={ i } value={ tenseSelection.id }>{ tenseSelection.tense }</option>
+                                    )}
+                                </select>
+                            </dd>
+                        </dl>
                         { cardInfo ? 
                             <Card ref={ verbCardRef } cardType={'verb'} infinitive={ cardInfo.infinitive } translation={ cardInfo.translation } pronunciation={ cardInfo.pronunciation } tense={ cardInfo.tense } conjugations={cardInfo.conjugations} />
                             : null                            

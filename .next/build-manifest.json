@@ -34,11 +34,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/verbs/flashcard.js"
-    ],
-    "/vocabulary/flashcard": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/flashcard.js"
     ]
   },
   "ampFirstPages": []
