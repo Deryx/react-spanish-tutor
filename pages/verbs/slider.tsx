@@ -12,27 +12,32 @@ interface SliderProps {
 }
 
 const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
-    const numQuestionsRef = useRef();
-    const tensesRef = useRef();
-    const [numQuestions, setNumQuestions] = useState();
-    const [question, setQuestion] = useState( 0 );
-    const [questionSet, setQuestionSet] = useState( [] );
-    const [tense, setTense] = useState();
-    const [showModal, setShowModal] = useState( false );
+    const numQuestionsRef = useRef(null);
+    const tensesRef = useRef(null);
+    const [numQuestions, setNumQuestions] = useState(null);
+    const [question, setQuestion] = useState(0);
+    const [questionSet, setQuestionSet] = useState([]);
+    const [tense, setTense] = useState(null);
+    const [showModal, setShowModal] = useState(false);
     const tenseSelections = [];
     const numOptions = 5;
     const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
+    let draggingElement;
+    let placeholder;
+    let isDraggingStarted = false;
+    let x = 0;
+    let y = 0;
 
     const incrementQuestion = () => {
-        if( question < numQuestions ) {
-            setQuestion( ++question );
+        if( numQuestions && (question < numQuestions )) {
+            setQuestion( question + 1 );
         } 
         
         question === numQuestions && setShowModal( showModal => showModal = !showModal );
     }
 
     const handleNumQuestionsChange = () => {
-        setNumQuestions( parseInt( event.target.value ));
+        setNumQuestions(event.target.value);
         numQuestionsRef.current.style.display = "none";
     }
 
@@ -47,23 +52,123 @@ const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
         } 
         tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
-
     const handleTenseChange = () => {
         setTense( parseInt( event.target.value ));
         tensesRef.current.style.display = "none";
     }
 
+    const mouseDownHandler = (e) => {
+        draggingElement = e.target;
+
+        const rect = draggingElement.getBoundingClientRect();
+        x = e.pageX - rect.left;
+        y = e.pageY - rect.top;
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    }
+
+    const mouseMoveHandler = (e) => {
+        const draggingRect = draggingElement.getBoundingClientRect();
+
+        if (!isDraggingStarted) {
+            // Update the flag
+            isDraggingStarted = true;
+
+            // Let the placeholder take the height of dragging element
+            // So the next element won't move up
+            placeholder = document.createElement('div');
+            placeholder.classList.add('placeholder');
+            draggingElement.parentNode.insertBefore(
+                placeholder,
+                draggingElement.nextSibling
+            );
+
+            // Set the placeholder's height
+            placeholder.style.height = `${draggingRect.height}px`;
+        } 
+        draggingElement.style.position = 'absolute';
+        draggingElement.style.top = `${e.pageY - y}px`;
+        draggingElement.style.left =`${e.pageX - x}px`;
+
+        const prevElement = draggingElement.previousElementSibling;
+        const nextElement = placeholder.nextElementSibling;
+
+        if (prevElement && isAbove(draggingElement, prevElement)) {
+            // The current order    -> The new order
+            // prevElement              -> placeholder
+            // draggingEle          -> draggingEle
+            // placeholder          -> prevEle
+            swap(placeholder, draggingElement);
+            swap(placeholder, prevElement);
+            return;
+        }
+
+        if (nextElement && isAbove(nextElement, draggingElement)) {
+            // The current order    -> The new order
+            // draggingElement      -> nextElement
+            // placeholder          -> placeholder
+            // nextElement          -> draggingEle
+            swap(nextElement, placeholder);
+            swap(nextElement, draggingElement);
+        }
+    }
+
+    const mouseUpHandler = () => {
+        // Remove the placeholder
+        placeholder && placeholder.parentNode.removeChild(placeholder);
+        // Reset the flag
+        isDraggingStarted = false;
+
+        // Remove the position styles
+        draggingElement.style.removeProperty('top');
+        draggingElement.style.removeProperty('left');
+        draggingElement.style.removeProperty('position');
+    
+        x = null;
+        y = null;
+        draggingElement = null;
+    
+        // Remove the handlers of `mousemove` and `mouseup`
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+    };
+
+    const isAbove = (nodeA, nodeB) => {
+        // Get the bounding rectangle of nodes
+        const rectA = nodeA.getBoundingClientRect();
+        const rectB = nodeB.getBoundingClientRect();
+    
+        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+    };
+
+    const swap = (nodeA, nodeB) => {
+        const parentA = nodeA.parentNode;
+        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+    
+        // Move `nodeA` to before the `nodeB`
+        nodeB.parentNode.insertBefore(nodeA, nodeB);
+    
+        // Move `nodeB` to before the sibling of `nodeA`
+        parentA.insertBefore(nodeB, siblingA);
+    };    
+    
     useEffect( () => {
         const randomIndices = randomNumberGenerator( numQuestions, verbs.length );
-    
+
         let verbIds = [];
         let slideSet = [];
         let scrambledSet = [];
         for( const index of randomIndices ) {
-            verbIds = [...verbIds, verbs.filter( verb => verb.id === index )[0].id];
+            verbIds = randomIndices && [...verbIds, verbs.filter( verb => verb.id === index )[0].id];
         }
         for( let i = 0; i < numQuestions; i++) {
-            let set = {};
+            let set = {
+                infinitive: '',
+                translation: '',
+                answers: [],
+                slideSet: []
+            };
             let currentVerb = verbs[verbIds[i]].id;
             set.infinitive = verbs.find( verb => verb.id === currentVerb).infinitive;
             set.translation = verbs.find( verb => verb.id === currentVerb).translation;
@@ -77,7 +182,7 @@ const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
             set.slideSet = scrambledSlides;
             setQuestionSet( prev => [...prev, set] );
         }
-    }, [tense]);
+      }, [tense]);
 
     createTenseSelect();
 
@@ -131,7 +236,13 @@ const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
                                 <div className='slides'>
                                     {
                                         questionSet[question].slideSet.map( ( slide, index ) => 
-                                            <div key={ index }>{ slide }</div>
+                                            <div 
+                                                id={`slide${index}`} 
+                                                key={ index } 
+                                                onMouseDown={mouseDownHandler} 
+                                                className="draggable">
+                                                    { slide }
+                                                </div>
                                         )
                                     }
                                 </div>

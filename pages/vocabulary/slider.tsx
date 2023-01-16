@@ -22,6 +22,11 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     const numOptions = 5;
     const categorySelections = [];
     let sliderDictionary = [];
+    let draggingElement;
+    let placeholder;
+    let isDraggingStarted = false;
+    let x = 0;
+    let y = 0;
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -56,6 +61,102 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
         categoriesRef.current.style.display = "none";
     }
 
+    const mouseDownHandler = (e) => {
+        draggingElement = e.target;
+
+        const rect = draggingElement.getBoundingClientRect();
+        x = e.pageX - rect.left;
+        y = e.pageY - rect.top;
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    }
+
+    const mouseMoveHandler = (e) => {
+        const draggingRect = draggingElement.getBoundingClientRect();
+
+        if (!isDraggingStarted) {
+            // Update the flag
+            isDraggingStarted = true;
+
+            // Let the placeholder take the height of dragging element
+            // So the next element won't move up
+            placeholder = document.createElement('div');
+            placeholder.classList.add('placeholder');
+            draggingElement.parentNode.insertBefore(
+                placeholder,
+                draggingElement.nextSibling
+            );
+
+            // Set the placeholder's height
+            placeholder.style.height = `${draggingRect.height}px`;
+        } 
+        draggingElement.style.position = 'absolute';
+        draggingElement.style.top = `${e.pageY - y}px`;
+        draggingElement.style.left =`${e.pageX - x}px`;
+
+        const prevElement = draggingElement.previousElementSibling;
+        const nextElement = placeholder.nextElementSibling;
+
+        if (prevElement && isAbove(draggingElement, prevElement)) {
+            // The current order    -> The new order
+            // prevElement              -> placeholder
+            // draggingEle          -> draggingEle
+            // placeholder          -> prevEle
+            swap(placeholder, draggingElement);
+            swap(placeholder, prevElement);
+            return;
+        }
+
+        if (nextElement && isAbove(nextElement, draggingElement)) {
+            // The current order    -> The new order
+            // draggingElement      -> nextElement
+            // placeholder          -> placeholder
+            // nextElement          -> draggingEle
+            swap(nextElement, placeholder);
+            swap(nextElement, draggingElement);
+        }
+    }
+
+    const mouseUpHandler = () => {
+        // Remove the placeholder
+        placeholder && placeholder.parentNode.removeChild(placeholder);
+        // Reset the flag
+        isDraggingStarted = false;
+
+        // Remove the position styles
+        draggingElement.style.removeProperty('top');
+        draggingElement.style.removeProperty('left');
+        draggingElement.style.removeProperty('position');
+    
+        x = null;
+        y = null;
+        draggingElement = null;
+    
+        // Remove the handlers of `mousemove` and `mouseup`
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+    };
+
+    const isAbove = (nodeA, nodeB) => {
+        // Get the bounding rectangle of nodes
+        const rectA = nodeA.getBoundingClientRect();
+        const rectB = nodeB.getBoundingClientRect();
+    
+        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+    };
+
+    const swap = (nodeA, nodeB) => {
+        const parentA = nodeA.parentNode;
+        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+    
+        // Move `nodeA` to before the `nodeB`
+        nodeB.parentNode.insertBefore(nodeA, nodeB);
+    
+        // Move `nodeB` to before the sibling of `nodeA`
+        parentA.insertBefore(nodeB, siblingA);
+    };    
+    
     useEffect(() => {
         sliderDictionary = [...dictionary.filter( word => word.category === category )];
         const dictionaryLength = sliderDictionary.length;
@@ -124,7 +225,13 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
                                 <div className='slides'>
                                     {
                                         slideSets[question].slideBricks.map( ( slideBricks, index ) => 
-                                            <div key={ index }>{ slideBricks }</div>
+                                            <div 
+                                                id={`slide${index}`} 
+                                                key={ index } 
+                                                onMouseDown={mouseDownHandler} 
+                                                className='draggable'>
+                                                    { slideBricks }
+                                            </div>
                                         )
                                     }
                                 </div>
