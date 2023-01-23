@@ -82,7 +82,9 @@ const Input: FC<InputProps> = ({ categories }) => {
     const handleSubmitClick = (e) => {
         e.preventDefault();
 
-        if(categoryRef.current.value && wordRef.current.value && translationRef.current.value && imageRef.current.value, pronunciationRef.current.value) {
+        const currentImage = imageRef.current.value && [imageRef.current.value.match('/fakepath\\(.*)/'), 'assets/images/'].join('');
+
+        if(categoryRef.current.value && wordRef.current.value && translationRef.current.value && currentImage, pronunciationRef.current.value) {
             const newVocabulary = {
                 category: categoryRef.current.value,
                 word: wordRef.current.value,
