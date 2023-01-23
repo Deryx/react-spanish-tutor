@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-function Textinput( props:any ) {
+const Imageupload = forwardRef( ( props:any, forwardedRef ) => {
     return (
         <>
             <dl>
                 <dt><label htmlFor={ props.id }>{ props.name }: </label></dt>
                 <dd>
-                    <input type="file" id={ props.id } name={ props.id } />
+                    <input ref={ forwardedRef } type="file" id={ props.id } name={ props.id } />
                 </dd>
             </dl>
         </>
     )
-}
+});
 
-export default Textinput;
+export default Imageupload;

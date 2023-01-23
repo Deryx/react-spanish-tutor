@@ -11,7 +11,7 @@ interface SliderProps {
     conjugations: any[];
 }
 
-const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
+const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     const numQuestionsRef = useRef(null);
     const tensesRef = useRef(null);
     const [numQuestions, setNumQuestions] = useState(null);
@@ -96,7 +96,7 @@ const Slider: FC<SliderProps> = ( { verbs, tenses, conjugations } ) => {
 
         if (prevElement && isAbove(draggingElement, prevElement)) {
             // The current order    -> The new order
-            // prevElement              -> placeholder
+            // prevElement          -> placeholder
             // draggingEle          -> draggingEle
             // placeholder          -> prevEle
             swap(placeholder, draggingElement);
