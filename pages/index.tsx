@@ -118,6 +118,7 @@ const Index = () => {
         if(slide < slideData.length) {
             changeSlide();
         } else {
+            stopShow();
             setSlide(0);
         }
     }, [slide]);
