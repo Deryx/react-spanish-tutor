@@ -1,6 +1,7 @@
 import Layout from '../src/components/layout';
 import 'bootstrap/dist/css/bootstrap.css';
 import '/styles/styles.scss';
+import '../styles/index.scss';
 import '/styles/common/siteHeader.scss';
 import '/styles/vocabulary/input.scss';
 import '/styles/vocabulary/completion.scss';
