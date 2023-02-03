@@ -4,126 +4,90 @@ import Image from 'next/image';
 import SlideShow from '../src/components/slideShow';
 import { clearInterval } from 'timers';
 
-const Index = () => {
-    const slideData = [
-        {
-            image: '/images/home/Flag-Argentina.webp',
-            caption: 'Argentina'
-        },
-        {
-            image: '/images/home/Flag-Bolivia.webp',
-            caption: 'Bolivia'
-        },
-        {
-            image: '/images/home/Flag-Chile.webp',
-            caption: 'Chile'
-        },
-        {
-            image: '/images/home/Flag-Colombia.webp',
-            caption: 'Colombia'
-        },
-        {
-            image: '/images/home/Flag-Costa-Rica.webp',
-            caption: 'Costa Rica'
-        },
-        {
-            image: '/images/home/Flag-Dominican-Republic.webp',
-            caption: 'Dominican Republic'
-        },
-        {
-            image: '/images/home/Flag-Ecuador.webp',
-            caption: 'Ecuador'
-        },
-        {
-            image: '/images/home/Flag-El-Salvador.webp',
-            caption: 'El Salvador'
-        },
-        {
-            image: '/images/home/Flag-Equatorial-Guinea.webp',
-            caption: 'Equatorial Guinea'
-        },
-        {
-            image: '/images/home/Flag-Guatemala.webp',
-            caption: 'Guatemala'
-        },
-        {
-            image: '/images/home/Flag-Honduras.webp',
-            caption: 'Honduras'
-        },
-        {
-            image: '/images/home/Flag-Mexico.webp',
-            caption: 'Mexico'
-        },
-        {
-            image: '/images/home/Flag-Nicaragua.webp',
-            caption: 'Nicaragua'
-        },
-        {
-            image: '/images/home/Flag-Panama.webp',
-            caption: 'Panama'
-        },
-        {
-            image: '/images/home/Flag-Paraguay.webp',
-            caption: 'Paraguay'
-        },
-        {
-            image: '/images/home/Flag-Peru.webp',
-            caption: 'Peru'
-        },
-        {
-            image: '/images/home/Flag-Spain.webp',
-            caption: 'Spain'
-        },
-        {
-            image: '/images/home/Flag-Uruguay.webp',
-            caption: 'Uruguay'
-        },
-        {
-            image: '/images/home/Flag-Venezuela.webp',
-            caption: 'Venezuela'
-        }
-    ];
-    const [slide, setSlide] = useState(0);
-    const slideShowRef = useRef(null);
-
-    const incrementSlide = () => {
-        if(slide < slideData.length) {
-            setSlide(slide + 1);
-        }
+const slideData = [
+    {
+        image: '/images/home/Flag-Argentina.webp',
+        caption: 'Argentina'
+    },
+    {
+        image: '/images/home/Flag-Bolivia.webp',
+        caption: 'Bolivia'
+    },
+    {
+        image: '/images/home/Flag-Chile.webp',
+        caption: 'Chile'
+    },
+    {
+        image: '/images/home/Flag-Colombia.webp',
+        caption: 'Colombia'
+    },
+    {
+        image: '/images/home/Flag-Costa-Rica.webp',
+        caption: 'Costa Rica'
+    },
+    {
+        image: '/images/home/Flag-Dominican-Republic.webp',
+        caption: 'Dominican Republic'
+    },
+    {
+        image: '/images/home/Flag-Ecuador.webp',
+        caption: 'Ecuador'
+    },
+    {
+        image: '/images/home/Flag-El-Salvador.webp',
+        caption: 'El Salvador'
+    },
+    {
+        image: '/images/home/Flag-Equatorial-Guinea.webp',
+        caption: 'Equatorial Guinea'
+    },
+    {
+        image: '/images/home/Flag-Guatemala.webp',
+        caption: 'Guatemala'
+    },
+    {
+        image: '/images/home/Flag-Honduras.webp',
+        caption: 'Honduras'
+    },
+    {
+        image: '/images/home/Flag-Mexico.webp',
+        caption: 'Mexico'
+    },
+    {
+        image: '/images/home/Flag-Nicaragua.webp',
+        caption: 'Nicaragua'
+    },
+    {
+        image: '/images/home/Flag-Panama.webp',
+        caption: 'Panama'
+    },
+    {
+        image: '/images/home/Flag-Paraguay.webp',
+        caption: 'Paraguay'
+    },
+    {
+        image: '/images/home/Flag-Peru.webp',
+        caption: 'Peru'
+    },
+    {
+        image: '/images/home/Flag-Spain.webp',
+        caption: 'Spain'
+    },
+    {
+        image: '/images/home/Flag-Uruguay.webp',
+        caption: 'Uruguay'
+    },
+    {
+        image: '/images/home/Flag-Venezuela.webp',
+        caption: 'Venezuela'
     }
+];
 
-    useEffect(() => {
-        let intervalId;
-        const slides = slideShowRef.current.querySelectorAll('div');
-        const changeSlide = () => {
-            if(!intervalId) {
-                intervalId = setInterval(playSlides, 2000);
-            }
-        }
-
-        const stopShow = () => {
-            clearInterval(intervalId);
-
-            intervalId = null;
-        }
-
-        const playSlides = () => {
-            let previous;
-            slides.forEach(slide => slide.classList.add('not-active'));
-            slides[slide] && slides[slide].classList.remove('not-active');
-            slides[slide] && slides[slide].classList.add('active');
-            incrementSlide();
-        }
-
-        if(slide < slideData.length) {
-            changeSlide();
-        } else {
-            stopShow();
-            setSlide(0);
-        }
-    }, [slide]);
+const Index = () => {
+    const [slideNumber, setSlideNumber] = useState(0);
+    const [slides, setSlides] = useState(slideData);
+    const delay = 2000;
     
-
     return (
         <div id="home">
             <div id="intro">
@@ -143,8 +107,10 @@ const Index = () => {
                         <h1>Learn Spanish!</h1>
                         <h2>Use it in all of these countries that have Spanish as their primary language: </h2>
                     </section>
-                    <div ref={ slideShowRef } className="slideShow">
-                        <SlideShow slideSet={ slideData } />
+                    <div className="slideShow">
+                        <div className='slideShowSlider' style={{transform: `translate3d(${-slideNumber * 100}%, 0, 0)`}}>
+                            <SlideShow slidesData={slideData} delay={ delay } />
+                        </div>
                     </div>
                 </div>
             </div>
