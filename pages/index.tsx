@@ -105,7 +105,7 @@ const Index = () => {
                 <div className='mainContent'>
                     <section className='tag-line'>
                         <h1>Learn Spanish!</h1>
-                        <h2>Use it in all of these countries that have Spanish as their primary language: </h2>
+                        <h2>Speak Spanish in all of the following countries that have Spanish as their primary language: </h2>
                     </section>
                     <div className="slideShow">
                         <div className='slideShowSlider' style={{transform: `translate3d(${-slideNumber * 100}%, 0, 0)`}}>
