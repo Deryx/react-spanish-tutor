@@ -10,6 +10,7 @@ import '/styles/vocabulary/quiz.scss';
 import '/styles/vocabulary/fillin.scss';
 import '/styles/vocabulary/scramble.scss';
 import '/styles/vocabulary/slider.scss';
+import '/styles/verbs/tenses.scss';
 import '/styles/verbs/input.scss';
 import '/styles/verbs/conjugator.scss';
 import '/styles/verbs/flashcard.scss';

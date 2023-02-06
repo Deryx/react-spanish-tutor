@@ -7,6 +7,7 @@ function SiteMenu() {
     const buttonRef = useRef( null );
 
     const verbPages = [
+        { title: 'about tenses', url: '/verbs/tenses'},
         { title: 'input', url: '/verbs/input'},
         { title: 'flashcard', url: '/verbs/flashcard' },
         { title: 'conjugator', url: '/verbs/conjugator' },

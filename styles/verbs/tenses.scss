@@ -1,0 +1,34 @@
+.tense-section {
+    margin: 1.5rem;
+    width: 60%;
+    height: 100vh;
+
+    h3 {
+        margin-bottom: 1rem;
+        width: 100%;
+        text-align: left !important;
+    }
+
+    p {
+        width: 100%;
+        text-align: left;
+    }
+
+    ul {
+        width: 100%;
+        dl {
+            width: 60%;
+            display: flex;
+            margin-bottom: 0;
+
+            dt {
+                width: 50%;
+            }
+
+            dd {
+                width: 50%;
+                justify-content: flex-end;
+            }
+        }
+    }
+}
