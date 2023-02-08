@@ -8,3 +8,4 @@ An application to learn beginning Spanish using React
 - TYPESCRIPT
 - PRISMA
 - SQLITE3
+- SASS
