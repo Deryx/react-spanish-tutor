@@ -33,7 +33,7 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
             setQuestion(question + 1);
         } 
         
-        question === numQuestions && setShowModal( showModal => showModal = !showModal );
+        question === (numQuestions - 1) && setShowModal( showModal => showModal = !showModal );
     }
 
     const createCategorySelect = () => {
@@ -86,14 +86,17 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
-            let set = {};
+            let set = {
+                question: '',
+                answer: '',
+                options: []
+            };
             let optionNumbers;
             let randomSpot = randomNumberGenerator( 1, 5 );
 
             set.question = quizDictionary[current].word;
             set.answer = quizDictionary[current].translation;
 
-            set.options = [];
             optionNumbers = randomNumberGenerator( numOptions - 1, dictionaryLength );
             for(const option of optionNumbers) {
                 set.options.push( quizDictionary[option].translation );
@@ -108,8 +111,14 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
 
     return (
         <>
-            { showModal ? <Modal /> : null }
-            { showModal ? <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } /> : null }
+            { showModal === true ? 
+                <>
+                    <Modal>
+                        <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } />
+                    </Modal>
+                </>
+                : null 
+            }
             <section className='pageContainer'>
                 <h1>Vocabulary Quiz</h1>
                 <form id="quiz" className="col-xs-12 col-sm-8 col-lg-4">

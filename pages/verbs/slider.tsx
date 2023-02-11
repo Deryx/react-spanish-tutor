@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '../../src/components/modal';
+import SliderReport from '../../src/components/verbs/slider-report';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
 
 const prisma = new PrismaClient();
@@ -14,6 +15,7 @@ interface SliderProps {
 const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     const numQuestionsRef = useRef(null);
     const tensesRef = useRef(null);
+    const slidesRef = useRef(null);
     const [numQuestions, setNumQuestions] = useState(null);
     const [question, setQuestion] = useState(0);
     const [questionSet, setQuestionSet] = useState([]);
@@ -21,6 +23,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     const [showModal, setShowModal] = useState(false);
     const tenseSelections = [];
     const numOptions = 5;
+    const reportTitle = "Verb Slider Report";
     const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
     let draggingElement;
     let placeholder;
@@ -33,7 +36,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
             setQuestion( question + 1 );
         } 
         
-        question === numQuestions && setShowModal( showModal => showModal = !showModal );
+        question === (numQuestions - 1) && setShowModal( showModal => showModal = !showModal );
     }
 
     const handleNumQuestionsChange = () => {
@@ -151,7 +154,17 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     
         // Move `nodeB` to before the sibling of `nodeA`
         parentA.insertBefore(nodeB, siblingA);
-    };    
+    };
+
+    const handleSubmitClick = () => {
+        const slides = slidesRef.current.querySelectorAll('div');
+        const answers = [];
+        for(const slide of slides) {
+            answers.push( slide.innerText );
+        }
+        questionSet[question].slideSet = answers;
+        incrementQuestion();
+    }
     
     useEffect( () => {
         const randomIndices = randomNumberGenerator( numQuestions, verbs.length );
@@ -189,7 +202,12 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     return (
         <>
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
+                { showModal ? 
+                    <Modal>
+                        <SliderReport reportTitle={ reportTitle } questionSet={ questionSet } />
+                    </Modal> : 
+                    null 
+                }
                 <h1>Verb Slider</h1>
                 <form id="slider" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
@@ -233,7 +251,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
                                         )
                                     }
                                 </div>
-                                <div className='slides'>
+                                <div ref={ slidesRef } className='slides'>
                                     {
                                         questionSet[question].slideSet.map( ( slide, index ) => 
                                             <div 
@@ -250,7 +268,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
                         : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
+                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
             </section>

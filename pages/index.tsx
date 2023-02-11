@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Footer from "../src/components/footer";
-import Image from 'next/image';
+import Image from '../node_modules/next/image';
 import SlideShow from '../src/components/slideShow';
 import { clearInterval } from 'timers';
 

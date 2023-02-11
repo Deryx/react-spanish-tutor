@@ -134,6 +134,11 @@ form#scramble {
         }
     }
 
+    .draggable {
+        cursor: move;
+        user-select: none;
+    }
+
     .buttons {
         width: 100%;
         display: flex;

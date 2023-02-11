@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '../../src/components/modal';
+import ConjugatorReport from '../../src/components/verbs/conjugator-report';
 import Textinput from '../../src/components/textInput';
 import Accents from '../../src/components/accents';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
@@ -31,6 +32,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
     const [translations, setTranslations] = useState( [] );
     const tenseSelections = [];
     const [showModal, setShowModal] = useState( false );
+    const reportTitle = "Verb Conjugator Report";
     let currentTextbox;
 
     const incrementQuestion = () => {
@@ -38,7 +40,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
             setQuestion(question + 1);
         } 
         
-        question === numQuestions && setShowModal( showModal => showModal = !showModal );
+        question === (numQuestions - 1) && setShowModal( showModal => showModal = !showModal );
     }
 
     const handleNumQuestionsChange = () => {
@@ -73,14 +75,21 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
     }
 
     const handleSubmitClick = () => {
-        const set = {};
+        const set = {
+            yo: '',
+            tu: '',
+            el: '',
+            nosotros: '',
+            vosotros: '',
+            ellos: ''
+        };
         set.yo = yoRef.current.value;
         set.tu = tuRef.current.value;
         set.el = elRef.current.value;
         set.nosotros = nosotrosRef.current.value;
         set.vosotros = vosotrosRef.current.value;
         set.ellos = ellosRef.current.value;
-        setUserAnswers( prev => [...prev, set]);
+        questionSet[question].userAnswers = set;
         incrementQuestion();
         clearAnswers();
     }
@@ -119,7 +128,11 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
     useEffect( () => {
         const randomVerbs = randomNumberGenerator( numQuestions, verbs.length );
         for(const verb of randomVerbs) {
-            const set = {};
+            const set = {
+                infinitive: '',
+                translation: '',
+                conjugations: []
+            };
             let currentVerb = verbs[verb].id;
             let currentConjugations = conjugations
                 .filter( ( conjugation ) => conjugation.tense === tense && conjugation.verb === currentVerb )
@@ -136,7 +149,12 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
     return (
         <>
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
+                { showModal === true ? 
+                    <Modal>
+                        <ConjugatorReport reportTitle={ reportTitle } questionSet={ questionSet } />
+                    </Modal> : 
+                    null 
+                }
                 <h1>Verb Conjugator</h1>
                 <form id="conjugator" className="col-xs-12 col-sm-8 col-lg-4">
                     <dl ref={ numQuestionsRef } id='numQuestionsSelect'>

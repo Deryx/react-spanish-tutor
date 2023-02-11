@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
 import Modal from '../../src/components/modal';
+import SliderReport from '../../src/components/vocabulary/slider-report';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
 
 const prisma = new PrismaClient();
@@ -11,13 +12,15 @@ interface SliderProps {
 }
 
 const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
-    const numQuestionsRef = useRef();
-    const categoriesRef = useRef();
-    const [numQuestions, setNumQuestions] = useState();
+    const numQuestionsRef = useRef(null);
+    const categoriesRef = useRef(null);
+    const slidesRef = useRef(null);
+    const [numQuestions, setNumQuestions] = useState(0);
     const [category, setCategory] = useState();
     const [slideSets, setSlideSets] = useState( [] );
-    const [question, setQuestion] = useState( 0 );
+    const [question, setQuestion] = useState(0);
     const [showModal, setShowModal] = useState( false );
+    const reportTitle = "Vocabulary Slider Report";
 
     const numOptions = 5;
     const categorySelections = [];
@@ -30,10 +33,10 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
-            setQuestion( ++question );
+            setQuestion( question + 1 );
         } 
         
-        question === numQuestions && setShowModal( showModal => showModal = !showModal );
+        question === (numQuestions - 1) && setShowModal( showModal => showModal = !showModal );
     }
 
     const createCategorySelect = () => {
@@ -156,6 +159,16 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
         // Move `nodeB` to before the sibling of `nodeA`
         parentA.insertBefore(nodeB, siblingA);
     };    
+
+    const handleSubmitClick = () => {
+        const slides = slidesRef.current.querySelectorAll('div');
+        const answers = [];
+        for(const slide of slides) {
+            answers.push( slide.innerText );
+        }
+        slideSets[question].slideBricks = answers;
+        incrementQuestion();
+    }
     
     useEffect(() => {
         sliderDictionary = [...dictionary.filter( word => word.category === category )];
@@ -163,13 +176,20 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
         for( let i = 0; i < numQuestions; i++ ) {
             let randomWords = randomNumberGenerator( numOptions, dictionaryLength );
             let bricks = {};
-            let stationaryBricks = [];
-            let slideBricks = [];
-            const set = {};
+            const stationaryBricks = [];
+            const correctAnswers = [];
+            const slideBricks = [];
+            const set = {
+                stationaryBricks: [],
+                correctAnswers: [],
+                slideBricks: []
+            };
             for(const word of randomWords) {
                 stationaryBricks.push( sliderDictionary[word].translation);
+                correctAnswers.push(sliderDictionary[word].word);
             }
             set.stationaryBricks = stationaryBricks;
+            set.correctAnswers = correctAnswers;
             const randomSlideOrder = randomNumberGenerator( numOptions, numOptions );
             for(const randomSlide of randomSlideOrder) {
                 let current = randomWords[randomSlide];
@@ -185,7 +205,14 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     return (
         <>
             <section className='pageContainer'>
-                { showModal === true ? <Modal /> : null }
+                { showModal === true ? 
+                    <>
+                        <Modal>
+                            <SliderReport reportTitle={ reportTitle } questionSet={ slideSets } />
+                        </Modal>
+                    </>
+                    : null 
+                }
                 <h1>Vocabulary Slider</h1>
                 <form id="slider" className="col-xs-12 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
@@ -222,7 +249,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
                                         )
                                     }
                                 </div>
-                                <div className='slides'>
+                                <div ref={ slidesRef } className='slides'>
                                     {
                                         slideSets[question].slideBricks.map( ( slideBricks, index ) => 
                                             <div 
@@ -239,7 +266,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
                         : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
-                        { slideSets[question] ? <input type="button" id="submitBtn" onClick={ incrementQuestion } value="submit" /> : null }
+                        { slideSets[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                     </div>
                 </form>
             </section>

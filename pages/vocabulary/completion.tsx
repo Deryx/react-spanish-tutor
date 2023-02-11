@@ -36,7 +36,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
             setQuestion(question + 1);
         } 
 
-        question === numQuestions && setShowModal(showModal => showModal = !showModal);
+        question === (numQuestions - 1) && setShowModal(showModal => showModal = !showModal);
     }
 
     const createCategorySelect = () => {
@@ -133,8 +133,9 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
             <section className='pageContainer'>
                 { showModal === true ? 
                     <>
-                        <Modal />
-                        <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } />
+                        <Modal>
+                            <SimpleReport reportTitle={ reportTitle } questionSet={ questionSet } userAnswers={ userAnswers } />
+                        </Modal>
                     </>
                     : null 
                 }

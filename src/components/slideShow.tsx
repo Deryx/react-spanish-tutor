@@ -33,7 +33,7 @@ const SlideShow = ({ slidesData, delay }: SlideShowProps ) => {
 
     return (
         <div className='slideShowSlider'>
-            { slides[slideNumber] ? <Slide image={slides[slideNumber].image} imageWidth={400} imageHeight={250} caption={slides[slideNumber].caption} /> : null }
+            { slides[slideNumber] ? <Slide image={slides[slideNumber].image} imageWidth={500} imageHeight={312} caption={slides[slideNumber].caption} /> : null }
         </div>
     );
 }

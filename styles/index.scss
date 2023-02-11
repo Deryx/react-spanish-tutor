@@ -50,19 +50,18 @@
             .slideShow {
                 margin: 0 auto;
                 margin-top: 3rem;
-                max-width: 400px;
+                max-width: 500px;
 
                 .slideShowSlider {
                     white-space: nowrap;
                     transition: ease 1000ms;
 
                     .slide {
-                        display: inline-block;
-                        width: 400px;
-                        height: 250px;
+                        border: 5px solid rgb(0, 0, 0);
                     }
                 }
             }
+
         }
     }
 

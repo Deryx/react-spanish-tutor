@@ -65,6 +65,7 @@ const Input: FC<InputProps> = ({ categories }) => {
     }
 
     const createCategorySelect = () => {
+        const numCategories = categories.length + 2;
         for(const category of categories) {
             categorySelections.push( 
                 {
@@ -77,6 +78,7 @@ const Input: FC<InputProps> = ({ categories }) => {
         categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
         categorySelections.unshift({ id: '0', category: 'all' });
         categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
+        categorySelections.push({ id: `${numCategories}`, category: 'other' });
     }
 
     const handleSubmitClick = (e) => {

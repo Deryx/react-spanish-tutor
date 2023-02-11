@@ -1,4 +1,4 @@
-function SimpleReport( {reportTitle, questionSet, userAnswers} ) {
+const SimpleReport = ( {reportTitle, questionSet, userAnswers} ) => {
     const numQuestions = questionSet.length;
     let report = [];
     let set;

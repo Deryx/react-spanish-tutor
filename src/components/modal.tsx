@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Children } from 'react';
 
-function Modal( props: any ) {
+function Modal( { children } ) {
     return (
-       <div id="modal"></div>
+       <div id="modal">
+        { children }
+       </div>
     )
 }
 
