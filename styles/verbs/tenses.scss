@@ -1,12 +1,16 @@
 .tense-section {
     margin: 1.5rem;
     width: 60%;
-    height: 100vh;
+    min-height: 50vh;
 
     h3 {
         margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        color: rgb(198 10 30);
+        font-weight: bold;
         width: 100%;
         text-align: left !important;
+        border-bottom: 0.125rem solid rgb(198 10 30);
     }
 
     p {
@@ -16,6 +20,7 @@
 
     ul {
         width: 100%;
+
         dl {
             width: 60%;
             display: flex;
@@ -23,6 +28,7 @@
 
             dt {
                 width: 50%;
+                color: rgb(198 10 30);
             }
 
             dd {
