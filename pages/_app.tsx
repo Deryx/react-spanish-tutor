@@ -20,6 +20,7 @@ import '/styles/common/accents.scss';
 import '/styles/common/card.scss';
 import '/styles/common/modal.scss';
 import '/styles/vocabulary/simple-report.scss';
+import '/styles/common/contentCard.scss';
 
 export default function MyApp({ Component, pageProps }) {
     return (

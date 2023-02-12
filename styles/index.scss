@@ -69,18 +69,50 @@
         margin: 0;
         padding: 0;
         width: 100%;
+        font-size: 150%;
         min-height: 100vh;
         display: flex;
-        flex-direction: column;
+
+        .row {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        h2 {
+            margin: 1.5rem;
+        }
+
+        p {
+            text-align: justify;
+            width: 80%;
+        }
     }
 
     #vocabularyContent {
         margin: 0;
         padding: 0;
         width: 100%;
-        min-height: 100vh;
+        font-size: 150%;
+        min-height: 150vh;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+
+        .row {
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+        }
+    
+        h2 {
+            margin: 1.5rem;
+        }
+
+        p {
+            text-align: justify;
+            width: 80%;
+        }
     }
 
     footer {

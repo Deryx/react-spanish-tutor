@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import Footer from "../src/components/footer";
 import Image from '../node_modules/next/image';
 import SlideShow from '../src/components/slideShow';
+import ContentCard from '../src/components/contentCard';
 import { clearInterval } from 'timers';
 
 const slideData = [
@@ -117,10 +118,25 @@ const Index = () => {
             <section id="verbContent">
                 <h2>Verbs</h2>
                 <p>Learn approximately 100 of the most commonly used Spanish verbs by studying flashcards and testing your study skills using the conjugator and playing the slider. The verbs are in the indicative form with present, preterite, imperfect, conditional, and future tenses.</p>
+                <div className='row'>
+                    <ContentCard image='/images/home/verb-flashcard.png' heading='flash card' description="Before delving into the verb games — the conjugator and slider — study the conjugations of approximately 100 of the most used spanish verbs by using the verb flashcards." width='col-lg-3' />
+                    <ContentCard image='/images/home/verb-conjugator.png' heading='conjugator' description="Try the verb conjugator. Your knowledge of the present, preterite, imperfect, conditional, and future tenses will be tested." width='col-lg-3' />
+                    <ContentCard image='/images/home/verb-slider.png' heading='slider' description="Try the verb slider. The conjugations and their translations are already on the page. You only have to slide around the conjugations to match with the pronouns." width='col-lg-3' />
+                </div>
             </section>
             <section id="vocabularyContent">
                 <h2>Vocabulary</h2>
                 <p>This site has over 700 words (and counting!) to start your (and my) Spanish-learning journey! Start by studying the flashcards. You can choose to study a category or all of the vocabulary. After you are confident in your in new vocabulary, you can test yourself by using the completion, fill-in, quiz, scramble, and slider exercises. Each exercise allows you to choose a category or all vocabulary and the number of questions (5, 10, 15, and 20) you want. After you're done, you are presented with a report detailing the percentage correct and correct answers and your answers.</p>
+                <div className='row'>
+                    <ContentCard image='/images/home/vocabulary-flashcard.png' heading='flash card' description='Before trying your hand at the vocabulary games — word completion, word fill-in, word quiz, word scramble, and slider — study the spanish to english translations of over 700 words with vocabulary flashcards.' width='col-lg-3' />
+                    <ContentCard image='/images/home/vocabulary-completion.png' heading='completion' description='Test your learning by playing vocabulary completion. You are presented with the english translation above and the spanish equivalent below, minus at least half of the letters. Fill in the missing letters, including letters with accents.' width='col-lg-3' />
+                    <ContentCard image='/images/home/vocabulary-fillin.png' heading='fill in' description="So, you've tried vocabulary completion but, find it too easy because some of the letters are already provided? Then try vocabulary fill-in! Just remember, accented letters count toward the correct answer too!" width='col-lg-3' />
+                </div>
+                <div className='row'>
+                    <ContentCard image='/images/home/vocabulary-quiz.png' heading='quiz' description="Studying the vocabulary flashcards is done and you think you know a few things. So, maybe you want to test yourself with the customary vocabulary quiz. You are presented with the spanish word and six possible translations." width='col-lg-3' />
+                    <ContentCard image='/images/home/vocabulary-scramble.png' heading='scramble' description="Test your spanish mastery while playing the vocabulary scramble. All the letters of the spanish word, including the blanks, are presented on the screen. Your job, of course, is to put each of them in their proper place." width='col-lg-3' />
+                    <ContentCard image='/images/home/vocabulary-slider.png' heading='slider' description="Try the sliding of the vocabulary slider. The immobile english translation tiles are on the left side. The sliding spanish words are on the left. Slide the spanish words up and down to match their corresponding english translation." width='col-lg-3' />
+                </div>
             </section>
             <footer>
 
