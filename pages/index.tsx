@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Footer from "../src/components/footer";
 import Image from '../node_modules/next/image';
+import Link from '../node_modules/next/link';
 import SlideShow from '../src/components/slideShow';
 import ContentCard from '../src/components/contentCard';
 import { clearInterval } from 'timers';
@@ -139,7 +140,74 @@ const Index = () => {
                 </div>
             </section>
             <footer>
+                <div className='row'>
+                    <div className='col-lg-3'>
+                        <Image src='/images/home/spanish-tutor-logo.png' width='250' height='50' />
+                        <p>&#169;Deryx E. Scott</p>
+                    </div>
+                    <div className='col-lg-3'>
+                        <h4>features</h4>
+                        <h5>verbs</h5>
+                        <ul>
+                            <li>
+                                <Link href='/verbs/tenses'>
+                                    <a>about tenses</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/verbs/flashcards'>
+                                    <a>flash cards</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/verbs/conjugator'>
+                                    <a>conjugator</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/verbs/slider'>
+                                    <a>slider</a>
+                                </Link>
+                            </li>
+                        </ul>
+                        <h5>vocabulary</h5>
+                        <ul>
+                            <li>
+                                <Link href='/vocabulary/flashcard'>
+                                    <a>flash cards</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/vocabulary/completion'>
+                                    <a>completion</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/vocabulary/fill-in'>
+                                    <a>fill-in</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/vocabulary/quiz'>
+                                    <a>quiz</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/vocabulary/scramble'>
+                                    <a>scramble</a>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href='/vocabulary/slider'>
+                                    <a>slider</a>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className='col-lg-3'>
 
+                    </div>
+                </div>
             </footer>
         </div>
     )
