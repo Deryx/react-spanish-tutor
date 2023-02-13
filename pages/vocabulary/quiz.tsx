@@ -52,7 +52,7 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
     }
 
     const handleNumQuestionsChange = (e) => {
-        setNumQuestions( e.target.value );    
+        setNumQuestions( parseInt(e.target.value) );    
         numQuestionsRef.current.style.display = "none";
     }
 

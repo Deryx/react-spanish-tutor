@@ -1,4 +1,5 @@
 const ConjugatorReport = ({ reportTitle, questionSet }) => {
+    console.log(questionSet);
     return (
         <div id="report">
             <section className="col-lg-5">

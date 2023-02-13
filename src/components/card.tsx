@@ -1,27 +1,19 @@
 import { forwardRef, FC } from 'react';
-import Image from 'next/image';
+import Image from '../../node_modules/next/image';
 import React from 'react';
 
 export type CardType = 'vocabulary' | 'verb';
 
-interface VocabularyCardProps {
-    cardType: CardType;
-    word: String;
-    pronunciation: String;
-    translation: String;
-    image: String;
+interface CardProps {
+    cardType: 'vocabulary';
+    word?: String;
+    pronunciation?: String;
+    image?: String;
+    infinitive?: String;
+    translation?: String;
+    tense?: String;
+    conjugations?: any;
 }
-
-interface VerbCardProps {
-    cardType: CardType;
-    infinitive: String;
-    translation: String;
-    pronunciation: String;
-    tense: String;
-    conjugations: any;
-}
-
-export type CardProps = VocabularyCardProps | VerbCardProps;
 
 const Card = forwardRef((props: CardProps, _ref) => {
     const {cardType, word, pronunciation, translation, image, infinitive, tense, conjugations} = props;

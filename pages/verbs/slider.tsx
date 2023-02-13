@@ -40,7 +40,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     }
 
     const handleNumQuestionsChange = (e) => {
-        setNumQuestions(e.target.value);
+        setNumQuestions( parseInt(e.target.value) );
         numQuestionsRef.current.style.display = "none";
     }
 
@@ -56,7 +56,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
         tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
     const handleTenseChange = (e) => {
-        setTense( e.target.value );
+        setTense( parseInt(e.target.value) );
         tensesRef.current.style.display = "none";
     }
 
