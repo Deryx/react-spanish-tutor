@@ -101,7 +101,7 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
             for(const option of optionNumbers) {
                 set.options.push( quizDictionary[option].translation );
             }
-            set.options.splice( randomSpot, 0, set.answer );
+            set.options.splice( randomSpot[0], 0, set.answer );
 
             setQuestionSet( current => [...current, set] );
         }
