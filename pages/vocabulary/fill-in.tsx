@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
-import Modal from '/src/components/modal';
+import Modal from '../../src/components/modal';
 import SimpleReport from '../../src/components/vocabulary/simple-report';
 import Accents from '../../src/components/accents';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';

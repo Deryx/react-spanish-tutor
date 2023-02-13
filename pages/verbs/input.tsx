@@ -1,9 +1,8 @@
 import { useState, useRef, FC } from 'react';
-import Head from 'next/head';
-import Router from "next/router";
+import Head from '../../node_modules/next/head';
+import Router from "../../node_modules/next/router";
 import { PrismaClient } from '@prisma/client';
 import Texinput from '../../src/components/textInput';
-import Tensesection from '../../src/components/verbs/tenseSection';
 import Accents from '../../src/components/accents';
 
 const prisma = new PrismaClient();
