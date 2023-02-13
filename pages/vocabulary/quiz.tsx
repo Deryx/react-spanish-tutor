@@ -51,13 +51,13 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
         categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
     }
 
-    const handleNumQuestionsChange = () => {
-        setNumQuestions( parseInt( event.target.value ));    
+    const handleNumQuestionsChange = (e) => {
+        setNumQuestions( parseInt( e.target.value ));    
         numQuestionsRef.current.style.display = "none";
     }
 
-    const handleCategoryChange = () => {
-        setCategory( parseInt( event.target.value ));
+    const handleCategoryChange = (e) => {
+        setCategory( parseInt( e.target.value ));
         categoriesRef.current.style.display = "none";
     }
 

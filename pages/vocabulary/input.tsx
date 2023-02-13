@@ -23,7 +23,7 @@ const Input: FC<InputProps> = ({ categories }) => {
     let currentTextbox;
 
     const [formValues, setFormValues] = useState({
-        category: '',
+        category: null,
         word: '',
         translation: '',
         gender: '',
@@ -46,7 +46,7 @@ const Input: FC<InputProps> = ({ categories }) => {
     }
 
     const handleOtherSelection = (e) => {
-        setFormValues({category: e.target.value });
+        formValues.category = parseInt( e.target.value, 10 );
     }
 
     const handleAccentClick = (e) => {

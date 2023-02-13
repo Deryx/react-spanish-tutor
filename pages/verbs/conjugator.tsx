@@ -43,8 +43,8 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
         question === (numQuestions - 1) && setShowModal( showModal => showModal = !showModal );
     }
 
-    const handleNumQuestionsChange = () => {
-        setNumQuestions( parseInt( event.target.value ));
+    const handleNumQuestionsChange = (e) => {
+        setNumQuestions( parseInt( e.target.value ));
         numQuestionsRef.current.style.display = "none";
     }
 
@@ -60,8 +60,8 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
         tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
 
-    const handleTenseChange = () => {
-        setTense( parseInt( event.target.value ));
+    const handleTenseChange = (e) => {
+        setTense( parseInt( e.target.value ));
         tensesRef.current.style.display = "none";
     }
 
@@ -131,7 +131,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
             const set = {
                 infinitive: '',
                 translation: '',
-                conjugations: []
+                conjugations: null
             };
             let currentVerb = verbs[verb].id;
             let currentConjugations = conjugations

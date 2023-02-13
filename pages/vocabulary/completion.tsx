@@ -54,13 +54,13 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
         categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
     }
 
-    const handleNumQuestionsChange = () => {
-        setNumQuestions( parseInt( event.target.value ));
+    const handleNumQuestionsChange = (e) => {
+        setNumQuestions( parseInt( e.target.value ));
         numQuestionsRef.current.style.display = "none";
     }
 
-    const handleCategoryChange = (event) => {
-        setCategory( parseInt( event.target.value ));
+    const handleCategoryChange = (e) => {
+        setCategory( parseInt( e.target.value ));
         categoriesRef.current.style.display = "none";
     }
 
@@ -115,10 +115,14 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
             for(const index of blanksArray) {
                 currentWord[index] = BLANK;
             }
-            let set = {};
+            let set = {
+                question: '',
+                incompleteWord: '',
+                answer: ''
+            };
             let optionNumbers;
 
-            set.question = completionDictionary[current].translation;;
+            set.question = completionDictionary[current].translation;
             set.incompleteWord = currentWord.join('');
             set.answer = completionDictionary[current].word;
 

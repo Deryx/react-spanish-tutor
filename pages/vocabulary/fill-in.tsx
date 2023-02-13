@@ -51,13 +51,13 @@ const Fillin: FC<FillinProps> = ({ dictionary, categories }) => {
         categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
     }
 
-    const handleNumQuestionsChange = () => {
-        setNumQuestions( parseInt( event.target.value ));
+    const handleNumQuestionsChange = (e) => {
+        setNumQuestions( parseInt( e.target.value ));
         numQuestionsRef.current.style.display = "none";
     }
 
-    const handleCategoryChange = () => {
-        setCategory( parseInt( event.target.value ));
+    const handleCategoryChange = (e) => {
+        setCategory( parseInt( e.target.value ));
         categoriesRef.current.style.display = "none";
     }
 
@@ -88,7 +88,10 @@ const Fillin: FC<FillinProps> = ({ dictionary, categories }) => {
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
             let current = words[i];
-            let set = {};
+            let set = {
+                question: '',
+                answer: ''
+            };
             let optionNumbers;
             let randomSpot = randomNumberGenerator( 1, 5 );
 

@@ -39,8 +39,8 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
         question === (numQuestions - 1) && setShowModal( showModal => showModal = !showModal );
     }
 
-    const handleNumQuestionsChange = () => {
-        setNumQuestions(event.target.value);
+    const handleNumQuestionsChange = (e) => {
+        setNumQuestions(e.target.value);
         numQuestionsRef.current.style.display = "none";
     }
 
@@ -55,8 +55,8 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
         } 
         tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
-    const handleTenseChange = () => {
-        setTense( parseInt( event.target.value ));
+    const handleTenseChange = (e) => {
+        setTense( parseInt( e.target.value ));
         tensesRef.current.style.display = "none";
     }
 
