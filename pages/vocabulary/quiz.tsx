@@ -52,12 +52,12 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
     }
 
     const handleNumQuestionsChange = (e) => {
-        setNumQuestions( parseInt( e.target.value ));    
+        setNumQuestions( e.target.value );    
         numQuestionsRef.current.style.display = "none";
     }
 
     const handleCategoryChange = (e) => {
-        setCategory( parseInt( e.target.value ));
+        setCategory( e.target.value );
         categoriesRef.current.style.display = "none";
     }
 

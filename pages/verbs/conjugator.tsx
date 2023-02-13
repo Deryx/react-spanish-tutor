@@ -61,7 +61,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
     }
 
     const handleTenseChange = (e) => {
-        setTense( parseInt( e.target.value ));
+        setTense( e.target.value );
         tensesRef.current.style.display = "none";
     }
 

@@ -60,7 +60,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
     }
 
     const handleCategoryChange = (e) => {
-        setCategory( parseInt( e.target.value ));
+        setCategory( e.target.value );
         categoriesRef.current.style.display = "none";
     }
 

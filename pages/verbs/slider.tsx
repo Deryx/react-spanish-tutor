@@ -56,7 +56,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
         tenseSelections.unshift({ id: '', tense: 'SELECT A TENSE' });
     }
     const handleTenseChange = (e) => {
-        setTense( parseInt( e.target.value ));
+        setTense( e.target.value );
         tensesRef.current.style.display = "none";
     }
 
