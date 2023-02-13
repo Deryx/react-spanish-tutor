@@ -178,7 +178,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
                                 <dd>
                                     <ul ref={ answerRef }>
                                         { questionSet[question] && questionSet[question].incompleteWord.split('').map( (letter, index) => 
-                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onFocus={ handleOnFocusEvent } onChange={ handleChange } maxLength="1" size="1" disabled={ letter !== BLANK } /></li>
+                                            <li key={ index }><input type="text" id={ `answer${index}` } key={ `answer${index}` } value={ letter !== BLANK ? letter : null } onFocus={ handleOnFocusEvent } onChange={ handleChange } maxLength={1} size={1} disabled={ letter !== BLANK } /></li>
                                         ) }
                                     </ul>
                                 </dd>
