@@ -1,4 +1,4 @@
-import prisma from "../../../lib/prisma";
+import prisma from "@prisma/client";
 
 export default async function handle(req, res) {
     const { infinitive, translation, pronunciation } = req.body;
