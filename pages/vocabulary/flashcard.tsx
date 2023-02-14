@@ -94,7 +94,7 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
                                 </select>
                             </dd>
                         </dl>
-                        <Card ref={cardRef} cardType={'vocabulary'} word={ cards[card] && cards[card].word } pronunciation={ cards[card] && cards[card].pronunciation } translation={ cards[card] && cards[card].translation }  image={ cards[card] && cards[card].image.split('/')[2] } />
+                        <Card ref={ cardRef } cardType={'vocabulary'} word={ cards[card] && cards[card].word } pronunciation={ cards[card] && cards[card].pronunciation } translation={ cards[card] && cards[card].translation }  image={ cards[card] && cards[card].image.split('/')[2] } />
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="flipBtn" onClick={ handleClick } value="flip card" />

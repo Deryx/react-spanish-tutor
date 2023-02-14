@@ -2,51 +2,56 @@ import { forwardRef, FC } from 'react';
 import Image from '../../node_modules/next/image';
 import React from 'react';
 
-export type CardType = 'vocabulary' | 'verb';
-
-interface CardProps {
+interface VocabularyCardProps {
     cardType: 'vocabulary';
-    word?: String;
-    pronunciation?: String;
-    image?: String;
-    infinitive?: String;
-    translation?: String;
-    tense?: String;
-    conjugations?: any;
+    word: String;
+    pronunciation: String;
+    translation: String;
+    image: String;
 }
 
-const Card = forwardRef((props: CardProps, _ref) => {
-    const {cardType, word, pronunciation, translation, image, infinitive, tense, conjugations} = props;
+interface VerbCardProps {
+    cardType: 'verb';
+    infinitive: String;
+    translation: String;
+    pronunciation: String;
+    tense: String;
+    conjugations: Object;
+}
+
+type CardProps = VocabularyCardProps | VerbCardProps;
+
+const Card = forwardRef((props: CardProps, _ref: any ) => {
     
     return (
         <div className='mainContainer'>
-            <div ref={_ref} className="card">
-                { cardType == "vocabulary" ? 
+            <div ref={ _ref } className="card">
+                { props.cardType == "vocabulary" ? 
                     <>
                         <div className='front'>
-                            <h3>[ { word } ]</h3>
+                            <h3>[ { props.word } ]</h3>
                             <h4 className="info">
-                                { pronunciation }
+                                { props.pronunciation }
                             </h4>
                         </div>
                         <div className='back'>
-                            <h3>{ translation }</h3>
-                            { image && !(image === 'blank.png') ?
+                            <h3>{ props.translation }</h3>
+                            { props.image && !(props.image === 'blank.png') ?
                                 <div className="image">
-                                    <Image src={`/images/${image}`} width={150} height={150} />
+                                    <Image src={`/images/${props.image}`} width={150} height={150} />
                                 </div> : null
                             }
                         </div>
                     </> : 
                     <>
                         <div className='front'>
-                            <h3>[ { infinitive } ]</h3>
-                            <h4>[ {translation} ]</h4>
-                            <h4>{ pronunciation }</h4>
+                            <h3>[ { props.infinitive } ]</h3>
+                            <h4>[ { props.translation } ]</h4>
+                            <h4>{ props.pronunciation }</h4>
                         </div>
                         <div className='back'>
-                            <h3>[ {tense} ] tense</h3>
-                            { conjugations && Object.entries(conjugations).map(([key, value]) => <dl className='verb'><dt>{key}</dt><dd>{value}</dd></dl>)}   
+                            <h3>[ { props.tense } ] tense</h3>
+                            { props.conjugations && Object.entries( props.conjugations ).map(([pronoun, conjugation]) => <dl key={pronoun} className='verb'><dt>{pronoun}</dt><dd>{conjugation}</dd></dl>)}   
                         </div>
                     </>
                 }
