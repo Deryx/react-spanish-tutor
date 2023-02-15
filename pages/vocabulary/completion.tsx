@@ -17,7 +17,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
     const categoriesRef = useRef(null);
     const answerRef = useRef(null);
     const [numQuestions, setNumQuestions] = useState(0);
-    const [category, setCategory] = useState();
+    const [category, setCategory] = useState(0);
     const [questionSet, setQuestionSet] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [question, setQuestion] = useState(0);
@@ -60,7 +60,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
     }
 
     const handleCategoryChange = (e) => {
-        setCategory( e.target.value );
+        setCategory( parseInt(e.target.value) );
         categoriesRef.current.style.display = "none";
     }
 

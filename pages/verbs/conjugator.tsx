@@ -189,7 +189,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
                         </section>
                     : null }
                     { questionSet[question] ? 
-                        <fieldset className="col-lg-12">
+                        <fieldset className="col-lg-10">
                             <Textinput ref={ yoRef } id="yo" name="yo" onFocusEvent={ onFocus } className="col-lg-12" />
                             <Textinput ref={ tuRef } id="tu" name="tu" onFocusEvent={ onFocus } className="col-lg-12" />
                             <Textinput ref={ elRef } id="el" name="el/Ella/Usted" onFocusEvent={ onFocus } className="col-lg-12" />
@@ -198,11 +198,11 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
                             <Textinput ref={ ellosRef } id="ellos" name="ellos/Ellas/Ustedes" onFocusEvent={ onFocus } className="col-lg-12" />
                         </fieldset>
                     : null }
-                    <div className='buttons col-lg-12'>
-                        { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
-                    </div>
                 </form>
                 { questionSet[question] && <Accents handleAccentClick={ handleAccentClick } /> }
+                <div className='buttons col-lg-12'>
+                    { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
+                </div>
             </section>
         </>
     )

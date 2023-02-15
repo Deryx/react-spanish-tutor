@@ -60,7 +60,7 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
     }
 
     const handleCategoryChange = (e) => {
-        setCategory( e.target.value );
+        setCategory( parseInt(e.target.value) );
         categoriesRef.current.style.display = "none";
     }
 

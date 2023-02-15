@@ -25,6 +25,12 @@ form#scramble {
         border-radius: 0.8rem;
         padding: 1.2rem 0;
         margin: 0 auto;
+        border: 0.0625rem solid rgb(198, 10, 30);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 40vh;
         
         dl#numQuestionsSelect {
             padding: 0;
@@ -140,6 +146,7 @@ form#scramble {
     }
 
     .buttons {
+        margin-top: 1.5rem;
         width: 100%;
         display: flex;
         justify-content: center;

@@ -23,7 +23,17 @@ section {
 form#conjugator {
     font-family: 'Roboto', sans-serif;
     margin-bottom: 1.5rem;
-        
+    border-radius: 0.8rem;
+    padding: 1.2rem 0;
+    padding-bottom: 2.5rem;
+    margin: 0 auto;
+    border: 0.0625rem solid rgb(198, 10, 30);
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
     dl#numQuestionsSelect {
         padding: 0;
         width: 100%;
@@ -152,22 +162,21 @@ form#conjugator {
             border-top: none;
         }
     }
-    
-    .buttons {
-        display: flex;
-        justify-content: center;
-        margin-top: 1.5rem;
-    
-        input[type="button"] {
-            width: 6.2rem;
-            padding: 0.4rem;
-            border-radius: 0.5rem;
-            color: rgb(255, 255, 255);
-            border: none;
-        }
-    
-        #submitBtn {
-            background: rgb(40, 167, 69);
-        }
+}
+ 
+.buttons {
+    display: flex;
+    justify-content: center;
+
+    input[type="button"] {
+        width: 6.2rem;
+        padding: 0.4rem;
+        border-radius: 0.5rem;
+        color: rgb(255, 255, 255);
+        border: none;
+    }
+
+    #submitBtn {
+        background: rgb(40, 167, 69);
     }
 }

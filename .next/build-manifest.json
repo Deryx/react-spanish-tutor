@@ -30,10 +30,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/verbs/flashcard": [
+    "/verbs/tenses": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/verbs/flashcard.js"
+      "static/chunks/pages/verbs/tenses.js"
+    ],
+    "/vocabulary/fill-in": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/vocabulary/fill-in.js"
     ]
   },
   "ampFirstPages": []

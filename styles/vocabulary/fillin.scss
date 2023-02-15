@@ -25,6 +25,13 @@ form#fillin {
         border-radius: 0.8rem;
         padding: 1.2rem 0;
         margin: 0 auto;
+        border: 0.0625rem solid rgb(198, 10, 30);
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
         dl#numQuestionsSelect {
             padding: 0;
             padding-top: 0.85rem;
@@ -117,15 +124,14 @@ form#fillin {
                 display: flex;
                 flex-direction: column; 
                 justify-content: center;
+                align-items: center;
 
-                div {
-                    display: flex;
-                    flex: 1 1 50%;
-                    margin-left: 45%;
-
-                    input {
-                        margin-right: 0.5rem;
-                    }
+                input {
+                    margin: 0 auto;
+                    width: 50%;
+                    border: none;
+                    border-bottom: 0.0625rem solid rgb(198, 10, 30);
+                    text-align: center;
                 }
             }
         }
@@ -136,6 +142,7 @@ form#fillin {
         width: 100%;
         display: flex;
         justify-content: center;
+        margin-top: 1.5rem;
     
         input[type="button"] {
             width: 6.2rem;

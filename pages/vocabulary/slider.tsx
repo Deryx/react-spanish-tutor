@@ -16,7 +16,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     const categoriesRef = useRef(null);
     const slidesRef = useRef(null);
     const [numQuestions, setNumQuestions] = useState(0);
-    const [category, setCategory] = useState();
+    const [category, setCategory] = useState(0);
     const [slideSets, setSlideSets] = useState( [] );
     const [question, setQuestion] = useState(0);
     const [showModal, setShowModal] = useState( false );
@@ -60,7 +60,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     }
 
     const handleCategoryChange = (e) => {
-        setCategory( e.target.value );
+        setCategory( parseInt(e.target.value) );
         categoriesRef.current.style.display = "none";
     }
 

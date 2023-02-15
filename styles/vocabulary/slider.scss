@@ -25,6 +25,12 @@ form#slider {
         border-radius: 0.8rem;
         padding: 1.2rem 0;
         margin: 0 auto;
+        border: 0.0625rem solid rgb(198, 10, 30);
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         
         dl#numQuestionsSelect {
             padding: 0;
@@ -143,6 +149,7 @@ form#slider {
         width: 100%;
         display: flex;
         justify-content: center;
+        margin-top: 1.5rem;
     
         input[type="button"] {
             width: 6.2rem;
