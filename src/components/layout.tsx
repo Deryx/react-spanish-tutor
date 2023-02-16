@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
             y: 0,
             transition: {
                 ease: 'easeIn',
-                duration: 1,
+                duration: 2,
                 delay: 1
             }
         }
