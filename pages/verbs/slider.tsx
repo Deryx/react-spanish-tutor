@@ -245,25 +245,27 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
                         : null }
                         { questionSet[question] ? 
                             <div id="questions">
-                                <div className='bricks'>
-                                    { 
-                                        bricks.map( ( brick, index ) => 
-                                            <div key={ index }>{ brick }</div>    
-                                        )
-                                    }
-                                </div>
-                                <div ref={ slidesRef } className='slides'>
-                                    {
-                                        questionSet[question].slideSet.map( ( slide, index ) => 
-                                            <div 
-                                                id={`slide${index}`} 
-                                                key={ index } 
-                                                onMouseDown={mouseDownHandler} 
-                                                className="draggable">
-                                                    { slide }
-                                                </div>
-                                        )
-                                    }
+                                <div className='sliders'>
+                                    <div className='bricks'>
+                                        { 
+                                            bricks.map( ( brick, index ) => 
+                                                <div key={ index }>{ brick }</div>    
+                                            )
+                                        }
+                                    </div>
+                                    <div ref={ slidesRef } className='slides'>
+                                        {
+                                            questionSet[question].slideSet.map( ( slide, index ) => 
+                                                <div 
+                                                    id={`slide${index}`} 
+                                                    key={ index } 
+                                                    onMouseDown={mouseDownHandler} 
+                                                    className="draggable">
+                                                        { slide }
+                                                    </div>
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         : null }
