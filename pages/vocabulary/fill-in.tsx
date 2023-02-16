@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SimpleReport from '../../src/components/vocabulary/simple-report';
 import Accents from '../../src/components/accents';
@@ -83,7 +84,7 @@ const Fillin: FC<FillinProps> = ({ dictionary, categories }) => {
     }
 
     useEffect(() => {
-        fillinDictionary = category != '0' ? [...dictionary.filter( word => word.category === category )] : dictionary;
+        fillinDictionary = category != 0 ? [...dictionary.filter( word => word.category === category )] : dictionary;
         const dictionaryLength = fillinDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
@@ -105,7 +106,7 @@ const Fillin: FC<FillinProps> = ({ dictionary, categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 { showModal === true ? 
                     <>
@@ -161,7 +162,7 @@ const Fillin: FC<FillinProps> = ({ dictionary, categories }) => {
                 </form>
                 { questionSet[question] ? <Accents handleAccentClick={ handleAccentClick } /> : null }
             </section>
-        </>
+        </Layout>
     )
 }
 

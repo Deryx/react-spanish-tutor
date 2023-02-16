@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import Link from 'next/link';
+import Link from '../../node_modules/next/link';
 import Menu from '../components/menu';
 
 function SiteMenu() {
@@ -28,17 +28,17 @@ function SiteMenu() {
         e.preventDefault();
         toggle = !toggle;
         if(toggle) {
-            buttonRef.current.classList.add('change');
-            menuRef.current.classList.add('open');
-            menuRef.current.classList.remove('close');
+            buttonRef.current && buttonRef.current.classList.add('change');
+            menuRef.current && menuRef.current.classList.add('open');
+            menuRef.current && menuRef.current.classList.remove('close');
             setTimeout(() => {
                 toggle = true;
                 handleClick(e);
             }, 8000);
         } else {
-            buttonRef.current.classList.remove('change');
-            menuRef.current.classList.remove('open');
-            menuRef.current.classList.add('close');
+            buttonRef.current && buttonRef.current.classList.remove('change');
+            menuRef.current && menuRef.current.classList.remove('open');
+            menuRef.current && menuRef.current.classList.add('close');
         }
     }
 
@@ -46,7 +46,7 @@ function SiteMenu() {
         <nav>
             <ul id="menu">
                 <li>
-                    <Link href="/">
+                    <Link href="/" scroll={false}>
                         <a ref={ buttonRef } id="button" onClick={ handleClick }>
                             <div className='bar1'></div>
                             <div className='bar2'></div>

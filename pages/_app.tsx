@@ -1,4 +1,5 @@
-import Layout from '../src/components/layout';
+import { AnimatePresence } from '../node_modules/framer-motion/dist/framer-motion';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import '/styles/styles.scss';
 import '../styles/index.scss';
@@ -24,8 +25,11 @@ import '/styles/common/contentCard.scss';
 
 export default function MyApp({ Component, pageProps }) {
     return (
-        <Layout>
+        <AnimatePresence 
+            initial={false} 
+            exitBeforeEnter
+        >
             <Component {...pageProps} />
-        </Layout>
+        </AnimatePresence>
     )
 }

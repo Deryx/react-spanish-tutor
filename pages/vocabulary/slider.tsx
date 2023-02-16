@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SliderReport from '../../src/components/vocabulary/slider-report';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
@@ -203,7 +204,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 { showModal === true ? 
                     <>
@@ -241,28 +242,32 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
                             </dl> 
                         : null }
                         { slideSets[question] ? 
-                            <div id="questions">
-                                <div className='bricks'>
-                                    {
-                                        slideSets[question].stationaryBricks.map( ( stationaryBricks, index ) => 
-                                            <div key={ index }>{ stationaryBricks }</div>
-                                        )
-                                    }
+                            <section id="questions">
+                                <h4>Category:</h4>
+                                <h5>[ {categories[category - 1].category} ]</h5>
+                                <div className='sliders'>
+                                    <div className='bricks'>
+                                        {
+                                            slideSets[question].stationaryBricks.map( ( stationaryBricks, index ) => 
+                                                <div key={ index }>{ stationaryBricks }</div>
+                                            )
+                                        }
+                                    </div>
+                                    <div ref={ slidesRef } className='slides'>
+                                        {
+                                            slideSets[question].slideBricks.map( ( slideBricks, index ) => 
+                                                <div 
+                                                    id={`slide${index}`} 
+                                                    key={ index } 
+                                                    onMouseDown={mouseDownHandler} 
+                                                    className='draggable'>
+                                                        { slideBricks }
+                                                </div>
+                                            )
+                                        }
+                                    </div>
                                 </div>
-                                <div ref={ slidesRef } className='slides'>
-                                    {
-                                        slideSets[question].slideBricks.map( ( slideBricks, index ) => 
-                                            <div 
-                                                id={`slide${index}`} 
-                                                key={ index } 
-                                                onMouseDown={mouseDownHandler} 
-                                                className='draggable'>
-                                                    { slideBricks }
-                                            </div>
-                                        )
-                                    }
-                                </div>
-                            </div>
+                            </section>
                         : null }
                     </fieldset>
                     <div className='buttons col-lg-12'>
@@ -270,7 +275,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
                     </div>
                 </form>
             </section>
-        </>
+        </Layout>
     )
 }
 

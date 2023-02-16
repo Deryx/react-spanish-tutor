@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SliderReport from '../../src/components/verbs/slider-report';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
@@ -200,7 +201,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     createTenseSelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 { showModal ? 
                     <Modal>
@@ -272,7 +273,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
                     </div>
                 </form>
             </section>
-        </>
+        </Layout>
     )
 }
 

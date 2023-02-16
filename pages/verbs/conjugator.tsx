@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import ConjugatorReport from '../../src/components/verbs/conjugator-report';
 import Textinput from '../../src/components/textInput';
@@ -147,7 +148,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
     createTenseSelect(); 
     
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 { showModal === true ? 
                     <Modal>
@@ -204,7 +205,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
                     { questionSet[question] ? <input type="button" id="submitBtn" onClick={ handleSubmitClick } value="submit" /> : null }
                 </div>
             </section>
-        </>
+        </Layout>
     )
 }
 

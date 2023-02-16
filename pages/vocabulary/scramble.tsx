@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SimpleReport from '../../src/components/vocabulary/simple-report';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
@@ -198,7 +199,7 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 { showModal === true ? 
                     <>
@@ -258,7 +259,7 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
                     </div>
                 </form>
             </section>
-        </>
+        </Layout>
     )
 }
 

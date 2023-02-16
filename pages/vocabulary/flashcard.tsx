@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useImperativeHandle, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Dropdown from '../../src/components/dropDown';
 import Card from '../../src/components/card';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
@@ -79,7 +80,7 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 <h1>Vocabulary Flashcard</h1>
                 <form id="vocabularyFlashcard" className="col-xs-12 col-sm-8 col-lg-4">
@@ -102,7 +103,7 @@ const Flashcard: FC<FlashcardProps> = ({ dictionary, categories }) => {
                     </div>
                 </form>
             </section>
-        </>
+        </Layout>
     )
 }
 

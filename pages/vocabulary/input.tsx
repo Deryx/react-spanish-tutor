@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Footer from '../../src/components/footer';
 import Texinput from '../../src/components/textInput';
 import Imageupload from '../../src/components/imageUpload';
@@ -102,7 +103,7 @@ const Input: FC<InputProps> = ({ categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 <h1>Vocabulary Input</h1>
                 <form ref={ formRef } id="vocabulary" className="col-xs-12 col-sm-10 col-md-8 col-lg-5">
@@ -131,7 +132,7 @@ const Input: FC<InputProps> = ({ categories }) => {
                 <Accents handleAccentClick={ handleAccentClick } />
             </section>
             <Footer />
-        </>
+        </Layout>
     )
 }
 

@@ -35,10 +35,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/verbs/tenses.js"
     ],
-    "/vocabulary/fill-in": [
+    "/vocabulary/completion": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/fill-in.js"
+      "static/chunks/pages/vocabulary/completion.js"
     ]
   },
   "ampFirstPages": []

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SimpleReport from '../../src/components/vocabulary/simple-report';
 import Accents from '../../src/components/accents';
@@ -133,7 +134,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 { showModal === true ? 
                     <>
@@ -191,7 +192,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
                 </form>
                 { questionSet[question] ? <Accents handleAccentClick={ handleAccentClick } /> : null }
             </section>
-        </>
+        </Layout>
     )
 }
 

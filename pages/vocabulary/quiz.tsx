@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SimpleReport from '../../src/components/vocabulary/simple-report';
 import randomNumberGenerator from '../../helper/useRandomNumberGenerator';
@@ -110,7 +111,7 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
     createCategorySelect();
 
     return (
-        <>
+        <Layout>
             { showModal === true ? 
                 <>
                     <Modal>
@@ -172,7 +173,7 @@ const Quiz: FC<QuizProps> = ({ dictionary, categories }) => {
                     </div>
                 </form>
             </section>
-        </>
+        </Layout>
     )
 }
 

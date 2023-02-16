@@ -1,5 +1,6 @@
 import { useState, useRef, FC } from 'react';
 import Head from '../../node_modules/next/head';
+import Layout from '../../src/components/layout';
 import Router from "../../node_modules/next/router";
 import { PrismaClient } from '@prisma/client';
 import Texinput from '../../src/components/textInput';
@@ -252,7 +253,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
     }
 
     return (
-        <div>
+        <Layout>
             <section className='pageContainer'>
                 <h1>Verb Input</h1>
                     <form ref={ formRef } id="verbs" className="col-xs-12 col-sm-8 col-lg-5">
@@ -324,7 +325,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                     </form>
                 { tense < numTenses && <Accents handleAccentClick={ handleAccentClick } /> }
             </section>
-        </div>
+        </Layout>
     )
 }
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useImperativeHandle, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import Layout from '../../src/components/layout';
 import Dropdown from '../../src/components/dropDown';
 import Card from '../../src/components/card';
 
@@ -105,7 +106,7 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
     createTenseSelect();
 
     return (
-        <>
+        <Layout>
             <section className='pageContainer'>
                 <h1>Verb Flashcard</h1>
                 <form id="verbFlashcard" className="col-xs-12 col-sm-8 col-lg-4">
@@ -140,7 +141,7 @@ const Flashcard: FC<FlashcardProps> = ( { verbs, tenses, conjugations } ) => {
                     </div>
                 </form>
             </section>
-        </>
+        </Layout>
     )
 }
 
