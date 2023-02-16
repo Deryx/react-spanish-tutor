@@ -26,6 +26,7 @@ An application created to learn beginning Spanish and sharpen my **React/TypeScr
 - NEXT.JS
 - REACT
 - TYPESCRIPT
+- FRAMER MOTION
 - PRISMA
 - SQLITE3
 - SASS
