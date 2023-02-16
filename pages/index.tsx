@@ -119,7 +119,7 @@ const Index = () => {
                     </div>
                 </div>
                 <section id="verbContent">
-                    <h2>Verbs</h2>
+                    <h2>[ Verbs ]</h2>
                     <p>Learn approximately 100 of the most commonly used Spanish verbs by studying flashcards and testing your study skills using the conjugator and playing the slider. The verbs are in the indicative form with present, preterite, imperfect, conditional, and future tenses.</p>
                     <div className='row'>
                         <ContentCard image='/images/home/verb-flashcard.png' heading='flash card' description="Before delving into the verb games — the conjugator and slider — study the conjugations of approximately 100 of the most used spanish verbs by using the verb flashcards." width='col-lg-3' />
@@ -128,7 +128,7 @@ const Index = () => {
                     </div>
                 </section>
                 <section id="vocabularyContent">
-                    <h2>Vocabulary</h2>
+                    <h2>[ Vocabulary ]</h2>
                     <p>This site has over 700 words (and counting!) to start your (and my) Spanish-learning journey! Start by studying the flashcards. You can choose to study a category or all of the vocabulary. After you are confident in your in new vocabulary, you can test yourself by using the completion, fill-in, quiz, scramble, and slider exercises. Each exercise allows you to choose a category or all vocabulary and the number of questions (5, 10, 15, and 20) you want. After you're done, you are presented with a report detailing the percentage correct and correct answers and your answers.</p>
                     <div className='row'>
                         <ContentCard image='/images/home/vocabulary-flashcard.png' heading='flash card' description='Before trying your hand at the vocabulary games — word completion, word fill-in, word quiz, word scramble, and slider — study the spanish to english translations of over 700 words with vocabulary flashcards.' width='col-lg-3' />
