@@ -258,7 +258,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                 <h1>Verb Input</h1>
                     <form ref={ formRef } id="verbs" className="col-xs-12 col-sm-8 col-lg-5">
                         { tense < numTenses && 
-                            <fieldset className="col-lg-12">
+                            <fieldset className="col-lg-10">
                                 <Texinput ref={ infinitiveRef } id="infinitive" name="infinitive" onFocusEvent={ handleTextboxFocusEvent } className="col-lg-12" />
                                 <Texinput ref={ translationRef } id="translation" name="translation" className="col-lg-12" />
                                 <Texinput ref={ pronunciationRef } id="pronunciation" name="pronunciation" className="col-lg-12" />
