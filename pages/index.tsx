@@ -149,62 +149,66 @@ const Index = () => {
                         </div>
                         <div className='col-lg-3'>
                             <h4>features</h4>
-                            <h5>verbs</h5>
-                            <ul>
-                                <li>
-                                    <Link href='/verbs/tenses'>
-                                        <a>about tenses</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/verbs/flashcards'>
-                                        <a>flash cards</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/verbs/conjugator'>
-                                        <a>conjugator</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/verbs/slider'>
-                                        <a>slider</a>
-                                    </Link>
-                                </li>
-                            </ul>
-                            <h5>vocabulary</h5>
-                            <ul>
-                                <li>
-                                    <Link href='/vocabulary/flashcard'>
-                                        <a>flash cards</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/vocabulary/completion'>
-                                        <a>completion</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/vocabulary/fill-in'>
-                                        <a>fill-in</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/vocabulary/quiz'>
-                                        <a>quiz</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/vocabulary/scramble'>
-                                        <a>scramble</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href='/vocabulary/slider'>
-                                        <a>slider</a>
-                                    </Link>
-                                </li>
-                            </ul>
+                            <div className='col-lg-6'>
+                                <h5>verbs</h5>
+                                <ul>
+                                    <li>
+                                        <Link href='/verbs/tenses'>
+                                            <a>about tenses</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/verbs/flashcards'>
+                                            <a>flash cards</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/verbs/conjugator'>
+                                            <a>conjugator</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/verbs/slider'>
+                                            <a>slider</a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className='col-lg-6'>
+                                <h5>vocabulary</h5>
+                                <ul>
+                                    <li>
+                                        <Link href='/vocabulary/flashcard'>
+                                            <a>flash cards</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/vocabulary/completion'>
+                                            <a>completion</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/vocabulary/fill-in'>
+                                            <a>fill-in</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/vocabulary/quiz'>
+                                            <a>quiz</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/vocabulary/scramble'>
+                                            <a>scramble</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href='/vocabulary/slider'>
+                                            <a>slider</a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div className='col-lg-3'>
 
