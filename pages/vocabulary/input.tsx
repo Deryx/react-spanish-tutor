@@ -14,8 +14,11 @@ interface InputProps {
 
 const Input: FC<InputProps> = ({ categories }) => {
     const [accent, setAccent] = useState(null);
+    const [category, setCategory] = useState(0);
+    const [newCategory, setNewCategory] = useState(null);
     const formRef = useRef(null);
     const categoryRef = useRef(null);
+    const newCategoryRef = useRef(null);
     const wordRef = useRef(null);
     const translationRef = useRef(null);
     const genderRef = useRef(null);
@@ -46,8 +49,27 @@ const Input: FC<InputProps> = ({ categories }) => {
         }
     }
 
+    const addCategory = async (category) => {
+        try {
+            const body = category;
+            await fetch(`/api/add-category`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body),
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const handleOtherSelection = (e) => {
-        formValues.category = parseInt( e.target.value, 10 );
+        setCategory( parseInt( e.target.value, 10 ) );
+        if(category === (categories.length + 2)) {
+            newCategoryRef.current && setNewCategory(newCategoryRef.current.value);
+            addCategory(newCategory);
+        }
+        const newCategoryId = categories.find(category => category.category === newCategory).id;
+        setCategory(newCategoryId);
     }
 
     const handleAccentClick = (e) => {
@@ -89,7 +111,7 @@ const Input: FC<InputProps> = ({ categories }) => {
 
         if(categoryRef.current.value && wordRef.current.value && translationRef.current.value && currentImage, pronunciationRef.current.value) {
             const newVocabulary = {
-                category: categoryRef.current.value,
+                category: category,
                 word: wordRef.current.value,
                 translation: translationRef.current.value,
                 gender: genderRef.current.value,
@@ -106,7 +128,7 @@ const Input: FC<InputProps> = ({ categories }) => {
         <Layout>
             <section className='pageContainer'>
                 <h1>Vocabulary Input</h1>
-                <form ref={ formRef } id="vocabulary" className="col-xs-12 col-sm-10 col-md-8 col-lg-5">
+                <form ref={ formRef } id="vocabulary" className="col-xs-12 col-sm-10 col-md-8 col-lg-4">
                     <fieldset className="col-lg-12">
                         <dl>
                             <dt><label htmlFor="categorySelect">category: </label></dt>
@@ -118,7 +140,7 @@ const Input: FC<InputProps> = ({ categories }) => {
                                 </select>
                             </dd>
                         </dl>
-                        { formValues.category === '0' && <Texinput id="newCategory" name="new category" className="col-lg-12" /> }
+                        { (category === categories.length + 2) && <Texinput ref={ newCategoryRef } id="newCategory" name="new category" className="col-lg-12" /> }
                         <Texinput ref={ wordRef } id="word" name="word" onFocus={ currentTextbox = wordRef } onChange={ handleInputChange } className="col-lg-12" />
                         <Texinput ref={ translationRef } id="translation" name="translation" onChange={ handleInputChange } className="col-lg-12" />
                         <Texinput ref={ genderRef } id="gender" name="gender" onChange={ handleInputChange } className="col-lg-12" />
