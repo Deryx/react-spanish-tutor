@@ -68,8 +68,8 @@ const Input: FC<InputProps> = ({ categories }) => {
             newCategoryRef.current && setNewCategory(newCategoryRef.current.value);
             addCategory(newCategory);
         }
-        const newCategoryId = categories.find(category => category.category === newCategory).id;
-        setCategory(newCategoryId);
+        const newCategoryId = categories.find(category => category.category === newCategory);
+        newCategoryId && setCategory(newCategoryId);
     }
 
     const handleAccentClick = (e) => {
