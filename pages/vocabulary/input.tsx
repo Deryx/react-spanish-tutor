@@ -65,11 +65,11 @@ const Input: FC<InputProps> = ({ categories }) => {
     const handleOtherSelection = (e) => {
         setCategory( parseInt( e.target.value, 10 ) );
         if(category === (categories.length + 2)) {
-            newCategoryRef.current && setNewCategory(newCategoryRef.current.value);
+            setNewCategory(newCategoryRef.current.value);
             addCategory(newCategory);
         }
-        const newCategoryId = categories.find(category => category.category === newCategory);
-        newCategoryId && setCategory(newCategoryId);
+        const userCategory = categories.find(category => category.category === newCategory);
+        newCategory && setCategory(userCategory.id);
     }
 
     const handleAccentClick = (e) => {
