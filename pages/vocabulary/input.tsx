@@ -14,7 +14,7 @@ interface InputProps {
 
 const Input: FC<InputProps> = ({ categories }) => {
     const [accent, setAccent] = useState(null);
-    const [category, setCategory] = useState(0);
+    const [category, setCategory] = useState(null);
     const [newCategory, setNewCategory] = useState(null);
     const formRef = useRef(null);
     const categoryRef = useRef(null);
@@ -28,12 +28,15 @@ const Input: FC<InputProps> = ({ categories }) => {
 
     const [formValues, setFormValues] = useState({
         category: null,
-        word: '',
-        translation: '',
-        gender: '',
-        image: '',
+        word: null,
+        translation: null,
+        gender: null,
+        image: null,
         pronunciation: ''
     });
+
+    let newCategoryDisabled = category === null || category !== '0' || category === -1;
+
     const categorySelections = [];
 
     const addVocabulary = async (vocabulary) => {
@@ -49,9 +52,9 @@ const Input: FC<InputProps> = ({ categories }) => {
         }
     }
 
-    const addCategory = async (category) => {
+    const addCategory = async (category: string) => {
         try {
-            const body = category;
+            const body = { category: category };
             await fetch(`/api/add-category`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
@@ -62,14 +65,26 @@ const Input: FC<InputProps> = ({ categories }) => {
         }
     }
 
-    const handleOtherSelection = (e) => {
-        setCategory( parseInt( e.target.value, 10 ) );
-        if(category === (categories.length + 2)) {
-            setNewCategory(newCategoryRef.current.value);
-            addCategory(newCategory);
+    const getCategoryId = async (category: string) => {
+        try {
+            const id = await fetch(`/api/retrieve-categoryId?category=${category}`, 
+                {
+                    method: 'GET'
+                },
+            );
+            return id.json();
+        } catch (error) {
+            console.error(error);
         }
-        const userCategory = categories.find(category => category.category === newCategory);
-        newCategory && setCategory(userCategory.id);
+    }
+
+    const getCategories = async () => {
+        try {
+            const categories = await fetch(`/api/retrieve-categories`).then(response => response.json());
+            return categories;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     const handleAccentClick = (e) => {
@@ -99,28 +114,43 @@ const Input: FC<InputProps> = ({ categories }) => {
         }
     
         categorySelections.sort((a, b) => a.category > b.category ? 1 : -1);
-        categorySelections.unshift({ id: '0', category: 'all' });
+        categorySelections.unshift({ id: '-1', category: 'all' });
         categorySelections.unshift({ id: '', category: 'SELECT A CATEGORY' });
-        categorySelections.push({ id: `${numCategories}`, category: 'other' });
+        categorySelections.push({ id: '0', category: 'other' });
+    }
+
+    const handleNewCategory = async (e) => {
+        const inputCategory = e.target.value;
+        const categoryFound = categories.find(category => category.category === inputCategory);
+        categoryFound === undefined && await addCategory(inputCategory.toLowerCase());
+        const newestCategory = await getCategoryId(inputCategory.toLowerCase());
+        setCategory(newCategory);
     }
 
     const handleSubmitClick = (e) => {
         e.preventDefault();
 
-        const currentImage = imageRef.current.value && [imageRef.current.value.match('/fakepath\\(.*)/'), 'assets/images/'].join('');
+        const formComplete = category && wordRef.current.value && translationRef.current.value && pronunciationRef.current.value;
 
-        if(categoryRef.current.value && wordRef.current.value && translationRef.current.value && currentImage, pronunciationRef.current.value) {
+        if(formComplete) {
+            const imageFile = imageRef.current ? imageRef.current.value.replace("C:\\fakepath\\", "/images/") : '/images/blank.png';
             const newVocabulary = {
                 category: category,
                 word: wordRef.current.value,
                 translation: translationRef.current.value,
                 gender: genderRef.current.value,
-                image: imageRef.current.value,
-                pronunciation: pronunciationRef.current
+                image: imageFile,
+                pronunciation: pronunciationRef.current.value
             }
             addVocabulary(newVocabulary);
         }
     }
+
+    useEffect(() => {
+        if(category === '0') {
+            newCategoryRef.current.focus();
+        }
+    }, [category]);
 
     createCategorySelect();
 
@@ -133,19 +163,19 @@ const Input: FC<InputProps> = ({ categories }) => {
                         <dl>
                             <dt><label htmlFor="categorySelect">category: </label></dt>
                             <dd>
-                                <select ref={ categoryRef } id="category" name="category" onChange={ handleOtherSelection }>
+                                <select ref={ categoryRef } id="categorySelect" name="categorySelect" onChange={ (e) => setCategory(e.target.value) }>
                                     { categorySelections.map( ( categorySelection, i ) => 
                                         <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
                                     )}
                                 </select>
                             </dd>
                         </dl>
-                        { (category === categories.length + 2) && <Texinput ref={ newCategoryRef } id="newCategory" name="new category" className="col-lg-12" /> }
-                        <Texinput ref={ wordRef } id="word" name="word" onFocus={ currentTextbox = wordRef } onChange={ handleInputChange } className="col-lg-12" />
-                        <Texinput ref={ translationRef } id="translation" name="translation" onChange={ handleInputChange } className="col-lg-12" />
-                        <Texinput ref={ genderRef } id="gender" name="gender" onChange={ handleInputChange } className="col-lg-12" />
+                        <Texinput ref={ newCategoryRef } id="newCategory" name="new category" disabled={ newCategoryDisabled } onChangeEvent={ handleNewCategory } inputClass="col-lg-12" />
+                        <Texinput ref={ wordRef } id="word" name="word" onFocusEvent={ (e) => handleInputChange(e) } inputClass="col-lg-12" />
+                        <Texinput ref={ translationRef } id="translation" name="translation" inputClass="col-lg-12" />
+                        <Texinput ref={ genderRef } id="gender" name="gender" inputClass="col-lg-12" />
                         <Imageupload ref={ imageRef } id="image" name="image" />
-                        <Texinput ref={ pronunciationRef } id="pronunciation" name="pronunciation" onChange={ handleInputChange } className="col-lg-12" />
+                        <Texinput ref={ pronunciationRef } id="pronunciation" name="pronunciation" inputClass="col-lg-12" />
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" onClick={handleSubmitClick} value="add word" />

@@ -191,12 +191,12 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
                     : null }
                     { questionSet[question] ? 
                         <fieldset className="col-lg-10">
-                            <Textinput ref={ yoRef } id="yo" name="yo" onFocusEvent={ onFocus } className="col-lg-12" />
-                            <Textinput ref={ tuRef } id="tu" name="tu" onFocusEvent={ onFocus } className="col-lg-12" />
-                            <Textinput ref={ elRef } id="el" name="el/Ella/Usted" onFocusEvent={ onFocus } className="col-lg-12" />
-                            <Textinput ref={ nosotrosRef } id="nosotros" name="nosotros" onFocusEvent={ onFocus } className="col-lg-12" />
-                            <Textinput ref={ vosotrosRef } id="vosotros" name="vosotros" onFocusEvent={ onFocus } className="col-lg-12" />
-                            <Textinput ref={ ellosRef } id="ellos" name="ellos/Ellas/Ustedes" onFocusEvent={ onFocus } className="col-lg-12" />
+                            <Textinput ref={ yoRef } id="yo" name="yo" onFocusEvent={ onFocus } inputClass="col-lg-12" />
+                            <Textinput ref={ tuRef } id="tu" name="tu" onFocusEvent={ onFocus } inputClass="col-lg-12" />
+                            <Textinput ref={ elRef } id="el" name="el/Ella/Usted" onFocusEvent={ onFocus } inputClass="col-lg-12" />
+                            <Textinput ref={ nosotrosRef } id="nosotros" name="nosotros" onFocusEvent={ onFocus } inputClass="col-lg-12" />
+                            <Textinput ref={ vosotrosRef } id="vosotros" name="vosotros" onFocusEvent={ onFocus } inputClass="col-lg-12" />
+                            <Textinput ref={ ellosRef } id="ellos" name="ellos/Ellas/Ustedes" onFocusEvent={ onFocus } inputClass="col-lg-12" />
                         </fieldset>
                     : null }
                 </form>
