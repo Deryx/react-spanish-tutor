@@ -111,4 +111,16 @@ form#verbs {
             background: rgb(40, 167, 69);
         }
     }
+
+    table {
+        width: 100%;
+
+        tbody {
+            td:first-child {
+                text-align: right;
+                font-weight: bold;
+                padding-right: 1.5rem;
+            }
+        }
+    }
 }

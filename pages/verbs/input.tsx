@@ -1,5 +1,4 @@
 import { useState, useRef, FC } from 'react';
-import { useRouter } from '../../node_modules/next/router';
 import Head from '../../node_modules/next/head';
 import Layout from '../../src/components/layout';
 import Router from "../../node_modules/next/router";
@@ -8,7 +7,6 @@ import Texinput from '../../src/components/textInput';
 import Accents from '../../src/components/accents';
 
 const prisma = new PrismaClient();
-const router = useRouter();
 
 interface InputProps {
     verbs: any[];
@@ -23,6 +21,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
     const [imperfectConjugation, setImperfectConjugation] = useState(null);
     const [conditionalConjugation, setConditionalConjugation] = useState(null);
     const [futureConjugation, setFutureConjugation] = useState(null);
+    const [showConjugations, setShowConjugations] = useState(false);
     const formRef = useRef(null);
     const infinitiveRef = useRef(null);
     const translationRef = useRef(null);
@@ -175,22 +174,26 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         }
 
         if(tense === 0) {
-            const infinitve = infinitiveRef.current.value.toLowerCase();
-            const translation = translationRef.current.value.toLowerCase();
-            const pronunciation = pronunciationRef.current.value.toLowerCase();
+            const infinitive = infinitiveRef.current && infinitiveRef.current.value.toLowerCase();
+            const translation = translationRef.current  && translationRef.current.value.toLowerCase();
+            const pronunciation = pronunciationRef.current && pronunciationRef.current.value.toLowerCase();
 
-            const newInfinitive = new Verb(
-                infinitve,
-                translation,
-                pronunciation
-            );
-            addVerb(newInfinitive);
-            const newVerb = await getVerbId(infinitve);
-            setVerbID(newVerb[0].id);
-            incrementTense();
+            const hasInfinitive = verbs.find(verb => verb.infinitive === infinitive);
+
+            if(hasInfinitive === undefined) {
+                const newInfinitive = new Verb(
+                    infinitive,
+                    translation,
+                    pronunciation
+                );
+                addVerb(newInfinitive);
+                const newVerb = await getVerbId(infinitive);
+                setVerbID(newVerb[0].id);
+                incrementTense();
+            }
         }
 
-        if(allAnswered) {
+        if(allAnswered && verbID) {
             if(tense === 1) {
                 const presentConjugations = new Conjugation(
                     verbID,
@@ -259,6 +262,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                     futureEllosRef.current && futureEllosRef.current.value.toLowerCase()
                 );
                 setFutureConjugation(futureConjugations);
+                setShowConjugations(true);
             }
 
             incrementTense();
@@ -271,7 +275,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         addConjugation(imperfectConjugation);
         addConjugation(conditionalConjugation);
         addConjugation(futureConjugation);
-        router.reload();
+        Router.reload();
     }
 
     const handleTextboxFocusEvent = (e) => {
@@ -358,6 +362,71 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                     }
                                 </section>
                             </fieldset>
+                        }
+                        {
+                            showConjugations && 
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>present</th>
+                                        <th>preterite</th>
+                                        <th>imperfect</th>
+                                        <th>conditional</th>
+                                        <th>future</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>yo</td>
+                                        <td>{ presentConjugation.yo }</td>
+                                        <td>{ preteriteConjugation.yo }</td>
+                                        <td>{ imperfectConjugation.yo }</td>
+                                        <td>{ conditionalConjugation.yo }</td>
+                                        <td>{ futureConjugation.yo }</td>
+                                    </tr>
+                                    <tr>
+                                        <td>tú</td>
+                                        <td>{ presentConjugation.tu }</td>
+                                        <td>{ preteriteConjugation.tu }</td>
+                                        <td>{ imperfectConjugation.tu }</td>
+                                        <td>{ conditionalConjugation.tu }</td>
+                                        <td>{ futureConjugation.tu }</td>
+                                    </tr>
+                                    <tr>
+                                        <td>él/ella/usted</td>
+                                        <td>{ presentConjugation.el }</td>
+                                        <td>{ preteriteConjugation.el }</td>
+                                        <td>{ imperfectConjugation.el }</td>
+                                        <td>{ conditionalConjugation.el }</td>
+                                        <td>{ futureConjugation.el }</td>
+                                    </tr>
+                                    <tr>
+                                        <td>nosotros</td>
+                                        <td>{ presentConjugation.nosotros }</td>
+                                        <td>{ preteriteConjugation.nosotros }</td>
+                                        <td>{ imperfectConjugation.nosotros }</td>
+                                        <td>{ conditionalConjugation.nosotros }</td>
+                                        <td>{ futureConjugation.nosotros }</td>
+                                    </tr>
+                                    <tr>
+                                        <td>vosotros</td>
+                                        <td>{ presentConjugation.vosotros }</td>
+                                        <td>{ preteriteConjugation.vosotros }</td>
+                                        <td>{ imperfectConjugation.vosotros }</td>
+                                        <td>{ conditionalConjugation.vosotros }</td>
+                                        <td>{ futureConjugation.vosotros }</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ellos/ellas/ustedes</td>
+                                        <td>{ presentConjugation.ellos }</td>
+                                        <td>{ preteriteConjugation.ellos }</td>
+                                        <td>{ imperfectConjugation.ellos }</td>
+                                        <td>{ conditionalConjugation.ellos }</td>
+                                        <td>{ futureConjugation.ellos }</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         }
                         <div className='buttons col-lg-12'>
                             { tense <= 5 ? 

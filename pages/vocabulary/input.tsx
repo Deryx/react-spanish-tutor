@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, FC } from 'react';
-import { useRouter } from '../../node_modules/next/router';
+import Router from "../../node_modules/next/router";
 import { PrismaClient } from '@prisma/client';
 import Layout from '../../src/components/layout';
 import Footer from '../../src/components/footer';
@@ -8,7 +8,6 @@ import Imageupload from '../../src/components/imageUpload';
 import Accents from '../../src/components/accents';
 
 const prisma = new PrismaClient;
-const router = useRouter();
 
 interface InputProps {
     categories: any[];
@@ -123,10 +122,12 @@ const Input: FC<InputProps> = ({ categories }) => {
 
     const handleNewCategory = async (e) => {
         const inputCategory = e.target.value;
-        const categoryFound = categories.find(category => category.category === inputCategory);
-        categoryFound === undefined && await addCategory(inputCategory.toLowerCase());
-        const newestCategory = await getCategoryId(inputCategory.toLowerCase());
-        setCategory(newCategory[0].id);
+        const hasCategory = categories.find(category => category.category === inputCategory);
+        if(hasCategory === undefined) {
+            await addCategory(inputCategory.toLowerCase());
+            const newestCategory = await getCategoryId(inputCategory.toLowerCase());
+            setCategory(newestCategory[0].id);
+        }
     }
 
     const handleSubmitClick = (e) => {
@@ -146,7 +147,7 @@ const Input: FC<InputProps> = ({ categories }) => {
             }
             addVocabulary(newVocabulary);
         }
-        router.reload();
+        Router.reload();
     }
 
     useEffect(() => {
