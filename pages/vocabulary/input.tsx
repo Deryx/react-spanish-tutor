@@ -10,10 +10,11 @@ import Accents from '../../src/components/accents';
 const prisma = new PrismaClient;
 
 interface InputProps {
+    dictionary: any[];
     categories: any[];
 }
 
-const Input: FC<InputProps> = ({ categories }) => {
+const Input: FC<InputProps> = ({ dictionary, categories }) => {
     const [accent, setAccent] = useState(null);
     const [category, setCategory] = useState(null);
     const [newCategory, setNewCategory] = useState(null);
@@ -134,8 +135,9 @@ const Input: FC<InputProps> = ({ categories }) => {
         e.preventDefault();
 
         const formComplete = category && wordRef.current.value && translationRef.current.value && pronunciationRef.current.value;
+        const hasWord = wordRef.current && dictionary.find(entry => entry.word === wordRef.current.value);
 
-        if(formComplete) {
+        if(formComplete && hasWord === undefined) {
             const imageFile = imageRef.current ? imageRef.current.value.replace("C:\\fakepath\\", "/images/") : '/images/blank.png';
             const newVocabulary = {
                 category: category,
@@ -193,9 +195,11 @@ const Input: FC<InputProps> = ({ categories }) => {
 }
 
 export async function getServerSideProps() {
+    const allVocabulary = await prisma.words.findMany();
     const allCategories = await prisma.categories.findMany();
     return {
         props: {
+            dictionary: allVocabulary,
             categories: allCategories
         }
     };
