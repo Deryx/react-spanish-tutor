@@ -4,8 +4,9 @@ const prisma = new PrismaClient();
 
 
 export default async function handle(req, res) {
-    const { verb } = req.body;
-    const record = await prisma.conjugations.findUnique({ where: { verb: parseInt( verb ) } });
-
-    return record.id;
+    const query = req.params.verb;
+    const record = await prisma.conjugations.findMany(
+        { where: { verb: query } 
+    });
+    res.json(record);
 }

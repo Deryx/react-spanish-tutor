@@ -4,8 +4,9 @@ const prisma = new PrismaClient();
 
 
 export default async function handle(req, res) {
-    const { verb } = req.body;
-    const record = await prisma.verbs.findUnique({ where: { infinitive: verb } });
-
-    return record.id;
+    const query = req.query.verb;
+    let verb = await prisma.verbs.findMany({ 
+        where: { infinitive: query }, 
+    });
+    res.json(verb);
 }

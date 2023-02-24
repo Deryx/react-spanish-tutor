@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handle(req, res) {
     const { verb, tense, yo, tu, el, nosotros, vosotros, ellos } = req.body;
-    const result = await prisma.conjugation.create({
+    const result = await prisma.conjugations.create({
         data: {
             verb: verb,
             tense: tense,

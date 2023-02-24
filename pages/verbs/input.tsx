@@ -1,4 +1,5 @@
 import { useState, useRef, FC } from 'react';
+import { useRouter } from '../../node_modules/next/router';
 import Head from '../../node_modules/next/head';
 import Layout from '../../src/components/layout';
 import Router from "../../node_modules/next/router";
@@ -7,6 +8,7 @@ import Texinput from '../../src/components/textInput';
 import Accents from '../../src/components/accents';
 
 const prisma = new PrismaClient();
+const router = useRouter();
 
 interface InputProps {
     verbs: any[];
@@ -14,6 +16,13 @@ interface InputProps {
 }
 
 const Input: FC<InputProps> = ({ verbs, tenses }) => {
+    const [tense, setTense] = useState(0);
+    const [verbID, setVerbID] = useState(null);
+    const [presentConjugation, setPresentConjugation] = useState(null);
+    const [preteriteConjugation, setPreteriteConjugation] = useState(null);
+    const [imperfectConjugation, setImperfectConjugation] = useState(null);
+    const [conditionalConjugation, setConditionalConjugation] = useState(null);
+    const [futureConjugation, setFutureConjugation] = useState(null);
     const formRef = useRef(null);
     const infinitiveRef = useRef(null);
     const translationRef = useRef(null);
@@ -59,10 +68,10 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
     const submitButtonRef = useRef(null);
 
     const formTenses = [];
-    const [tense, setTense] = useState(0);
     const numTenses = tenses.length;
 
     let currentTextBox;
+    let currentTense;
 
     class Verb {
         infinitive: string;
@@ -122,6 +131,19 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         }
     }
 
+    const getVerbId = async (verb: string) => {
+        try {
+            const id = await fetch(`/api/retrieve-verbId?verb=${verb}`, 
+                {
+                    method: 'GET'
+                },
+            );
+            return id.json();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const addConjugation = async (conjugation) => {
         try {
             const body = conjugation;
@@ -139,25 +161,117 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         setTense(tense + 1);
     }
 
-    const handleNextClick = () => {
-        if(tense < numTenses - 1) {
-            const currentTense = formTenses[tense];
-            const formInputs = formRef.current.querySelectorAll('input');
-            let allAnswered = true;
-            for(const formInput of formInputs) {
-                if(!formInput.value) {
-                    allAnswered = false;
-                    break;
-                }
+    const handleNextClick = async (e) => {
+        e.preventDefault();
+
+        const formInputs = formRef.current.querySelectorAll('input');
+        let allAnswered = true;
+
+        for(const formInput of formInputs) {
+            if(!formInput.value) {
+                allAnswered = false;
+                break;
             }
-            if(allAnswered) {
-                incrementTense();
+        }
+
+        if(tense === 0) {
+            const infinitve = infinitiveRef.current.value.toLowerCase();
+            const translation = translationRef.current.value.toLowerCase();
+            const pronunciation = pronunciationRef.current.value.toLowerCase();
+
+            const newInfinitive = new Verb(
+                infinitve,
+                translation,
+                pronunciation
+            );
+            addVerb(newInfinitive);
+            const newVerb = await getVerbId(infinitve);
+            setVerbID(newVerb[0].id);
+            incrementTense();
+        }
+
+        if(allAnswered) {
+            if(tense === 1) {
+                const presentConjugations = new Conjugation(
+                    verbID,
+                    tense,
+                    presentYoRef.current && presentYoRef.current.value.toLowerCase(),
+                    presentTuRef.current && presentTuRef.current.value.toLowerCase(),
+                    presentElRef.current && presentElRef.current.value.toLowerCase(),
+                    presentNosotrosRef.current && presentNosotrosRef.current.value.toLowerCase(),
+                    presentVosotrosRef.current && presentVosotrosRef.current.value.toLowerCase(),
+                    presentEllosRef.current && presentEllosRef.current.value.toLowerCase()
+                );
+                setPresentConjugation(presentConjugations);
             }
 
-        } else {
-            nextButtonRef.current.style.display = "none";
-            submitButtonRef.current.style.display = "block";
-        }     
+            if(tense === 2) {
+                const preteriteConjugations = new Conjugation(
+                    verbID,
+                    tense,
+                    preteriteYoRef.current && preteriteYoRef && preteriteYoRef.current.value.toLowerCase(),
+                    preteriteTuRef.current && preteriteTuRef.current.value.toLowerCase(),
+                    preteriteElRef.current && preteriteElRef.current.value.toLowerCase(),
+                    preteriteNosotrosRef.current && preteriteNosotrosRef.current.value.toLowerCase(),
+                    preteriteVosotrosRef.current && preteriteVosotrosRef.current.value.toLowerCase(),
+                    preteriteEllosRef.current && preteriteEllosRef.current.value.toLowerCase()
+                );
+                setPreteriteConjugation(preteriteConjugations);
+            }
+
+            if(tense === 3) {
+                const imperfectConjugations = new Conjugation(
+                    verbID,
+                    tense,
+                    imperfectYoRef.current && imperfectYoRef.current.value.toLowerCase(),
+                    imperfectTuRef.current && imperfectTuRef.current.value.toLowerCase(),
+                    imperfectElRef.current && imperfectElRef.current.value.toLowerCase(),
+                    imperfectNosotrosRef.current && imperfectNosotrosRef.current.value.toLowerCase(),
+                    imperfectVosotrosRef.current && imperfectVosotrosRef.current.value.toLowerCase(),
+                    imperfectEllosRef.current && imperfectEllosRef.current.value.toLowerCase()
+                );
+                setImperfectConjugation(imperfectConjugations);
+            }
+
+            if(tense === 4) {
+                const conditionalConjugations = new Conjugation(
+                    verbID,
+                    tense,
+                    conditionalYoRef.current && conditionalYoRef.current.value.toLowerCase(),
+                    conditionalTuRef.current && conditionalTuRef.current.value.toLowerCase(),
+                    conditionalElRef.current && conditionalElRef.current.value.toLowerCase(),
+                    conditionalNosotrosRef.current && conditionalNosotrosRef.current.value.toLowerCase(),
+                    conditionalVosotrosRef.current && conditionalVosotrosRef.current.value.toLowerCase(),
+                    conditionalEllosRef.current && conditionalEllosRef.current.value.toLowerCase()
+                );
+                setConditionalConjugation(conditionalConjugations);
+            }
+
+            if(tense === 5) {
+                const futureConjugations = new Conjugation(
+                    verbID,
+                    tense,
+                    futureYoRef.current && futureYoRef.current.value.toLowerCase(),
+                    futureTuRef.current && futureTuRef.current.value.toLowerCase(),
+                    futureElRef.current && futureElRef.current.value.toLowerCase(),
+                    futureNosotrosRef.current && futureNosotrosRef.current.value.toLowerCase(),
+                    futureVosotrosRef.current && futureVosotrosRef.current.value.toLowerCase(),
+                    futureEllosRef.current && futureEllosRef.current.value.toLowerCase()
+                );
+                setFutureConjugation(futureConjugations);
+            }
+
+            incrementTense();
+        }
+    }
+
+    const handleSubmitClick = () => {
+        addConjugation(presentConjugation);
+        addConjugation(preteriteConjugation);
+        addConjugation(imperfectConjugation);
+        addConjugation(conditionalConjugation);
+        addConjugation(futureConjugation);
+        router.reload();
     }
 
     const handleTextboxFocusEvent = (e) => {
@@ -175,79 +289,6 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         currentTextBox.selectionEnd = currentPosition + 1;
     }
 
-    const handleSubmitClick = (e) => {
-        e.preventDefault();
-
-        const newVerb = new Verb(
-            infinitiveRef.current.value,
-            translationRef.current.value,
-            pronunciationRef.current.value);
-
-        addVerb(newVerb);
-        const verb = verbs.find(verb => verb.infinitive === infinitiveRef.current.value);
-        const newVerbId = verb.id;
-
-        const presentConjugations = new Conjugation(
-            newVerbId,
-            tense,
-            presentYoRef.current.value,
-            presentTuRef.current.value,
-            presentElRef.current.value,
-            presentNosotrosRef.current.value,
-            presentVosotrosRef.current.value,
-            presentEllosRef.current.value
-        );
-        addConjugation(presentConjugations);
-
-        const preteriteConjugations = new Conjugation(
-            newVerbId,
-            tense,
-            preteriteYoRef.current.value,
-            preteriteTuRef.current.value,
-            preteriteElRef.current.value,
-            preteriteNosotrosRef.current.value,
-            preteriteVosotrosRef.current.value,
-            preteriteEllosRef.current.value
-        );
-        addConjugation(preteriteConjugations);
-
-        const imperfectConjugations = new Conjugation(
-            newVerbId,
-            tense,
-            imperfectYoRef.current.value,
-            imperfectTuRef.current.value,
-            imperfectElRef.current.value,
-            imperfectNosotrosRef.current.value,
-            imperfectVosotrosRef.current.value,
-            imperfectEllosRef.current.value
-        );
-        addConjugation(imperfectConjugations);
-
-        const conditionalConjugations = new Conjugation(
-            newVerbId,
-            tense,
-            conditionalYoRef.current.value,
-            conditionalTuRef.current.value,
-            conditionalElRef.current.value,
-            conditionalNosotrosRef.current.value,
-            conditionalVosotrosRef.current.value,
-            conditionalEllosRef.current.value
-        );
-        addConjugation(conditionalConjugations);
-
-        const futureConjugations = new Conjugation(
-            newVerbId,
-            tense,
-            futureYoRef.current.value,
-            futureTuRef.current.value,
-            futureElRef.current.value,
-            futureNosotrosRef.current.value,
-            futureVosotrosRef.current.value,
-            futureEllosRef.current.value
-        );
-        addConjugation(futureConjugations);
-    }
-
     for(const tense in tenses) {
         formTenses.push( tenses[tense].tense );
     }
@@ -257,15 +298,15 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
             <section className='pageContainer'>
                 <h1>Verb Input</h1>
                     <form ref={ formRef } id="verbs" className="col-xs-12 col-sm-8 col-lg-5">
-                        { tense < numTenses && 
+                        { tense <= numTenses && 
                             <fieldset className="col-lg-10">
                                 <Texinput ref={ infinitiveRef } id="infinitive" name="infinitive" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                 <Texinput ref={ translationRef } id="translation" name="translation" inputClass="col-lg-12" />
                                 <Texinput ref={ pronunciationRef } id="pronunciation" name="pronunciation" inputClass="col-lg-12" />
                             
                                 <section ref={ tensesRef }>
-                                    <h4>{ formTenses[tense] }</h4>
-                                    { formTenses[tense] === 'present' && 
+                                    <h4>{ formTenses[tense - 1] }</h4>
+                                    { tense === 1 ? 
                                         <>
                                             <Texinput ref={ presentYoRef } id="presentYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ presentTuRef } id="presentTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
@@ -273,9 +314,9 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                             <Texinput ref={ presentNosotrosRef } id="presentNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ presentVosotrosRef } id="presentVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ presentEllosRef } id="presentEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                        </>
+                                        </> : null
                                     }
-                                    { formTenses[tense] === 'preterite' && 
+                                    { tense === 2 ? 
                                         <>
                                             <Texinput ref={ preteriteYoRef } id="preteriteYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ preteriteTuRef } id="preteriteTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
@@ -283,9 +324,9 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                             <Texinput ref={ preteriteNosotrosRef } id="preteriteNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ preteriteVosotrosRef } id="preteriteVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ preteriteEllosRef } id="preteriteEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                        </>
+                                        </> : null
                                     }
-                                    { formTenses[tense] === 'imperfect' &&
+                                    { tense === 3 ?
                                         <>
                                             <Texinput ref={ imperfectYoRef } id="imperfectYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ imperfectTuRef } id="imperfectTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
@@ -293,9 +334,9 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                             <Texinput ref={ imperfectNosotrosRef } id="imperfectNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ imperfectVosotrosRef } id="imperfectVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ imperfectEllosRef } id="imperfectEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                        </>
+                                        </> : null
                                     }
-                                    { formTenses[tense] === 'conditional' && 
+                                    { tense === 4 ? 
                                         <>
                                             <Texinput ref={ conditionalYoRef } id="conditionalYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ conditionalTuRef } id="conditionalTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
@@ -303,9 +344,9 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                             <Texinput ref={ conditionalNosotrosRef } id="conditionalNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ conditionalVosotrosRef } id="conditionalVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ conditionalEllosRef } id="conditionalEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                        </>
+                                        </> : null
                                     }
-                                    { formTenses[tense] === 'future' && 
+                                    { tense === 5 ? 
                                         <>
                                             <Texinput ref={ futureYoRef } id="futureYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ futureTuRef } id="futureTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
@@ -313,17 +354,19 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                             <Texinput ref={ futureNosotrosRef } id="futureNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ futureVosotrosRef } id="futureVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
                                             <Texinput ref={ futureEllosRef } id="futureEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                        </>
+                                        </> : null
                                     }
                                 </section>
                             </fieldset>
                         }
                         <div className='buttons col-lg-12'>
-                            <input ref={ nextButtonRef } type="button" id="nextBtn" onClick={ handleNextClick } value="next" />
-                            <input ref={ submitButtonRef } type="button" id="submitBtn" onClick={ handleSubmitClick } value="add verb" />
+                            { tense <= 5 ? 
+                                <input type="button" id='nextBtn' onClick={ handleNextClick } value='next' /> : 
+                                <input type="button" id='submitBtn' onClick={ handleSubmitClick } value='add verb' />
+                            }
                         </div>
                     </form>
-                { tense < numTenses && <Accents handleAccentClick={ handleAccentClick } /> }
+                { tense <= numTenses && <Accents handleAccentClick={ handleAccentClick } /> }
             </section>
         </Layout>
     )
