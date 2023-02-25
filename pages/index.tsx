@@ -117,6 +117,13 @@ const Index = () => {
                             </div>
                         </div>
                     </div>
+                    <div className='scroll-link'>
+                        <Link href='#verbContent' scroll={ false }>
+                            <div className='circle'>
+                                <div className='triangle'></div>
+                            </div>
+                        </Link>
+                    </div>
                 </div>
                 <section id="verbContent">
                     <h2>[ Verbs ]</h2>
