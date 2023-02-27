@@ -278,6 +278,10 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         Router.reload();
     }
 
+    const handleQuit = () => {
+        Router.reload();
+    }
+
     const handleTextboxFocusEvent = (e) => {
         currentTextBox = e.target;
     }
@@ -365,73 +369,79 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                         }
                         {
                             showConjugations && 
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>present</th>
-                                        <th>preterite</th>
-                                        <th>imperfect</th>
-                                        <th>conditional</th>
-                                        <th>future</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>yo</td>
-                                        <td>{ presentConjugation.yo }</td>
-                                        <td>{ preteriteConjugation.yo }</td>
-                                        <td>{ imperfectConjugation.yo }</td>
-                                        <td>{ conditionalConjugation.yo }</td>
-                                        <td>{ futureConjugation.yo }</td>
-                                    </tr>
-                                    <tr>
-                                        <td>tú</td>
-                                        <td>{ presentConjugation.tu }</td>
-                                        <td>{ preteriteConjugation.tu }</td>
-                                        <td>{ imperfectConjugation.tu }</td>
-                                        <td>{ conditionalConjugation.tu }</td>
-                                        <td>{ futureConjugation.tu }</td>
-                                    </tr>
-                                    <tr>
-                                        <td>él/ella/usted</td>
-                                        <td>{ presentConjugation.el }</td>
-                                        <td>{ preteriteConjugation.el }</td>
-                                        <td>{ imperfectConjugation.el }</td>
-                                        <td>{ conditionalConjugation.el }</td>
-                                        <td>{ futureConjugation.el }</td>
-                                    </tr>
-                                    <tr>
-                                        <td>nosotros</td>
-                                        <td>{ presentConjugation.nosotros }</td>
-                                        <td>{ preteriteConjugation.nosotros }</td>
-                                        <td>{ imperfectConjugation.nosotros }</td>
-                                        <td>{ conditionalConjugation.nosotros }</td>
-                                        <td>{ futureConjugation.nosotros }</td>
-                                    </tr>
-                                    <tr>
-                                        <td>vosotros</td>
-                                        <td>{ presentConjugation.vosotros }</td>
-                                        <td>{ preteriteConjugation.vosotros }</td>
-                                        <td>{ imperfectConjugation.vosotros }</td>
-                                        <td>{ conditionalConjugation.vosotros }</td>
-                                        <td>{ futureConjugation.vosotros }</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ellos/ellas/ustedes</td>
-                                        <td>{ presentConjugation.ellos }</td>
-                                        <td>{ preteriteConjugation.ellos }</td>
-                                        <td>{ imperfectConjugation.ellos }</td>
-                                        <td>{ conditionalConjugation.ellos }</td>
-                                        <td>{ futureConjugation.ellos }</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <>
+                                <h3>Everything OK?</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>present</th>
+                                            <th>preterite</th>
+                                            <th>imperfect</th>
+                                            <th>conditional</th>
+                                            <th>future</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>yo</td>
+                                            <td>{ presentConjugation.yo }</td>
+                                            <td>{ preteriteConjugation.yo }</td>
+                                            <td>{ imperfectConjugation.yo }</td>
+                                            <td>{ conditionalConjugation.yo }</td>
+                                            <td>{ futureConjugation.yo }</td>
+                                        </tr>
+                                        <tr>
+                                            <td>tú</td>
+                                            <td>{ presentConjugation.tu }</td>
+                                            <td>{ preteriteConjugation.tu }</td>
+                                            <td>{ imperfectConjugation.tu }</td>
+                                            <td>{ conditionalConjugation.tu }</td>
+                                            <td>{ futureConjugation.tu }</td>
+                                        </tr>
+                                        <tr>
+                                            <td>él/ella/usted</td>
+                                            <td>{ presentConjugation.el }</td>
+                                            <td>{ preteriteConjugation.el }</td>
+                                            <td>{ imperfectConjugation.el }</td>
+                                            <td>{ conditionalConjugation.el }</td>
+                                            <td>{ futureConjugation.el }</td>
+                                        </tr>
+                                        <tr>
+                                            <td>nosotros</td>
+                                            <td>{ presentConjugation.nosotros }</td>
+                                            <td>{ preteriteConjugation.nosotros }</td>
+                                            <td>{ imperfectConjugation.nosotros }</td>
+                                            <td>{ conditionalConjugation.nosotros }</td>
+                                            <td>{ futureConjugation.nosotros }</td>
+                                        </tr>
+                                        <tr>
+                                            <td>vosotros</td>
+                                            <td>{ presentConjugation.vosotros }</td>
+                                            <td>{ preteriteConjugation.vosotros }</td>
+                                            <td>{ imperfectConjugation.vosotros }</td>
+                                            <td>{ conditionalConjugation.vosotros }</td>
+                                            <td>{ futureConjugation.vosotros }</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ellos/ellas/ustedes</td>
+                                            <td>{ presentConjugation.ellos }</td>
+                                            <td>{ preteriteConjugation.ellos }</td>
+                                            <td>{ imperfectConjugation.ellos }</td>
+                                            <td>{ conditionalConjugation.ellos }</td>
+                                            <td>{ futureConjugation.ellos }</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </>
                         }
                         <div className='buttons col-lg-12'>
                             { tense <= 5 ? 
                                 <input type="button" id='nextBtn' onClick={ handleNextClick } value='next' /> : 
-                                <input type="button" id='submitBtn' onClick={ handleSubmitClick } value='add verb' />
+                                <>
+                                    <input type="button" id='submitBtn' onClick={ handleSubmitClick } value='add verb' />
+                                    <input type="button" id='quitBtn' onClick={ handleQuit } value='quit' />
+                                </>
                             }
                         </div>
                     </form>

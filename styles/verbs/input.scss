@@ -110,6 +110,19 @@ form#verbs {
         #submitBtn {
             background: rgb(40, 167, 69);
         }
+
+        #quitBtn {
+            background: rgb(198, 10, 30);
+            color: rgb(255, 255, 255);
+            margin-left: 1.5rem;
+        }
+    }
+
+    
+    h3 {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
     }
 
     table {
