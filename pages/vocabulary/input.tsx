@@ -122,6 +122,8 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
     }
 
     const handleNewCategory = async (e) => {
+        e.preventDefault();
+
         const inputCategory = e.target.value;
         const hasCategory = categories.find(category => category.category === inputCategory);
         if(hasCategory === undefined) {
@@ -146,10 +148,10 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
                 gender: genderRef.current.value,
                 image: imageFile,
                 pronunciation: pronunciationRef.current.value
-            }
+            };
             addVocabulary(newVocabulary);
+            Router.reload();
         }
-        Router.reload();
     }
 
     useEffect(() => {
@@ -169,7 +171,7 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
                         <dl>
                             <dt><label htmlFor="categorySelect">category: </label></dt>
                             <dd>
-                                <select ref={ categoryRef } id="categorySelect" name="categorySelect" onChange={ (e) => setCategory(e.target.value) }>
+                                <select ref={ categoryRef } id="categorySelect" name="categorySelect" onChange={ (e) => setCategory(parseInt(e.target.value)) }>
                                     { categorySelections.map( ( categorySelection, i ) => 
                                         <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
                                     )}

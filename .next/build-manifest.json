@@ -30,6 +30,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/vocabulary/flashcard": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/vocabulary/flashcard.js"
+    ],
     "/vocabulary/input": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

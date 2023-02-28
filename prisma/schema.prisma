@@ -21,7 +21,7 @@ model Words {
   translation String
   pronunciation String
   category Int
-  gender String
+  gender String?
   image String
 }
 

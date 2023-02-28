@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handle(req, res) {
     const { category, word, translation, gender, image, pronunciation } = req.body;
-    const result = await prisma.vocabulary.create({
+    const result = await prisma.words.create({
         data: {
             category: category,
             word: word,
