@@ -18,26 +18,15 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
     const [accent, setAccent] = useState(null);
     const [category, setCategory] = useState(null);
     const [newCategory, setNewCategory] = useState(null);
-    const formRef = useRef(null);
-    const categoryRef = useRef(null);
-    const newCategoryRef = useRef(null);
+    const [word, setWord] = useState(null);
+    const [translation, setTranslation] = useState(null);
+    const [pronunciation, setPronunciation] = useState(null);
+    const [gender, setGender] = useState(null);
+    const [image, setImage] = useState(null);
     const wordRef = useRef(null);
-    const translationRef = useRef(null);
-    const genderRef = useRef(null);
-    const imageRef = useRef(null);
-    const pronunciationRef = useRef(null);
+    const newCategoryRef = useRef(null);
+    const newCategoryDisabled = category === null || category !== 0 || category === -1;
     let currentTextbox;
-
-    const [formValues, setFormValues] = useState({
-        category: null,
-        word: null,
-        translation: null,
-        gender: null,
-        image: null,
-        pronunciation: ''
-    });
-
-    let newCategoryDisabled = category === null || category !== '0' || category === -1;
 
     const categorySelections = [];
 
@@ -136,18 +125,18 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
     const handleSubmitClick = (e) => {
         e.preventDefault();
 
-        const formComplete = category && wordRef.current.value && translationRef.current.value && pronunciationRef.current.value;
-        const hasWord = wordRef.current && dictionary.find(entry => entry.word === wordRef.current.value);
+        const formComplete = category && word && translation && pronunciation;
+        const hasWord = word && dictionary.find(entry => entry.word === word);
 
         if(formComplete && hasWord === undefined) {
-            const imageFile = imageRef.current ? imageRef.current.value.replace("C:\\fakepath\\", "/images/") : '/images/blank.png';
+            const imageFile = image ? image.replace("C:\\fakepath\\", "/images/") : '/images/blank.png';
             const newVocabulary = {
                 category: category,
-                word: wordRef.current.value,
-                translation: translationRef.current.value,
-                gender: genderRef.current.value,
+                word: word,
+                translation: translation,
+                gender: gender,
                 image: imageFile,
-                pronunciation: pronunciationRef.current.value
+                pronunciation: pronunciation
             };
             addVocabulary(newVocabulary);
             Router.reload();
@@ -166,12 +155,12 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
         <Layout>
             <section className='pageContainer'>
                 <h1>Vocabulary Input</h1>
-                <form ref={ formRef } id="vocabulary" className="col-xs-12 col-sm-10 col-md-8 col-lg-4">
+                <form id="vocabulary" className="col-xs-12 col-sm-10 col-md-8 col-lg-4">
                     <fieldset className="col-lg-12">
                         <dl>
                             <dt><label htmlFor="categorySelect">category: </label></dt>
                             <dd>
-                                <select ref={ categoryRef } id="categorySelect" name="categorySelect" onChange={ (e) => setCategory(parseInt(e.target.value)) }>
+                                <select id="categorySelect" name="categorySelect" onChange={ (e) => setCategory(parseInt(e.target.value)) }>
                                     { categorySelections.map( ( categorySelection, i ) => 
                                         <option key={ i } value={ categorySelection.id }>{ categorySelection.category }</option>
                                     )}
@@ -179,11 +168,11 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
                             </dd>
                         </dl>
                         <Texinput ref={ newCategoryRef } id="newCategory" name="new category" disabled={ newCategoryDisabled } onChangeEvent={ handleNewCategory } inputClass="col-lg-12" />
-                        <Texinput ref={ wordRef } id="word" name="word" onFocusEvent={ (e) => handleInputChange(e) } inputClass="col-lg-12" />
-                        <Texinput ref={ translationRef } id="translation" name="translation" inputClass="col-lg-12" />
-                        <Texinput ref={ genderRef } id="gender" name="gender" inputClass="col-lg-12" />
-                        <Imageupload ref={ imageRef } id="image" name="image" />
-                        <Texinput ref={ pronunciationRef } id="pronunciation" name="pronunciation" inputClass="col-lg-12" />
+                        <Texinput ref={ wordRef } id="word" name="word" onFocusEvent={ (e) => handleInputChange(e) } onChangeEvent={ (e) => setWord(e.target.value) } inputClass="col-lg-12" />
+                        <Texinput id="translation" name="translation" onChangeEvent={ (e) => setTranslation(e.target.value) } inputClass="col-lg-12" />
+                        <Texinput id="gender" name="gender" onChangeEvent={ (e) => setGender(e.target.value) } inputClass="col-lg-12" />
+                        <Imageupload id="image" onChangeEvent={ (e) => setImage(e.target.value) } name="image" />
+                        <Texinput id="pronunciation" name="pronunciation" onChangeEvent={ (e) => setPronunciation(e.target.value) } inputClass="col-lg-12" />
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" onClick={handleSubmitClick} value="add word" />
