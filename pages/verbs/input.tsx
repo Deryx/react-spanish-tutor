@@ -16,12 +16,53 @@ interface InputProps {
 const Input: FC<InputProps> = ({ verbs, tenses }) => {
     const [tense, setTense] = useState(0);
     const [verbID, setVerbID] = useState(null);
+
+    const [infinitive, setInfinitive] = useState(null);
+    const [translation, setTranslation] = useState(null);
+    const [pronunciation, setPronunciation] = useState(null);
+
+    const [presentYo, setPresentYo] = useState(null);
+    const [presentTu, setPresentTu] = useState(null);
+    const [presentEl, setPresentEl] = useState(null);
+    const [presentNosotros, setPresentNosotros] = useState(null);
+    const [presentVosotros, setPresentVosotros] = useState(null);
+    const [presentEllos, setPresentEllos] = useState(null);
+
+    const [preteriteYo, setPreteriteYo] = useState(null);
+    const [preteriteTu, setPreteriteTu] = useState(null);
+    const [preteriteEl, setPreteriteEl] = useState(null);
+    const [preteriteNosotros, setPreteriteNosotros] = useState(null);
+    const [preteriteVosotros, setPreteriteVosotros] = useState(null);
+    const [preteriteEllos, setPreteriteEllos] = useState(null);
+
+    const [imperfectYo, setImperfectYo] = useState(null);
+    const [imperfectTu, setImperfectTu] = useState(null);
+    const [imperfectEl, setImperfectEl] = useState(null);
+    const [imperfectNosotros, setImperfectNosotros] = useState(null);
+    const [imperfectVosotros, setImperfectVosotros] = useState(null);
+    const [imperfectEllos, setImperfectEllos] = useState(null);
+
+    const [conditionalYo, setConditionalYo] = useState(null);
+    const [conditionalTu, setConditionalTu] = useState(null);
+    const [conditionalEl, setConditionalEl] = useState(null);
+    const [conditionalNosotros, setConditionalNosotros] = useState(null);
+    const [conditionalVosotros, setConditionalVosotros] = useState(null);
+    const [conditionalEllos, setConditionalEllos] = useState(null);
+
+    const [futureYo, setFutureYo] = useState(null);
+    const [futureTu, setFutureTu] = useState(null);
+    const [futureEl, setFutureEl] = useState(null);
+    const [futureNosotros, setFutureNosotros] = useState(null);
+    const [futureVosotros, setFutureVosotros] = useState(null);
+    const [futureEllos, setFutureEllos] = useState(null);
+
     const [presentConjugation, setPresentConjugation] = useState(null);
     const [preteriteConjugation, setPreteriteConjugation] = useState(null);
     const [imperfectConjugation, setImperfectConjugation] = useState(null);
     const [conditionalConjugation, setConditionalConjugation] = useState(null);
     const [futureConjugation, setFutureConjugation] = useState(null);
     const [showConjugations, setShowConjugations] = useState(false);
+
     const formRef = useRef(null);
     const infinitiveRef = useRef(null);
     const translationRef = useRef(null);
@@ -174,17 +215,13 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         }
 
         if(tense === 0) {
-            const infinitive = infinitiveRef.current && infinitiveRef.current.value.toLowerCase();
-            const translation = translationRef.current  && translationRef.current.value.toLowerCase();
-            const pronunciation = pronunciationRef.current && pronunciationRef.current.value.toLowerCase();
-
             const hasInfinitive = verbs.find(verb => verb.infinitive === infinitive);
 
             if(hasInfinitive === undefined) {
                 const newInfinitive = new Verb(
-                    infinitive,
-                    translation,
-                    pronunciation
+                    infinitive.toLowerCase(),
+                    translation.toLowerCase(),
+                    pronunciation.toLowerCase()
                 );
                 addVerb(newInfinitive);
                 const newVerb = await getVerbId(infinitive);
@@ -198,12 +235,12 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                 const presentConjugations = new Conjugation(
                     verbID,
                     tense,
-                    presentYoRef.current && presentYoRef.current.value.toLowerCase(),
-                    presentTuRef.current && presentTuRef.current.value.toLowerCase(),
-                    presentElRef.current && presentElRef.current.value.toLowerCase(),
-                    presentNosotrosRef.current && presentNosotrosRef.current.value.toLowerCase(),
-                    presentVosotrosRef.current && presentVosotrosRef.current.value.toLowerCase(),
-                    presentEllosRef.current && presentEllosRef.current.value.toLowerCase()
+                    presentYo.toLowerCase(),
+                    presentTu.toLowerCase(),
+                    presentEl.toLowerCase(),
+                    presentNosotros.toLowerCase(),
+                    presentVosotros.toLowerCase(),
+                    presentEllos.toLowerCase()
                 );
                 setPresentConjugation(presentConjugations);
             }
@@ -212,12 +249,12 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                 const preteriteConjugations = new Conjugation(
                     verbID,
                     tense,
-                    preteriteYoRef.current && preteriteYoRef && preteriteYoRef.current.value.toLowerCase(),
-                    preteriteTuRef.current && preteriteTuRef.current.value.toLowerCase(),
-                    preteriteElRef.current && preteriteElRef.current.value.toLowerCase(),
-                    preteriteNosotrosRef.current && preteriteNosotrosRef.current.value.toLowerCase(),
-                    preteriteVosotrosRef.current && preteriteVosotrosRef.current.value.toLowerCase(),
-                    preteriteEllosRef.current && preteriteEllosRef.current.value.toLowerCase()
+                    preteriteYo.toLowerCase(),
+                    preteriteTu.toLowerCase(),
+                    preteriteEl.toLowerCase(),
+                    preteriteNosotros.toLowerCase(),
+                    preteriteVosotros.toLowerCase(),
+                    preteriteEllos.toLowerCase()
                 );
                 setPreteriteConjugation(preteriteConjugations);
             }
@@ -226,12 +263,12 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                 const imperfectConjugations = new Conjugation(
                     verbID,
                     tense,
-                    imperfectYoRef.current && imperfectYoRef.current.value.toLowerCase(),
-                    imperfectTuRef.current && imperfectTuRef.current.value.toLowerCase(),
-                    imperfectElRef.current && imperfectElRef.current.value.toLowerCase(),
-                    imperfectNosotrosRef.current && imperfectNosotrosRef.current.value.toLowerCase(),
-                    imperfectVosotrosRef.current && imperfectVosotrosRef.current.value.toLowerCase(),
-                    imperfectEllosRef.current && imperfectEllosRef.current.value.toLowerCase()
+                    imperfectYo.toLowerCase(),
+                    imperfectTu.toLowerCase(),
+                    imperfectEl.toLowerCase(),
+                    imperfectNosotros.toLowerCase(),
+                    imperfectVosotros.toLowerCase(),
+                    imperfectEllos.toLowerCase()
                 );
                 setImperfectConjugation(imperfectConjugations);
             }
@@ -240,12 +277,12 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                 const conditionalConjugations = new Conjugation(
                     verbID,
                     tense,
-                    conditionalYoRef.current && conditionalYoRef.current.value.toLowerCase(),
-                    conditionalTuRef.current && conditionalTuRef.current.value.toLowerCase(),
-                    conditionalElRef.current && conditionalElRef.current.value.toLowerCase(),
-                    conditionalNosotrosRef.current && conditionalNosotrosRef.current.value.toLowerCase(),
-                    conditionalVosotrosRef.current && conditionalVosotrosRef.current.value.toLowerCase(),
-                    conditionalEllosRef.current && conditionalEllosRef.current.value.toLowerCase()
+                    conditionalYo.toLowerCase(),
+                    conditionalTu.toLowerCase(),
+                    conditionalEl.toLowerCase(),
+                    conditionalNosotros.toLowerCase(),
+                    conditionalVosotros.toLowerCase(),
+                    conditionalEllos.toLowerCase()
                 );
                 setConditionalConjugation(conditionalConjugations);
             }
@@ -254,12 +291,12 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                 const futureConjugations = new Conjugation(
                     verbID,
                     tense,
-                    futureYoRef.current && futureYoRef.current.value.toLowerCase(),
-                    futureTuRef.current && futureTuRef.current.value.toLowerCase(),
-                    futureElRef.current && futureElRef.current.value.toLowerCase(),
-                    futureNosotrosRef.current && futureNosotrosRef.current.value.toLowerCase(),
-                    futureVosotrosRef.current && futureVosotrosRef.current.value.toLowerCase(),
-                    futureEllosRef.current && futureEllosRef.current.value.toLowerCase()
+                    futureYo.toLowerCase(),
+                    futureTu.toLowerCase(),
+                    futureEl.toLowerCase(),
+                    futureNosotros.toLowerCase(),
+                    futureVosotros.toLowerCase(),
+                    futureEllos.toLowerCase()
                 );
                 setFutureConjugation(futureConjugations);
                 setShowConjugations(true);
@@ -308,60 +345,60 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                     <form ref={ formRef } id="verbs" className="col-xs-12 col-sm-8 col-lg-5">
                         { tense <= numTenses && 
                             <fieldset className="col-lg-10">
-                                <Texinput ref={ infinitiveRef } id="infinitive" name="infinitive" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                <Texinput ref={ translationRef } id="translation" name="translation" inputClass="col-lg-12" />
-                                <Texinput ref={ pronunciationRef } id="pronunciation" name="pronunciation" inputClass="col-lg-12" />
+                                <Texinput ref={ infinitiveRef } id="infinitive" name="infinitive" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setInfinitive(e.target.value) } inputClass="col-lg-12" />
+                                <Texinput id="translation" name="translation" onChangeEvent={ (e) => setTranslation(e.target.value) } inputClass="col-lg-12" />
+                                <Texinput id="pronunciation" name="pronunciation" onChangeEvent={ (e) => setPronunciation(e.target.value) } inputClass="col-lg-12" />
                             
                                 <section ref={ tensesRef }>
                                     <h4>{ formTenses[tense - 1] }</h4>
                                     { tense === 1 ? 
                                         <>
-                                            <Texinput ref={ presentYoRef } id="presentYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentTuRef } id="presentTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentElRef } id="presentEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentNosotrosRef } id="presentNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentVosotrosRef } id="presentVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentEllosRef } id="presentEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentYoRef } id="presentYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentYo(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentTuRef } id="presentTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentTu(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentElRef } id="presentEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentEl(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentNosotrosRef } id="presentNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentNosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentVosotrosRef } id="presentVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentVosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentEllosRef } id="presentEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentEllos(e.target.value) } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 2 ? 
                                         <>
-                                            <Texinput ref={ preteriteYoRef } id="preteriteYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteTuRef } id="preteriteTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteElRef } id="preteriteEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteNosotrosRef } id="preteriteNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteVosotrosRef } id="preteriteVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteEllosRef } id="preteriteEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteYoRef } id="preteriteYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteYo(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteTuRef } id="preteriteTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteTu(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteElRef } id="preteriteEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteEl(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteNosotrosRef } id="preteriteNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteNosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteVosotrosRef } id="preteriteVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteVosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteEllosRef } id="preteriteEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteEllos(e.target.value) } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 3 ?
                                         <>
-                                            <Texinput ref={ imperfectYoRef } id="imperfectYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectTuRef } id="imperfectTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectElRef } id="imperfectEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectNosotrosRef } id="imperfectNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectVosotrosRef } id="imperfectVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectEllosRef } id="imperfectEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectYoRef } id="imperfectYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectYo(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectTuRef } id="imperfectTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectTu(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectElRef } id="imperfectEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectEl(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectNosotrosRef } id="imperfectNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectNosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectVosotrosRef } id="imperfectVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectVosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectEllosRef } id="imperfectEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectEllos(e.target.value) } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 4 ? 
                                         <>
-                                            <Texinput ref={ conditionalYoRef } id="conditionalYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalTuRef } id="conditionalTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalElRef } id="conditionalEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalNosotrosRef } id="conditionalNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalVosotrosRef } id="conditionalVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalEllosRef } id="conditionalEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalYoRef } id="conditionalYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalYo(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalTuRef } id="conditionalTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalTu(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalElRef } id="conditionalEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalEl(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalNosotrosRef } id="conditionalNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalNosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalVosotrosRef } id="conditionalVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalVosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalEllosRef } id="conditionalEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalEllos(e.target.value) } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 5 ? 
                                         <>
-                                            <Texinput ref={ futureYoRef } id="futureYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureTuRef } id="futureTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureElRef } id="futureEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureNosotrosRef } id="futureNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureVosotrosRef } id="futureVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureEllosRef } id="futureEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureYoRef } id="futureYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureYo(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureTuRef } id="futureTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureTu(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureElRef } id="futureEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureEl(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureNosotrosRef } id="futureNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureNosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureVosotrosRef } id="futureVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureVosotros(e.target.value) } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureEllosRef } id="futureEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureEllos(e.target.value) } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                 </section>

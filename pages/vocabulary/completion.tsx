@@ -104,7 +104,7 @@ const Completion: FC<CompletionProps> = ({ dictionary, categories }) => {
     }
 
     useEffect( () => {    
-        completionDictionary = category != '0' ? [...dictionary.filter( word => word.category === category )] : dictionary;
+        completionDictionary = category != 0  ? [...dictionary.filter( word => word.category === category )] : dictionary;
         const dictionaryLength = completionDictionary.length;
         const words = randomNumberGenerator( numQuestions, dictionaryLength );
         for(let i = 0; i < numQuestions; i++) {
