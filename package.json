@@ -4,9 +4,11 @@
   "description": "An application to learn beginning Spanish using React",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
-    "start": "npm run dev"
+    "start": "next start",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "prisma:generate": "prisma generate"
   },
   "keywords": [
     "Spanish",
