@@ -4,10 +4,10 @@
   "description": "An application to learn beginning Spanish using React",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "vercel-build": "prisma generate && next build",
+    "start": "npm run dev",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "prisma:generate": "prisma generate"
   },
   "keywords": [
@@ -24,7 +24,7 @@
   "author": "Deryx E. Scott",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^4.2.1",
+    "@prisma/client": "^4.12.0-dev.6",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.2.0",
     "framer-motion": "^9.0.3",
@@ -35,9 +35,11 @@
     "sass": "^1.54.3"
   },
   "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^4.11.0",
     "@types/node": "^18.6.5",
     "@types/react": "^18.0.17",
-    "prisma": "^4.2.1",
+    "eslint": "^8.35.0",
+    "prisma": "^4.12.0-dev.6",
     "typescript": "^4.7.4"
   }
 }
