@@ -22,12 +22,20 @@ section {
 
 form#verbs {
     font-family: 'Roboto', sans-serif;
+
+    @media only screen and (max-width: 480px) {
+        width: 95%;
+    }
     
     fieldset {
         border-radius: 0.8rem;
         padding: 1.2rem 0;
         margin: 0 auto;
         background:  rgb(255, 196, 0);
+
+        @media only screen and (max-width: 480px) {
+            
+        }
     
         dl {
             padding: 0;

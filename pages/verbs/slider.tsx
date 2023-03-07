@@ -210,7 +210,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
                     null 
                 }
                 <h1>Verb Slider</h1>
-                <form id="slider" className="col-xs-12 col-sm-8 col-lg-4">
+                <form id="slider" className="col-xs-10 col-sm-8 col-lg-4">
                     <fieldset className="col-lg-12">
                         <dl ref={ numQuestionsRef } id='numQuestionsSelect'>
                             <dt><label htmlFor='numQuestions'>number questions: </label></dt>

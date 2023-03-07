@@ -95,7 +95,7 @@ const Index = () => {
         <Layout>
             <div id="home">
                 <div id="intro">
-                    <div className='spanish-map'>
+                    <div className='spanish-map col-xs-12'>
                         <Image 
                             className='landingBackground'
                             src="/images/home/296-2965054_map-of-spain-png-transparent-png.png"
@@ -106,12 +106,12 @@ const Index = () => {
                             alt="Map of Spain with Provinces"
                         />
                     </div>
-                    <div className='mainContent'>
-                        <section className='tag-line'>
+                    <div className='mainContent col-xs-12'>
+                        <section className='tag-line col-xs-12'>
                             <h1>Learn Spanish!</h1>
                             <h2>Speak Spanish in all of the following countries that have Spanish as their primary language: </h2>
                         </section>
-                        <div className="slideShow">
+                        <div className="slideShow col-xs-12">
                             <div className='slideShowSlider' style={{transform: `translate3d(${-slideNumber * 100}%, 0, 0)`}}>
                                 <SlideShow slidesData={slideData} delay={ delay } />
                             </div>

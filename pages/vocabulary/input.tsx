@@ -18,11 +18,14 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
     const [accent, setAccent] = useState(null);
     const [category, setCategory] = useState(null);
     const [newCategory, setNewCategory] = useState(null);
-    const [word, setWord] = useState(null);
-    const [translation, setTranslation] = useState(null);
-    const [pronunciation, setPronunciation] = useState(null);
-    const [gender, setGender] = useState(null);
-    const [image, setImage] = useState(null);
+    const [newEntry, setNewEntry] = useState({
+        category: null,
+        word: null,
+        translation: null,
+        pronunciation: null,
+        gender: null,
+        image: null
+    });
     const wordRef = useRef(null);
     const newCategoryRef = useRef(null);
     const newCategoryDisabled = category === null || category !== 0 || category === -1;
@@ -125,20 +128,14 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
     const handleSubmitClick = (e) => {
         e.preventDefault();
 
-        const formComplete = category && word && translation && pronunciation;
-        const hasWord = word && dictionary.find(entry => entry.word === word);
+        const formComplete = category && newEntry.word && newEntry.translation && newEntry.pronunciation;
+        const hasWord = newEntry.word && dictionary.find(entry => entry.word === newEntry.word);
 
         if(formComplete && hasWord === undefined) {
-            const imageFile = image ? image.replace("C:\\fakepath\\", "/images/") : '/images/blank.png';
-            const newVocabulary = {
-                category: category,
-                word: word,
-                translation: translation,
-                gender: gender,
-                image: imageFile,
-                pronunciation: pronunciation
-            };
-            addVocabulary(newVocabulary);
+            const imageFile = newEntry.image ? newEntry.image.replace("C:\\fakepath\\", "/images/") : '/images/blank.png';
+            setNewEntry({...newEntry, image: imageFile});
+            setNewEntry({...newEntry, category: category});
+            addVocabulary(newEntry);
             Router.reload();
         }
     }
@@ -168,11 +165,11 @@ const Input: FC<InputProps> = ({ dictionary, categories }) => {
                             </dd>
                         </dl>
                         <Texinput ref={ newCategoryRef } id="newCategory" name="new category" disabled={ newCategoryDisabled } onChangeEvent={ handleNewCategory } inputClass="col-lg-12" />
-                        <Texinput ref={ wordRef } id="word" name="word" onFocusEvent={ (e) => handleInputChange(e) } onChangeEvent={ (e) => setWord(e.target.value) } inputClass="col-lg-12" />
-                        <Texinput id="translation" name="translation" onChangeEvent={ (e) => setTranslation(e.target.value) } inputClass="col-lg-12" />
-                        <Texinput id="gender" name="gender" onChangeEvent={ (e) => setGender(e.target.value) } inputClass="col-lg-12" />
-                        <Imageupload id="image" onChangeEvent={ (e) => setImage(e.target.value) } name="image" />
-                        <Texinput id="pronunciation" name="pronunciation" onChangeEvent={ (e) => setPronunciation(e.target.value) } inputClass="col-lg-12" />
+                        <Texinput ref={ wordRef } id="word" name="word" onFocusEvent={ (e) => handleInputChange(e) } onChangeEvent={ (e) => setNewEntry({...newEntry, word: e.target.value}) } inputClass="col-lg-12" />
+                        <Texinput id="translation" name="translation" onChangeEvent={ (e) => setNewEntry({...newEntry, translation: e.target.value}) } inputClass="col-lg-12" />
+                        <Texinput id="gender" name="gender" onChangeEvent={ (e) => setNewEntry({...newEntry, gender: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
+                        <Imageupload id="image" onChangeEvent={ (e) => setNewEntry({...newEntry, image: e.target.value.toLowerCase()}) } name="image" />
+                        <Texinput id="pronunciation" name="pronunciation" onChangeEvent={ (e) => setNewEntry({...newEntry, pronunciation: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
                     </fieldset>
                     <div className='buttons col-lg-12'>
                         <input type="button" id="submitBtn" onClick={handleSubmitClick} value="add word" />

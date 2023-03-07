@@ -8,7 +8,11 @@ form#verbFlashcard {
 
         .mainContainer {
             top: 55%;
-            left: 50%;    
+            left: 50%;
+            
+            @media only screen and (max-width: 480px) {
+                top: 40%;
+            }
         }
 
         dl {
@@ -27,6 +31,10 @@ form#verbFlashcard {
                 text-transform: capitalize;
                 text-align: right;
                 font-size: 90%;   
+
+                @media only screen and (max-width: 480px) {
+                    font-size: 100%;
+                }
             }
     
             dd {
@@ -40,6 +48,11 @@ form#verbFlashcard {
                     border-radius: 0.3rem;
                     padding: 0.4rem;
                     font-size: 80%;
+
+                    @media only screen and (max-width: 480px) {
+                        width: 100%;
+                        font-size: 90%;
+                    }
                 }
             }
         } 
@@ -51,6 +64,9 @@ form#verbFlashcard {
         justify-content: center;
         margin-top: 70%;
 
+        @media only screen and (max-width: 480px) {
+            margin-top: 120%;
+        }
     
         input[type="button"] {
             margin: 0.75rem;

@@ -33,6 +33,11 @@ form#conjugator {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media only screen and (max-width: 480px) {
+        border: none;
+        height: 40vh;
+    }
     
     dl#numQuestionsSelect {
         padding: 0;

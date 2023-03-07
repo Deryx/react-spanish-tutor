@@ -26,6 +26,10 @@ form#accents {
                 width: 2.0rem;
                 height: 2.0rem;
                 margin: 0 10px;
+
+                @media only screen and (max-width: 480px) {
+                    margin: 0 5px;
+                }
             }
         }
     }

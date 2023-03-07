@@ -27,11 +27,20 @@ form#vocabulary {
     padding: 3rem;
     border-radius: 0.8rem;
 
+    @media only screen and (max-width: 480px) {
+        border: none;
+    }
+
     fieldset {
         border-radius: 0.8rem;
         padding: 1.2rem;
         margin: 0 auto;
         background:  rgb(255, 196, 0); 
+
+        @media only screen and (max-width: 480px) {
+            width: 120%;
+            margin-left: -30px;
+        }
         
         dl {
             padding: 0;

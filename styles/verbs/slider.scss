@@ -33,6 +33,11 @@ form#slider {
         align-items: center;
         justify-content: center;
 
+        @media only screen and (max-width: 480px) {
+            border: none;
+            height: 30vh;
+        }
+
         h2 {
             color: rgb(198, 10, 30);
             font-weight: bold;
@@ -132,6 +137,10 @@ form#slider {
                         text-align: center;
                         background: rgb(198, 10, 30);
                         color: rgb(255, 196, 0);
+
+                        @media only screen and (max-width: 480px) {
+                            width: 10rem;
+                        }
                     }
                 }
         
@@ -149,6 +158,10 @@ form#slider {
                         color: rgb(198, 10, 30);
                         background: rgb(255, 196, 0);
                         cursor: move;
+
+                        @media only screen and (max-width: 480px) {
+                            width: 10rem;
+                        }
                     }
                 }
             }

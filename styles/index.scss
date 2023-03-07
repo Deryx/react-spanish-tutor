@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 50vh;
+    min-height: 50vh;
     display: flex;
     flex-direction: column;
 
@@ -12,11 +12,20 @@
         background-color: rgb(247, 247, 247);
         display: flex;
         padding-right: 2rem;
+
+        @media only screen and (max-width: 480px) {
+            min-height: 55vh;
+            flex-direction: column;
+        }
         
         .spanish-map {
             width: 50%;
             height: 100%;
             position: relative;
+
+            @media only screen and (max-width: 768px) {
+                display: none;
+            }
         }
 
         .mainContent {
@@ -25,6 +34,10 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+      
+            @media only screen and (max-width: 768px) {
+                width: 100%;
+            }
 
             .tag-line {
                 margin-top: 25rem;
@@ -32,18 +45,35 @@
                 height: 100%;
                 text-align: center;
 
+                @media only screen and (max-width: 480px) {
+                    margin-top: 15rem;
+                }
+
                 h1 {
                     font-family: 'Inter', sans-serif;
                     font-size: 400%;
                     font-weight: 700;
                     letter-spacing: -2px;
                     color: rgb(198, 10, 30);
+    
+                    @media only screen and (max-width: 480px) {
+                        margin: 0;
+                        font-size: 300%;
+                        margin-left: 1.5rem;
+                    }
                 }
 
                 h2 {
                     font-family: 'Inter', sans-serif;
                     letter-spacing: -1px;
                     font-size: 350%;
+    
+                    @media only screen and (max-width: 480px) {
+                        margin: 0;
+                        font-size: 175%;
+                        margin-left: 1.5rem;
+                        text-align: justify;
+                    }
                 }
             }
 
@@ -51,6 +81,12 @@
                 margin: 0 auto;
                 margin-top: 3rem;
                 max-width: 500px;
+               
+                @media only screen and (max-width: 480px) {
+                    width: 100%;
+                    margin-left: 1.5rem;
+                    text-align: center;
+                }
 
                 .slideShowSlider {
                     white-space: nowrap;
@@ -72,6 +108,10 @@
             position: absolute;
             bottom: 0.625rem;
             z-index: 100;
+                
+            @media only screen and (max-width: 480px) {
+                display: none;
+            }
 
             .circle {
                 border-radius: 50%;

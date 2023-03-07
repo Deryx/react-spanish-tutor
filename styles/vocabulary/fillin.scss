@@ -31,6 +31,13 @@ form#fillin {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+       
+        @media only screen and (max-width: 480px) {
+            margin-top: -30px;
+            border: none;
+            width: 100%;
+            height: 15vh;
+        }
 
         dl#numQuestionsSelect {
             padding: 0;
@@ -40,17 +47,30 @@ form#fillin {
             flex-direction: row;
             justify-content: center;
 
+            @media only screen and (max-width: 480px) {
+                width: 100%;
+                flex-direction: column;
+            }
+
             dt {
                 width: 30%;
                 text-align: right;
                 margin-top: 0.3125rem;
                 margin-right: 0.5rem;
                 text-transform: capitalize;
+
+                @media only screen and (max-width: 480px) {
+                    width: 100%;
+                }
             }
 
             dd {
                 width: 30%;
                 justify-content: flex-start;
+
+                @media only screen and (max-width: 480px) {
+                    width: 100%;
+                }
                 
                 select {
                     width: 30%;
@@ -58,6 +78,10 @@ form#fillin {
                     border-radius: 0.3rem;
                     padding: 0.4rem;
                     font-size: 80%;
+                
+                    @media only screen and (max-width: 480px) {
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -69,7 +93,11 @@ form#fillin {
             display: flex;
             flex-direction: row;
             justify-content: center;
-                                            
+
+            @media only screen and (max-width: 480px) {
+                width: 120%;
+            }
+
             dt {
                 margin: 0;
                 margin-top: 0.3125rem;
@@ -93,6 +121,10 @@ form#fillin {
                     border-radius: 0.3rem;
                     padding: 0.4rem;
                     font-size: 80%;
+
+                    @media only screen and (max-width: 480px) {
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -132,6 +164,10 @@ form#fillin {
                     border: none;
                     border-bottom: 0.0625rem solid rgb(198, 10, 30);
                     text-align: center;
+
+                    @media only screen and (max-width: 480px) {
+                        width: 100%;
+                    }
                 }
             }
         }

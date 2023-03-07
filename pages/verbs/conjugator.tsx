@@ -157,7 +157,7 @@ const Conjugator: FC<ConjugatorProps> = ( { verbs, tenses, conjugations } ) => {
                     null 
                 }
                 <h1>Verb Conjugator</h1>
-                <form id="conjugator" className="col-xs-12 col-sm-8 col-lg-4">
+                <form id="conjugator" className="col-xs-10 col-sm-8 col-lg-4">
                     <dl ref={ numQuestionsRef } id='numQuestionsSelect'>
                         <dt><label htmlFor='numQuestions'>number questions: </label></dt>
                         <dd>
