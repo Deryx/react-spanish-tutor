@@ -24,6 +24,8 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
     });
 
     const [presentConjugations, setPresentConjugations] = useState({
+        verb: null,
+        tense: null,
         yo: null,
         tu: null,
         el: null,
@@ -32,6 +34,8 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         ellos: null
     });
     const [preteriteConjugations, setPreteriteConjugations] = useState({
+        verb: null,
+        tense: null,
         yo: null,
         tu: null,
         el: null,
@@ -40,6 +44,8 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         ellos: null
     });
     const [imperfectConjugations, setImperfectConjugations] = useState({
+        verb: null,
+        tense: null,
         yo: null,
         tu: null,
         el: null,
@@ -48,6 +54,8 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         ellos: null
     });
     const [conditionalConjugations, setConditionalConjugations] = useState({
+        verb: null,
+        tense: null,
         yo: null,
         tu: null,
         el: null,
@@ -56,6 +64,8 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         ellos: null
     });
     const [futureConjugations, setFutureConjugations] = useState({
+        verb: null,
+        tense: null,
         yo: null,
         tu: null,
         el: null,
@@ -181,7 +191,66 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         }
 
         if(allAnswered && verbID) {
+            if(tense === 1) {
+                setPresentConjugations({...presentConjugations,
+                    verb: verbID,
+                    tense: tense,
+                    yo: presentYoRef.current.value,
+                    tu: presentTuRef.current.value,
+                    el: presentElRef.current.value,
+                    nosotros: presentNosotrosRef.current.value,
+                    vosotros: presentVosotrosRef.current.value,
+                    ellos: presentElRef.current.value
+                });
+
+            }
+            if(tense === 2) {
+                setPreteriteConjugations({...preteriteConjugations,
+                    verb: verbID,
+                    tense: tense,
+                    yo: preteriteYoRef.current.value,
+                    tu: preteriteTuRef.current.value,
+                    el: preteriteElRef.current.value,
+                    nosotros: preteriteNosotrosRef.current.value,
+                    vosotros: preteriteVosotrosRef.current.value,
+                    ellos: preteriteEllosRef.current.value
+                });
+            }
+            if(tense === 3) {
+                setImperfectConjugations({...imperfectConjugations,
+                    verb: verbID,
+                    tense: tense,
+                    yo: imperfectYoRef.current.value,
+                    tu: imperfectTuRef.current.value,
+                    el: imperfectElRef.current.value,
+                    nosotros: imperfectNosotrosRef.current.value,
+                    vosotros: imperfectVosotrosRef.current.value,
+                    ellos: imperfectEllosRef.current.value
+                });
+            }
+            if(tense === 4) {
+                setConditionalConjugations({...conditionalConjugations,
+                    verb: verbID,
+                    tense: tense,
+                    yo: conditionalYoRef.current.value,
+                    tu: conditionalTuRef.current.value,
+                    el: conditionalElRef.current.value,
+                    nosotros: conditionalNosotrosRef.current.value,
+                    vosotros: conditionalVosotrosRef.current.value,
+                    ellos: conditionalEllosRef.current.value
+                });
+            }
             if(tense === 5) {
+                setFutureConjugations({...futureConjugations,
+                    verb: verbID,
+                    tense: tense,
+                    yo: futureYoRef.current.value,
+                    tu: futureTuRef.current.value,
+                    el: futureElRef.current.value,
+                    nosotros: futureNosotrosRef.current.value,
+                    vosotros: futureVosotrosRef.current.value,
+                    ellos: futureEllosRef.current.value
+                });
                 setShowConjugations(true);
             }
 
@@ -206,7 +275,7 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
         currentTextBox = e.target;
     }
 
-    const handleAccentClick = (e, accent) => {
+    const handleAccentClick = (e) => {
         e.preventDefault();
 
         const currentPosition = currentTextBox.selectionStart;
@@ -236,52 +305,52 @@ const Input: FC<InputProps> = ({ verbs, tenses }) => {
                                     <h4>{ formTenses[tense - 1] }</h4>
                                     { tense === 1 ? 
                                         <>
-                                            <Texinput ref={ presentYoRef } id="presentYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentConjugations({...presentConjugations, yo: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentTuRef } id="presentTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentConjugations({...presentConjugations, tu: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentElRef } id="presentEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentConjugations({...presentConjugations, el: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentNosotrosRef } id="presentNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentConjugations({...presentConjugations, nosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentVosotrosRef } id="presentVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentConjugations({...presentConjugations, vosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ presentEllosRef } id="presentEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPresentConjugations({...presentConjugations, ellos: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentYoRef } id="presentYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentTuRef } id="presentTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentElRef } id="presentEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentNosotrosRef } id="presentNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentVosotrosRef } id="presentVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ presentEllosRef } id="presentEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 2 ? 
                                         <>
-                                            <Texinput ref={ preteriteYoRef } id="preteriteYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteConjugations({...preteriteConjugations, yo: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteTuRef } id="preteriteTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteConjugations({...preteriteConjugations, tu: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteElRef } id="preteriteEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteConjugations({...preteriteConjugations, el: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteNosotrosRef } id="preteriteNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteConjugations({...preteriteConjugations, nosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteVosotrosRef } id="preteriteVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteConjugations({...preteriteConjugations, vosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ preteriteEllosRef } id="preteriteEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setPreteriteConjugations({...preteriteConjugations, ellos: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteYoRef } id="preteriteYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteTuRef } id="preteriteTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteElRef } id="preteriteEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteNosotrosRef } id="preteriteNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteVosotrosRef } id="preteriteVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ preteriteEllosRef } id="preteriteEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 3 ?
                                         <>
-                                            <Texinput ref={ imperfectYoRef } id="imperfectYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectConjugations({...imperfectConjugations, yo: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectTuRef } id="imperfectTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectConjugations({...imperfectConjugations, tu: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectElRef } id="imperfectEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectConjugations({...imperfectConjugations, el: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectNosotrosRef } id="imperfectNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectConjugations({...imperfectConjugations, nosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectVosotrosRef } id="imperfectVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectConjugations({...imperfectConjugations, vosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ imperfectEllosRef } id="imperfectEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setImperfectConjugations({...imperfectConjugations, ellos: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectYoRef } id="imperfectYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectTuRef } id="imperfectTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectElRef } id="imperfectEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectNosotrosRef } id="imperfectNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectVosotrosRef } id="imperfectVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ imperfectEllosRef } id="imperfectEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 4 ? 
                                         <>
-                                            <Texinput ref={ conditionalYoRef } id="conditionalYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalConjugations({...conditionalConjugations, yo: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalTuRef } id="conditionalTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalConjugations({...conditionalConjugations, tu: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalElRef } id="conditionalEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalConjugations({...conditionalConjugations, el: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalNosotrosRef } id="conditionalNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalConjugations({...conditionalConjugations, nosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalVosotrosRef } id="conditionalVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalConjugations({...conditionalConjugations, vosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ conditionalEllosRef } id="conditionalEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setConditionalConjugations({...conditionalConjugations, ellos: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalYoRef } id="conditionalYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalTuRef } id="conditionalTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalElRef } id="conditionalEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalNosotrosRef } id="conditionalNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalVosotrosRef } id="conditionalVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ conditionalEllosRef } id="conditionalEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                     { tense === 5 ? 
                                         <>
-                                            <Texinput ref={ futureYoRef } id="futureYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureConjugations({...futureConjugations, yo: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureTuRef } id="futureTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureConjugations({...futureConjugations, tu: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureElRef } id="futureEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureConjugations({...futureConjugations, el: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureNosotrosRef } id="futureNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureConjugations({...futureConjugations, nosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureVosotrosRef } id="futureVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureConjugations({...futureConjugations, vosotros: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
-                                            <Texinput ref={ futureEllosRef } id="futureEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => setFutureConjugations({...futureConjugations, ellos: e.target.value.toLowerCase()}) } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureYoRef } id="futureYo" name="Yo" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureTuRef } id="futureTu" name="Tu" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureElRef } id="futureEl" name="El/Ella/Usted" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureNosotrosRef } id="futureNosotros" name="Nosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureVosotrosRef } id="futureVosotros" name="Vosotros" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
+                                            <Texinput ref={ futureEllosRef } id="futureEllos" name="Ellos/Ellas/Ustedes" onFocusEvent={ handleTextboxFocusEvent } onChangeEvent={ (e) => e.target.value.toLowerCase() } inputClass="col-lg-12" />
                                         </> : null
                                     }
                                 </section>
