@@ -99,9 +99,8 @@ const Index = () => {
                         <Image 
                             className='landingBackground'
                             src="/images/home/296-2965054_map-of-spain-png-transparent-png.png"
-                            objectFit='scale-down'
-                            objectPosition='left'
-                            layout='fill'
+                            width={828}
+                            height={675}
                             priority={true}
                             alt="Map of Spain with Provinces"
                         />
@@ -150,7 +149,7 @@ const Index = () => {
                 </section>
                 <footer>
                     <div className='row'>
-                        <div className='col-lg-3'>
+                        <div className='col-lg-3 logo'>
                             <Image src='/images/home/spanish-tutor-logo.png' width='250' height='50' />
                             <p>&#169;Deryx E. Scott</p>
                         </div>

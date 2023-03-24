@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SliderReport from '../../src/components/verbs/slider-report';
@@ -26,11 +27,6 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     const numOptions = 5;
     const reportTitle = "Verb Slider Report";
     const bricks = ['yo', 'tu', 'él/ella/ud', 'nosotros', 'vosotros', 'ellos/ellas/uds'];
-    let draggingElement;
-    let placeholder;
-    let isDraggingStarted = false;
-    let x = 0;
-    let y = 0;
 
     const incrementQuestion = () => {
         if( numQuestions && (question < numQuestions )) {
@@ -61,101 +57,15 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
         tensesRef.current.style.display = "none";
     }
 
-    const mouseDownHandler = (e) => {
-        draggingElement = e.target;
+    const handleOnDragEnd = (result) => {
+        if(!result.destination) return;
+        console.log(questionSet[question]);
+        let items = Array.from(questionSet[question].slideSet);
+        const [reorderedItem] = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, reorderedItem);
 
-        const rect = draggingElement.getBoundingClientRect();
-        x = e.pageX - rect.left;
-        y = e.pageY - rect.top;
-
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
+        questionSet[question].slideSet = items;
     }
-
-    const mouseMoveHandler = (e) => {
-        const draggingRect = draggingElement.getBoundingClientRect();
-
-        if (!isDraggingStarted) {
-            // Update the flag
-            isDraggingStarted = true;
-
-            // Let the placeholder take the height of dragging element
-            // So the next element won't move up
-            placeholder = document.createElement('div');
-            placeholder.classList.add('placeholder');
-            draggingElement.parentNode.insertBefore(
-                placeholder,
-                draggingElement.nextSibling
-            );
-
-            // Set the placeholder's height
-            placeholder.style.height = `${draggingRect.height}px`;
-        } 
-        draggingElement.style.position = 'absolute';
-        draggingElement.style.top = `${e.pageY - y}px`;
-        draggingElement.style.left =`${e.pageX - x}px`;
-
-        const prevElement = draggingElement.previousElementSibling;
-        const nextElement = placeholder.nextElementSibling;
-
-        if (prevElement && isAbove(draggingElement, prevElement)) {
-            // The current order    -> The new order
-            // prevElement          -> placeholder
-            // draggingEle          -> draggingEle
-            // placeholder          -> prevEle
-            swap(placeholder, draggingElement);
-            swap(placeholder, prevElement);
-            return;
-        }
-
-        if (nextElement && isAbove(nextElement, draggingElement)) {
-            // The current order    -> The new order
-            // draggingElement      -> nextElement
-            // placeholder          -> placeholder
-            // nextElement          -> draggingEle
-            swap(nextElement, placeholder);
-            swap(nextElement, draggingElement);
-        }
-    }
-
-    const mouseUpHandler = () => {
-        // Remove the placeholder
-        placeholder && placeholder.parentNode.removeChild(placeholder);
-        // Reset the flag
-        isDraggingStarted = false;
-
-        // Remove the position styles
-        draggingElement.style.removeProperty('top');
-        draggingElement.style.removeProperty('left');
-        draggingElement.style.removeProperty('position');
-    
-        x = null;
-        y = null;
-        draggingElement = null;
-    
-        // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
-    };
-
-    const isAbove = (nodeA, nodeB) => {
-        // Get the bounding rectangle of nodes
-        const rectA = nodeA.getBoundingClientRect();
-        const rectB = nodeB.getBoundingClientRect();
-    
-        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-    };
-
-    const swap = (nodeA, nodeB) => {
-        const parentA = nodeA.parentNode;
-        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
-    
-        // Move `nodeA` to before the `nodeB`
-        nodeB.parentNode.insertBefore(nodeA, nodeB);
-    
-        // Move `nodeB` to before the sibling of `nodeA`
-        parentA.insertBefore(nodeB, siblingA);
-    };
 
     const handleSubmitClick = () => {
         const slides = slidesRef.current.querySelectorAll('div');
@@ -253,19 +163,24 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
                                             )
                                         }
                                     </div>
-                                    <div ref={ slidesRef } className='slides'>
-                                        {
-                                            questionSet[question].slideSet.map( ( slide, index ) => 
-                                                <div 
-                                                    id={`slide${index}`} 
-                                                    key={ index } 
-                                                    onMouseDown={mouseDownHandler} 
-                                                    className="draggable">
-                                                        { slide }
-                                                    </div>
-                                            )
-                                        }
-                                    </div>
+                                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                                        <Droppable droppableId='conjugates'>
+                                            {(provided) => (
+                                                <div className='slides' {...provided.droppableProps} ref={provided.innerRef}>
+                                                    {questionSet[question].slideSet.map( (slide, index) =>
+                                                        <Draggable key={`slide${index}`} draggableId={`slide${index}`} index={index}>
+                                                            {(provided) => ( 
+                                                                <div id={`slide${index}`} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                                    { slide }
+                                                                </div>
+                                                            )}
+                                                        </Draggable>
+                                                    )}
+                                                    {provided.placeholder}
+                                                </div>
+                                            )}
+                                        </Droppable>
+                                    </DragDropContext>
                                 </div>
                             </div>
                         : null }

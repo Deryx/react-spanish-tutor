@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { PrismaClient } from '@prisma/client';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Layout from '../../src/components/layout';
 import Modal from '../../src/components/modal';
 import SimpleReport from '../../src/components/vocabulary/simple-report';
@@ -26,11 +27,6 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
 
     const categorySelections = [];
     let scrambleDictionary = [];
-    let draggingElement;
-    let placeholder;
-    let isDraggingStarted = false;
-    let x = 0;
-    let y = 0;
 
     const incrementQuestion = () => {
         if( question < numQuestions ) {
@@ -65,6 +61,19 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
         categoriesRef.current.style.display = "none";
     }
 
+    const handleOnDragComplete = (result) => {
+        if (!result.destination) return;
+      
+        let items = Array.from(questionSet[question].scrambledWord);
+        console.log(items);
+        //Changing the position of Array element
+        let removedItem = items.splice(result.source.index, 1);
+        items.splice(result.destination.index, 0, removedItem);
+      
+        //Updating the list
+        questionSet[question].scrambledWord = items;
+      };
+
     const handleSubmitClick = () => {
         const currentAnswer = answerRef.current.querySelectorAll( 'div' );
         const answer = [];
@@ -74,102 +83,6 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
         setUserAnswers( prev => [...prev, answer.join('')] );
         incrementQuestion();
     }
-
-    const mouseDownHandler = (e) => {
-        draggingElement = e.target;
-
-        const rect = draggingElement.getBoundingClientRect();
-        x = e.pageX - rect.left;
-        y = e.pageY - rect.top;
-
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
-    }
-
-    const mouseMoveHandler = (e) => {
-        const draggingRect = draggingElement.getBoundingClientRect();
-
-        if (!isDraggingStarted) {
-            // Update the flag
-            isDraggingStarted = true;
-
-            // Let the placeholder take the height of dragging element
-            // So the next element won't move up
-            placeholder = document.createElement('div');
-            placeholder.classList.add('placeholder');
-            draggingElement.parentNode.insertBefore(
-                placeholder,
-                draggingElement.nextSibling
-            );
-
-            // Set the placeholder's height
-            placeholder.style.height = `${draggingRect.height}px`;
-        } 
-        draggingElement.style.position = 'absolute';
-        draggingElement.style.top = `${e.pageY - y}px`;
-        draggingElement.style.left =`${e.pageX - x}px`;
-
-        const prevElement = draggingElement.previousElementSibling;
-        const nextElement = placeholder.nextElementSibling;
-
-        if (prevElement && isAbove(draggingElement, prevElement)) {
-            // The current order    -> The new order
-            // prevElement              -> placeholder
-            // draggingEle          -> draggingEle
-            // placeholder          -> prevEle
-            swap(placeholder, draggingElement);
-            swap(placeholder, prevElement);
-            return;
-        }
-
-        if (nextElement && isAbove(nextElement, draggingElement)) {
-            // The current order    -> The new order
-            // draggingElement      -> nextElement
-            // placeholder          -> placeholder
-            // nextElement          -> draggingEle
-            swap(nextElement, placeholder);
-            swap(nextElement, draggingElement);
-        }
-    }
-
-    const mouseUpHandler = () => {
-        // Remove the placeholder
-        placeholder && placeholder.parentNode.removeChild(placeholder);
-        // Reset the flag
-        isDraggingStarted = false;
-
-        // Remove the position styles
-        draggingElement.style.removeProperty('top');
-        draggingElement.style.removeProperty('left');
-        draggingElement.style.removeProperty('position');
-    
-        x = null;
-        y = null;
-        draggingElement = null;
-    
-        // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
-    };
-
-    const isAbove = (nodeA, nodeB) => {
-        // Get the bounding rectangle of nodes
-        const rectA = nodeA.getBoundingClientRect();
-        const rectB = nodeB.getBoundingClientRect();
-    
-        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-    };
-
-    const swap = (nodeA, nodeB) => {
-        const parentA = nodeA.parentNode;
-        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
-    
-        // Move `nodeA` to before the `nodeB`
-        nodeB.parentNode.insertBefore(nodeA, nodeB);
-    
-        // Move `nodeB` to before the sibling of `nodeA`
-        parentA.insertBefore(nodeB, siblingA);
-    };    
 
     useEffect(() => {
         scrambleDictionary = [...dictionary.filter( word => word.category === category )];
@@ -237,20 +150,28 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
                             </dl> 
                         : null }
                         { questionSet[question] ? 
-                            <dl id="questions">                            
+                            <dl ref={answerRef} id="questions">                            
                                 <dt>
                                     <h2>[ { questionSet[question].question } ]</h2>
                                 </dt>
-                                <dd ref={ answerRef }>
-                                    { questionSet[question].scrambledWord.map( ( letter, index ) =>
-                                        <div 
-                                            key={ index } 
-                                            onMouseDown={mouseDownHandler} 
-                                            className='draggable'>
-                                                { letter }
-                                        </div>
-                                    ) }
-                                </dd>
+                                <DragDropContext onDragEnd={handleOnDragComplete}>
+                                    <Droppable droppableId='words' direction="horizontal">
+                                        {(provided, snapshot) => (
+                                            <dd {...provided.droppableProps} ref={provided.innerRef}>
+                                                {questionSet[question].scrambledWord.map( ( letter, index ) =>
+                                                    <Draggable key={`letter${index}`} draggableId={`letter${index}`} index={index}>
+                                                        {(provided) => ( 
+                                                            <div className='draggable' id={`letter${index}`} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                                                                { letter }
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                )}
+                                                {provided.placeholder}
+                                            </dd>
+                                        )}
+                                    </Droppable>
+                                </DragDropContext>
                             </dl>
                         : null }
                     </fieldset>
