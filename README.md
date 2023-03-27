@@ -30,3 +30,4 @@ An application created to learn beginning Spanish and sharpen my **React/TypeScr
 - PRISMA
 - SQLITE3
 - SASS
+- REACT BEAUTIFUL DND
