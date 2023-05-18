@@ -19,34 +19,34 @@ const SliderReport = ( { reportTitle, questionSet } ) => {
                                 <th className='col-xs-4'>user answer</th>
                             </tr>
                             <tr>
-                                <td>{ }</td>
+                                <td>Yo</td>
                                 <td>{ question.answers[0] }</td>
-                                <td>{ question.slideSet[0] }</td>
+                                <td>{ question.slideSet[0].split('\n')[0] }</td>
                             </tr>
                             <tr>
                                 <td>Tu</td>
                                 <td>{ question.answers[1] }</td>
-                                <td>{ question.slideSet[1] }</td>
+                                <td>{ question.slideSet[0].split('\n')[1] }</td>
                             </tr>
                             <tr>
                                 <td>El</td>
                                 <td>{ question.answers[2] }</td>
-                                <td>{ question.slideSet[2] }</td>
+                                <td>{ question.slideSet[0].split('\n')[2] }</td>
                             </tr>
                             <tr>
                                 <td>Nosotros</td>
                                 <td>{ question.answers[3] }</td>
-                                <td>{ question.slideSet[3] }</td>
+                                <td>{ question.slideSet[0].split('\n')[3] }</td>
                             </tr>
                             <tr>
                                 <td>Vosotros</td>
                                 <td>{ question.answers[4] }</td>
-                                <td>{ question.slideSet[4] }</td>
+                                <td>{ question.slideSet[0].split('\n')[4] }</td>
                             </tr>
                             <tr>
                                 <td>Ellos</td>
                                 <td>{ question.answers[5] }</td>
-                                <td>{ question.slideSet[5] }</td>
+                                <td>{ question.slideSet[0].split('\n')[5] }</td>
                             </tr>
                         </tbody>
                     </>

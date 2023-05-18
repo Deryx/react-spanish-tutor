@@ -5,6 +5,7 @@
     min-height: 50vh;
     display: flex;
     flex-direction: column;
+    background-color: rgb(247, 247, 247);
 
     #intro {
         width: 100%;
@@ -552,6 +553,223 @@
             width: 100%;
             background-color: rgb(198, 10, 30);
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+    
+            .row {
+                margin: 1.5rem 0;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .logo {
+                    margin-left: 1.5rem;
+                }
+    
+                div {
+                    display: flex;
+                    margin: 0;
+                    padding: 0.75rem;
+                    text-align: center;
+                }
+    
+                h4 {
+                    color: rgb(255, 196, 0);
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    margin-bottom: 1.5rem;
+                    text-align: center;
+                }
+    
+                h5 {
+                    display: block;
+                    color: rgb(0 0 0);
+                    text-transform: capitalize;
+                    font-weight: bold;
+                    margin-bottom: 0.75rem;
+                }
+    
+                p {
+                    margin-top: -0.9375rem;
+                    color: rgb(0 0 0);
+                    font-weight: bold;
+                    font-style: italic;
+                }
+    
+                ul {
+                    list-style-type: none;
+                    margin: 0;
+                    padding: 0;
+                    margin-bottom: 1.5rem;
+                    width: 100%;
+    
+                    li {
+                        text-transform: capitalize;
+                        font-size: 125%;
+    
+                        a {
+                            text-decoration: none;
+                            color:rgb(255, 196, 0); 
+                        }
+    
+                        a:hover {
+                            text-decoration: underline;
+                        }
+    
+                        a:visited {
+                            color:rgb(255, 196, 0); 
+                        }
+                    }
+                }
+            }
+        }    
+    }
+}
+
+@media screen and (min-width: 53rem) and (max-width: 64rem) {
+    #home {
+        #intro {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+
+            .spanish-map {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 120px;
+                margin-bottom: 0;
+            }
+
+            .mainContent {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-top: 0;
+                width: 100%;
+
+                .tag-line {
+                    margin-top: 0;
+                    width: 100%;
+                    text-align: center;
+                    padding: 0 1.5rem;
+    
+                    h1 {
+                        margin-top: 0;
+                        font-family: 'Inter', sans-serif;
+                        font-size: 200%;
+                        font-weight: 700;
+                        letter-spacing: -2px;
+                        color: rgb(198, 10, 30);
+                    }
+    
+                    h2 {
+                        font-family: 'Inter', sans-serif;
+                        letter-spacing: -1px;
+                        font-size: 175%;
+                        padding: 0 4rem;
+                    }
+                }
+    
+                .slideShow {
+                    margin-top: 3rem;
+                    width: 90%;
+    
+                    .slideShowSlider {
+                        white-space: nowrap;
+                        transition: ease 1000ms;
+    
+                        .slide {
+                            border: 5px solid rgb(0, 0, 0);
+                        }
+                    }
+                }
+            }
+            
+            .scroll-link {
+                display: none;
+            }
+        }
+
+        #verbContent {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-size: 115%;
+            display: flex;
+            justify-content: center;
+
+    
+            .row {
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            h2 {
+                margin: 1.5rem;
+                color: rgb(198, 10, 30);
+                font-weight: bold;
+            }
+    
+            p {
+                text-align: justify;
+                width: 80%;
+                font-size: 80%;
+            }
+
+            .content-card {
+                width: 75%;
+                margin: 0 auto;
+                margin-bottom: 2rem;
+            }
+        }
+        
+        #vocabularyContent {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            font-size: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+    
+            .row {
+                width: 80%;
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 3rem;
+            }
+        
+            h2 {
+                margin: 1.5rem;
+                color: rgb(198, 10, 30);
+                font-weight: bold;
+            }
+    
+            p {
+                text-align: justify;
+                width: 80%;
+                font-size: 90%;
+            }
+        
+            .content-card {
+                width: 75%;
+                margin: 0 auto;
+                margin-bottom: 2rem;
+            }
+
+        }
+        
+        footer {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: rgb(198, 10, 30);
+            display: flex;
             justify-content: center;
     
             .row {
@@ -568,6 +786,7 @@
                     display: inline-table;
                     margin: 0;
                     padding: 0.75rem;
+                    text-align: center;
                 }
     
                 h4 {

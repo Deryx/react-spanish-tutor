@@ -15,11 +15,6 @@
   ],
   "rootMainFiles": [],
   "pages": {
-    "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
-    ],
     "/_app": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
@@ -30,15 +25,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/vocabulary/quiz": [
+    "/verbs/slider": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/quiz.js"
+      "static/chunks/pages/verbs/slider.js"
     ],
-    "/vocabulary/scramble": [
+    "/vocabulary/slider": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/scramble.js"
+      "static/chunks/pages/vocabulary/slider.js"
     ]
   },
   "ampFirstPages": []

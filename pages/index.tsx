@@ -153,7 +153,7 @@ const Index = () => {
                             <Image src='/images/home/spanish-tutor-logo.png' width='250' height='50' />
                             <p>&#169;Deryx E. Scott</p>
                         </div>
-                        <div className='col-lg-3'>
+                        <div className='col-lg-3 features'>
                             <h4>features</h4>
                             <div className='col-lg-6'>
                                 <h5>verbs</h5>

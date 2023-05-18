@@ -19,7 +19,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     const slidesRef = useRef(null);
     const [numQuestions, setNumQuestions] = useState(0);
     const [category, setCategory] = useState(0);
-    const [slideSets, setSlideSets] = useState( [] );
+    let [slideSets, setSlideSets] = useState( [] );
     const [question, setQuestion] = useState(0);
     const [showModal, setShowModal] = useState( false );
     const reportTitle = "Vocabulary Slider Report";
@@ -71,7 +71,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     }
 
     const handleSubmitClick = () => {
-        const slides = slidesRef.current.querySelectorAll('div');
+        const slides = document.querySelectorAll('.slides');
         const answers = [];
         for(const slide of slides) {
             answers.push( slide.innerText );
@@ -106,7 +106,7 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
                 slideBricks.push( sliderDictionary[current].word);
             }
             set.slideBricks = slideBricks;
-            setSlideSets( prev => [...prev, set] );
+            setSlideSets( slideSets = [...slideSets, set] );
         }
     }, [category]);
 

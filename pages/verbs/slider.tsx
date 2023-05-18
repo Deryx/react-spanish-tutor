@@ -15,12 +15,12 @@ interface SliderProps {
 }
 
 const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
-    const numQuestionsRef = useRef(null);
-    const tensesRef = useRef(null);
-    const slidesRef = useRef(null);
+    const numQuestionsRef = useRef();
+    const tensesRef = useRef<any>();
+    const slidesRef = useRef<any>();
     const [numQuestions, setNumQuestions] = useState(null);
     const [question, setQuestion] = useState(0);
-    const [questionSet, setQuestionSet] = useState([]);
+    let [questionSet, setQuestionSet] = useState([]);
     const [tense, setTense] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const tenseSelections = [];
@@ -38,7 +38,9 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
 
     const handleNumQuestionsChange = (e) => {
         setNumQuestions( parseInt(e.target.value) );
-        numQuestionsRef.current.style.display = "none";
+        if(numQuestionsRef.current) {
+            numQuestionsRef.current.style.display = "none";
+        }
     }
 
     const createTenseSelect = () => {
@@ -68,7 +70,7 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
     }
 
     const handleSubmitClick = () => {
-        const slides = slidesRef.current.querySelectorAll('div');
+        const slides: any = document.querySelectorAll('.slides');
         const answers = [];
         for(const slide of slides) {
             answers.push( slide.innerText );
@@ -104,7 +106,9 @@ const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
             const randomSlideOrder = randomNumberGenerator( currentSlides.length, currentSlides.length );
             let scrambledSlides = randomSlideOrder.map( slide => currentSlides[slide] );
             set.slideSet = scrambledSlides;
-            setQuestionSet( prev => [...prev, set] );
+            console.log(set);
+            setQuestionSet( questionSet = [...questionSet, set] );
+            console.log(questionSet);
         }
       }, [tense]);
 

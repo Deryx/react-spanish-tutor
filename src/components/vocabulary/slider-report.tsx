@@ -1,4 +1,5 @@
 const SliderReport = ( { reportTitle, questionSet } ) => {
+    console.log(questionSet);
     return (
         <div id="report">
             <section className="col-lg-5">
@@ -17,32 +18,32 @@ const SliderReport = ( { reportTitle, questionSet } ) => {
                             <tr>
                                 <td>{ question.stationaryBricks[0] }</td>
                                 <td>{ question.correctAnswers[0]}</td>
-                                <td>{ question.slideBricks[0] }</td>
+                                <td>{ question.slideBricks[0].split('\n')[0] }</td>
                             </tr>
                             <tr>
                                 <td>{ question.stationaryBricks[1] }</td>
                                 <td>{ question.correctAnswers[1]}</td>
-                                <td>{ question.slideBricks[1] }</td>
+                                <td>{ question.slideBricks[0].split('\n')[1] }</td>
                             </tr>
                             <tr>
                                 <td>{ question.stationaryBricks[2] }</td>
                                 <td>{ question.correctAnswers[2]}</td>
-                                <td>{ question.slideBricks[2] }</td>
+                                <td>{ question.slideBricks[0].split('\n')[2] }</td>
                             </tr>
                             <tr>
                                 <td>{ question.stationaryBricks[3] }</td>
                                 <td>{ question.correctAnswers[3]}</td>
-                                <td>{ question.slideBricks[3] }</td>
+                                <td>{ question.slideBricks[0].split('\n')[3] }</td>
                             </tr>
                             <tr>
                                 <td>{ question.stationaryBricks[4] }</td>
                                 <td>{ question.correctAnswers[4]}</td>
-                                <td>{ question.slideBricks[4] }</td>
+                                <td>{ question.slideBricks[0].split('\n')[4] }</td>
                             </tr>
                             <tr>
                                 <td>{ question.stationaryBricks[5] }</td>
                                 <td>{ question.correctAnswers[5]}</td>
-                                <td>{ question.slideBricks[5] }</td>
+                                <td>{ question.slideBricks[0].split('\n')[5] }</td>
                             </tr>
                         </tbody>
                     </>
