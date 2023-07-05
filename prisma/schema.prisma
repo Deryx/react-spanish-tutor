@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./spanish.db"
+  provider = "mysql"
+  url      = "file:./spanish.sql"
 }
 
 model Categories {
