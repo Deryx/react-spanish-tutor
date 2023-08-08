@@ -22,10 +22,8 @@ section {
 
 form#quiz {
     fieldset {
-        border-radius: 0.8rem;
         padding: 1.2rem 0;
         margin: 0 auto;
-        border: 0.0625rem solid rgb(198, 10, 30);
         height: 40vh;
         display: flex;
         flex-direction: column;
@@ -39,99 +37,38 @@ form#quiz {
             height: 15vh;
         }
 
-        dl#numQuestionsSelect {
+        dl {
+            margin: 0;
             padding: 0;
-            padding-top: 0.85rem;
-            width: 100%;
+            width: 50vw;
             display: flex;
-            flex-direction: row;
-            justify-content: center;
-
-            @media only screen and (max-width: 480px) {
-                width: 100%;
-                flex-direction: column;
-            }
-
+    
             dt {
-                width: 30%;
-                text-align: right;
                 margin-top: 0.3125rem;
+                width: 50%;
+                display: flex;
+                justify-content: flex-end;
                 margin-right: 0.5rem;
-                text-transform: capitalize;
-
-                @media only screen and (max-width: 480px) {
-                    width: 100%;
-                }
+                font-size: 90%;
             }
-
+    
             dd {
-                width: 30%;
+                width: 50%;
+                display: flex;
                 justify-content: flex-start;
-
-                @media only screen and (max-width: 480px) {
-                    width: 100%;
-                }
-
+                font-size: 90%;
+                
                 select {
-                    width: 30%;
                     border: 1px solid rgb(112, 128, 144);
                     border-radius: 0.3rem;
                     padding: 0.4rem;
-                    font-size: 80%;
-                
-                    @media only screen and (max-width: 480px) {
-                        width: 100%;
-                    }
+                    font-size: 90%;
                 }
             }
         }
-    
-        dl#categorySelect {
-            padding: 0;
-            padding-top: 0.85rem;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-
-            @media only screen and (max-width: 480px) {
-                width: 120%;
-            }
-
-            dt {
-                margin: 0;
-                margin-top: 0.3125rem;
-                margin-right: 0.5rem;
-                padding: 0;
-                width: 30%;
-                font-weight: bold;
-                text-transform: capitalize;
-                text-align: right;
-                font-size: 90%;   
-            }
-    
-            dd {
-                margin: 0;
-                width: 65%;
-                padding: 0 0.5rem;
-                
-                select {
-                    width: 65%;
-                    border: 1px solid rgb(112, 128, 144);
-                    border-radius: 0.3rem;
-                    padding: 0.4rem;
-                    font-size: 80%;
-
-                    @media only screen and (max-width: 480px) {
-                        width: 100%;
-                    }
-                }
-            }
-        }
-
+        
         dl#questions {
             padding: 0;
-            padding-top: 4.0rem;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -145,7 +82,8 @@ form#quiz {
                 margin-bottom: 1rem;
                 font-weight: bold;
                 text-transform: lowercase;
-                text-align: center;
+                display: flex;
+                justify-content: center;
                 font-size: 150%;   
                 color: rgb(198, 10, 30);
             }
@@ -157,12 +95,14 @@ form#quiz {
                 display: flex;
                 flex-direction: column; 
                 justify-content: center;
+                margin: auto;
 
                 div {
                     display: flex;
                     flex: 1 1 0;
-                    margin-left: 45%;
                     margin-bottom: 0.5rem;
+                    flex-direction: row;
+                    margin: auto;
 
                     input {
                         margin-right: 0.5rem;

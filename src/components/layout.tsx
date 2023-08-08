@@ -5,17 +5,13 @@ const Layout = ({ children }) => {
     const variants = {
         out: {
             opacity: 0,
-            y: 600,
             transition: {
-                ease: 'easeOut',
-                duration: 1
+                duration: 2
             }
         },
         in: {
             opacity: 1,
-            y: 0,
             transition: {
-                ease: 'easeIn',
                 duration: 2,
                 delay: 1
             }

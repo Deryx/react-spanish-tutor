@@ -22,80 +22,44 @@ section {
 
 form#slider {
     fieldset {
-        border-radius: 0.8rem;
         padding: 1.2rem 0;
         margin: 0 auto;
-        border: 0.0625rem solid rgb(198, 10, 30);
         height: 40vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
 
-        dl#numQuestionsSelect {
+        dl {
+            margin: 0;
             padding: 0;
-            padding-top: 0.85rem;
-            width: 100%;
+            width: 50vw;
             display: flex;
-            flex-direction: row;
-            justify-content: center;
-
+    
             dt {
-                width: 30%;
-                text-align: right;
                 margin-top: 0.3125rem;
+                width: 50%;
+                display: flex;
+                justify-content: flex-end;
                 margin-right: 0.5rem;
-                text-transform: capitalize;
+                font-size: 90%;
             }
-
+    
             dd {
-                width: 30%;
+                width: 50%;
+                display: flex;
                 justify-content: flex-start;
-
-                select {
-                    width: 30%;
-                    border: 1px solid rgb(112, 128, 144);
-                    border-radius: 0.3rem;
-                    padding: 0.4rem;
-                    font-size: 80%;
-                }
-            }
-        }
-    
-        dl#categorySelect {
-            padding: 0;
-            padding-top: 0.85rem;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-
-            dt {
-                margin: 0;
-                margin-top: 0.3125rem;
-                margin-right: 0.5rem;
-                padding: 0;
-                width: 30%;
-                font-weight: bold;
-                text-transform: capitalize;
-                text-align: right;
-                font-size: 90%;   
-            }
-    
-            dd {
-                margin: 0;
-                width: 65%;
-                padding: 0 0.5rem;
+                font-size: 90%;
                 
                 select {
-                    width: 65%;
                     border: 1px solid rgb(112, 128, 144);
                     border-radius: 0.3rem;
                     padding: 0.4rem;
-                    font-size: 80%;
+                    font-size: 90%;
                 }
             }
         }
+        
 
         #questions {
             padding: 0;

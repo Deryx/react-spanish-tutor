@@ -23,12 +23,10 @@ section {
 form#conjugator {
     font-family: 'Roboto', sans-serif;
     margin-bottom: 1.5rem;
-    border-radius: 0.8rem;
     padding: 1.2rem 0;
     padding-bottom: 2.5rem;
     margin: 0 auto;
-    border: 0.0625rem solid rgb(198, 10, 30);
-    height: 60vh;
+    height: 40vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,67 +36,33 @@ form#conjugator {
         border: none;
         height: 40vh;
     }
-    
-    dl#numQuestionsSelect {
+
+    dl {
+        margin: 0;
         padding: 0;
-        width: 100%;
+        width: 50vw;
         display: flex;
-        flex-direction: row;
-        justify-content: center;
 
         dt {
-            width: 30%;
-            text-align: right;
             margin-top: 0.3125rem;
+            width: 50%;
+            display: flex;
+            justify-content: flex-end;
             margin-right: 0.5rem;
-            text-transform: capitalize;
-            font-size: 90%;   
+            font-size: 90%;
         }
 
         dd {
-            width: 30%;
+            width: 50%;
+            display: flex;
             justify-content: flex-start;
+            font-size: 90%;
             
             select {
-                width: 30%;
                 border: 1px solid rgb(112, 128, 144);
                 border-radius: 0.3rem;
                 padding: 0.4rem;
-                font-size: 80%;
-            }
-        }
-    }
-
-    dl#tenseSelect {
-        padding: 0;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-                                        
-        dt {
-            margin: 0;
-            margin-top: 0.3125rem;
-            margin-right: 0.5rem;
-            padding: 0;
-            width: 30%;
-            font-weight: bold;
-            text-transform: capitalize;
-            text-align: right;
-            font-size: 90%;   
-        }
-
-        dd {
-            margin: 0;
-            width: 65%;
-            padding: 0 0.5rem;
-            
-            select {
-                width: 65%;
-                border: 1px solid rgb(112, 128, 144);
-                border-radius: 0.3rem;
-                padding: 0.4rem;
-                font-size: 80%;
+                font-size: 90%;
             }
         }
     }
@@ -128,6 +92,7 @@ form#conjugator {
         padding: 1.2rem;
         margin: 0 auto;
         background:  rgb(255, 196, 0);
+        margin-bottom: 2.5rem;
 
         dl {
             padding: 0;
@@ -135,6 +100,7 @@ form#conjugator {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
+            margin-bottom: 0.625rem;
                                             
             dt {
                 margin: 0;
@@ -165,6 +131,10 @@ form#conjugator {
     
         dl:first-child {
             border-top: none;
+        }
+
+        dl:last-child {
+            margin-bottom: 0;
         }
     }
 }
