@@ -65,7 +65,6 @@ const Scramble: FC<ScrambleProps> = ({ dictionary, categories }) => {
         if (!result.destination) return;
       
         let items = Array.from(questionSet[question].scrambledWord);
-        console.log(items);
         //Changing the position of Array element
         let removedItem = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, removedItem);

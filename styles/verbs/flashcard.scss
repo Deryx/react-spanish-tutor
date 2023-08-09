@@ -5,14 +5,11 @@ form#verbFlashcard {
 
     fieldset {
         background: none;
+        margin-bottom: 15rem;
 
         .mainContainer {
-            top: 55%;
+            top: 50%;
             left: 50%;
-            
-            @media only screen and (max-width: 480px) {
-                top: 40%;
-            }
         }
 
         dl {
@@ -31,10 +28,6 @@ form#verbFlashcard {
                 text-transform: capitalize;
                 text-align: right;
                 font-size: 90%;   
-
-                @media only screen and (max-width: 480px) {
-                    font-size: 100%;
-                }
             }
     
             dd {
@@ -43,30 +36,19 @@ form#verbFlashcard {
                 width: 70%;    
                 
                 select {
-                    width: 50%;
+                    width: 100%;
                     border: 1px solid rgb(112, 128, 144);
                     border-radius: 0.3rem;
                     padding: 0.4rem;
                     font-size: 80%;
-
-                    @media only screen and (max-width: 480px) {
-                        width: 100%;
-                        font-size: 90%;
-                    }
                 }
             }
         } 
     }
 
     .buttons {
-        width: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 70%;
-
-        @media only screen and (max-width: 480px) {
-            margin-top: 120%;
-        }
     
         input[type="button"] {
             margin: 0.75rem;
@@ -83,6 +65,105 @@ form#verbFlashcard {
     
         #nextBtn {
             background: rgb(40, 167, 69);
+        }
+    }
+}
+
+@media screen and (max-width: 30rem) {
+
+}
+
+@media screen and (min-width: 30rem) and (max-width: 52rem) {
+
+}
+
+@media screen and (min-width: 53rem) and (max-width: 64rem) {
+    form#verbFlashcard {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+    
+        fieldset {
+            background: none;
+    
+            .mainContainer {
+                top: 55%;
+                left: 50%;
+                
+                @media only screen and (max-width: 480px) {
+                    top: 40%;
+                }
+            }
+    
+            dl {
+                padding: 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+        
+                dt {
+                    margin: 0;
+                    margin-top: 5px;
+                    margin-right: 10px;
+                    padding: 0;
+                    width: 30%;
+                    font-weight: bold;
+                    text-transform: capitalize;
+                    text-align: right;
+                    font-size: 90%;   
+    
+                    @media only screen and (max-width: 480px) {
+                        font-size: 100%;
+                    }
+                }
+        
+                dd {
+                    margin: 0;
+                    padding: 0 0.5rem;
+                    width: 70%;    
+                    
+                    select {
+                        width: 50%;
+                        border: 1px solid rgb(112, 128, 144);
+                        border-radius: 0.3rem;
+                        padding: 0.4rem;
+                        font-size: 80%;
+    
+                        @media only screen and (max-width: 480px) {
+                            width: 100%;
+                            font-size: 90%;
+                        }
+                    }
+                }
+            } 
+        }
+    
+        .buttons {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 70%;
+    
+            @media only screen and (max-width: 480px) {
+                margin-top: 120%;
+            }
+        
+            input[type="button"] {
+                margin: 0.75rem;
+                width: 6.2rem;
+                padding: 0.4rem;
+                border-radius: 0.5rem;
+                color: rgb(255, 255, 255);
+                border: none;
+            }
+    
+            #flipBtn {
+                background: rgb(0, 123, 255);
+            }
+        
+            #nextBtn {
+                background: rgb(40, 167, 69);
+            }
         }
     }
 }
