@@ -14,9 +14,8 @@ interface SliderProps {
 }
 
 const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
-    const numQuestionsRef = useRef(null);
-    const categoriesRef = useRef(null);
-    const slidesRef = useRef(null);
+    const numQuestionsRef = useRef<HTMLDListElement>(null);
+    const categoriesRef = useRef<HTMLDListElement>(null);
     const [numQuestions, setNumQuestions] = useState(0);
     const [category, setCategory] = useState(0);
     let [slideSets, setSlideSets] = useState( [] );
@@ -73,8 +72,8 @@ const Slider: FC<SliderProps> = ({ dictionary, categories }) => {
     const handleSubmitClick = () => {
         const slides = document.querySelectorAll('.slides');
         const answers = [];
-        for(const slide of slides) {
-            answers.push( slide.innerText );
+        for(const slide of Array.from(slides)) {
+            answers.push( slide.innerHTML );
         }
         slideSets[question].slideBricks = answers;
         incrementQuestion();

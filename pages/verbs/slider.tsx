@@ -15,9 +15,8 @@ interface SliderProps {
 }
 
 const Slider: FC<SliderProps> = ({ verbs, tenses, conjugations }) => {
-    const numQuestionsRef = useRef();
-    const tensesRef = useRef<any>();
-    const slidesRef = useRef<any>();
+    const numQuestionsRef = useRef<HTMLDListElement>();
+    const tensesRef = useRef<HTMLDListElement>();
     const [numQuestions, setNumQuestions] = useState(null);
     const [question, setQuestion] = useState(0);
     let [questionSet, setQuestionSet] = useState([]);
