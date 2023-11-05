@@ -5,13 +5,88 @@ form#verbFlashcard {
 
     fieldset {
         background: none;
-        margin-bottom: 15rem;
 
         .mainContainer {
             top: 50%;
-            left: 50%;
+            left: 50%; 
+        }
+    }
+
+    dl {
+        padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-left: 5%;
+
+        dt {
+            margin: 0;
+            margin-top: 5px;
+            margin-right: 10px;
+            padding: 0;
+            width: 15%;
+            font-weight: bold;
+            text-transform: capitalize;
+            text-align: right;
+            font-size: 90%;   
         }
 
+        dd {
+            margin: 0;
+            padding: 0 0.5rem;
+            width: 100%;  
+            
+            select {
+                width: 85%;
+                border: 1px solid rgb(112, 128, 144);
+                border-radius: 0.3rem;
+                padding: 0.4rem;
+                font-size: 80%;
+            }
+        }
+    }
+
+    .buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 130%;
+    
+        input[type="button"] {
+            width: 6.2rem;
+            margin: 0.75rem;
+            padding: 0.4rem;
+            border-radius: 0.5rem;
+            color: rgb(255, 255, 255);
+            border: none;
+        }
+
+        #flipBtn {
+            background: rgb(0, 123, 255);
+        }
+    
+        #nextBtn {
+            background: rgb(40, 167, 69);
+        }
+    }
+}
+
+@media screen and (min-width: 30rem) and (max-width: 48rem) {
+    form#verbFlashcard {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+    
+        fieldset {
+            background: none;
+    
+            .mainContainer {
+                top: 50%;
+                left: 50%; 
+                margin-top: -10%;
+            }
+        }
+    
         dl {
             padding: 0;
             width: 100%;
@@ -33,51 +108,45 @@ form#verbFlashcard {
             dd {
                 margin: 0;
                 padding: 0 0.5rem;
-                width: 70%;    
+                width: 70%;  
                 
                 select {
-                    width: 100%;
+                    width: 50%;
                     border: 1px solid rgb(112, 128, 144);
                     border-radius: 0.3rem;
                     padding: 0.4rem;
                     font-size: 80%;
                 }
             }
-        } 
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: center;
-    
-        input[type="button"] {
-            margin: 0.75rem;
-            width: 6.2rem;
-            padding: 0.4rem;
-            border-radius: 0.5rem;
-            color: rgb(255, 255, 255);
-            border: none;
-        }
-
-        #flipBtn {
-            background: rgb(0, 123, 255);
         }
     
-        #nextBtn {
-            background: rgb(40, 167, 69);
+        .buttons {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 70%;
+        
+            input[type="button"] {
+                width: 6.2rem;
+                margin: 0.75rem;
+                padding: 0.4rem;
+                border-radius: 0.5rem;
+                color: rgb(255, 255, 255);
+                border: none;
+            }
+    
+            #flipBtn {
+                background: rgb(0, 123, 255);
+            }
+        
+            #nextBtn {
+                background: rgb(40, 167, 69);
+            }
         }
     }
 }
 
-@media screen and (max-width: 30rem) {
-
-}
-
-@media screen and (min-width: 30rem) and (max-width: 52rem) {
-
-}
-
-@media screen and (min-width: 53rem) and (max-width: 64rem) {
+@media screen and (min-width: 49rem) and (max-width: 52rem) {
     form#verbFlashcard {
         font-family: 'Roboto', sans-serif;
         display: flex;
@@ -87,55 +156,43 @@ form#verbFlashcard {
             background: none;
     
             .mainContainer {
-                top: 55%;
-                left: 50%;
-                
-                @media only screen and (max-width: 480px) {
-                    top: 40%;
-                }
+                top: 50%;
+                left: 50%; 
+                margin-top: -20%;
+            }
+        }
+    
+        dl {
+            padding: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+    
+            dt {
+                margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
+                padding: 0;
+                width: 30%;
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: right;
+                font-size: 90%;   
             }
     
-            dl {
-                padding: 0;
-                width: 100%;
-                display: flex;
-                justify-content: center;
-        
-                dt {
-                    margin: 0;
-                    margin-top: 5px;
-                    margin-right: 10px;
-                    padding: 0;
-                    width: 30%;
-                    font-weight: bold;
-                    text-transform: capitalize;
-                    text-align: right;
-                    font-size: 90%;   
-    
-                    @media only screen and (max-width: 480px) {
-                        font-size: 100%;
-                    }
+            dd {
+                margin: 0;
+                padding: 0 0.5rem;
+                width: 70%;  
+                
+                select {
+                    width: 50%;
+                    border: 1px solid rgb(112, 128, 144);
+                    border-radius: 0.3rem;
+                    padding: 0.4rem;
+                    font-size: 80%;
                 }
-        
-                dd {
-                    margin: 0;
-                    padding: 0 0.5rem;
-                    width: 70%;    
-                    
-                    select {
-                        width: 50%;
-                        border: 1px solid rgb(112, 128, 144);
-                        border-radius: 0.3rem;
-                        padding: 0.4rem;
-                        font-size: 80%;
-    
-                        @media only screen and (max-width: 480px) {
-                            width: 100%;
-                            font-size: 90%;
-                        }
-                    }
-                }
-            } 
+            }
         }
     
         .buttons {
@@ -143,20 +200,93 @@ form#verbFlashcard {
             display: flex;
             justify-content: center;
             margin-top: 70%;
-    
-            @media only screen and (max-width: 480px) {
-                margin-top: 120%;
-            }
         
             input[type="button"] {
-                margin: 0.75rem;
                 width: 6.2rem;
+                margin: 0.75rem;
                 padding: 0.4rem;
                 border-radius: 0.5rem;
                 color: rgb(255, 255, 255);
                 border: none;
             }
     
+            #flipBtn {
+                background: rgb(0, 123, 255);
+            }
+        
+            #nextBtn {
+                background: rgb(40, 167, 69);
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 80rem) {
+    form#verbFlashcard {
+        font-family: 'Roboto', sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        fieldset {
+            background: none;
+
+            .mainContainer {
+                top: 50%;
+                left: 51%; 
+            }
+        }
+
+        dl {
+            padding: 0;
+            width: 75%;
+            display: flex;
+            justify-content: center;
+            margin-left: 23%;
+
+            dt {
+                margin: 0;
+                margin-top: 5px;
+                margin-right: 10px;
+                padding: 0;
+                width: 30%;
+                font-weight: bold;
+                text-transform: capitalize;
+                text-align: right;
+                font-size: 90%;   
+            }
+
+            dd {
+                margin: 0;
+                padding: 0 0.5rem;
+                width: 100%;  
+                
+                select {
+                    width: 50%;
+                    border: 1px solid rgb(112, 128, 144);
+                    border-radius: 0.3rem;
+                    padding: 0.4rem;
+                    font-size: 80%;
+                }
+            }
+        }
+
+        .buttons {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 60%;
+            margin-left: 5%;
+        
+            input[type="button"] {
+                width: 6.2rem;
+                margin: 0.75rem;
+                padding: 0.4rem;
+                border-radius: 0.5rem;
+                color: rgb(255, 255, 255);
+                border: none;
+            }
+
             #flipBtn {
                 background: rgb(0, 123, 255);
             }

@@ -30,15 +30,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/verbs/flashcard": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/verbs/flashcard.js"
+    ],
     "/vocabulary/flashcard": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/vocabulary/flashcard.js"
-    ],
-    "/vocabulary/scramble": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/vocabulary/scramble.js"
     ]
   },
   "ampFirstPages": []
